@@ -42,7 +42,7 @@ class PeopleController < ApplicationController
       @organisations = Organisation.find("id:[0 TO 9]").sort_by(:name) # to support list in View
       @people = Person.find("id:[0 TO 9]").sort_by(:surname, :first_name) # to support list in View
       @locations = Location.find("id:[0 TO 9]").sort_by(:street_name, :suburb) # to support list in View
-      @events = Location.find("id:[0 TO 9]").sort_by(:title, :event_type) # to support list in View
+      @events = Event.find("id:[0 TO 9]").sort_by(:title, :event_type) # to support list in View
 
       if params[:target_id]
         

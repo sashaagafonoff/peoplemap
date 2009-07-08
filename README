@@ -1,8 +1,6 @@
 == Welcome to peoplemap
 
-peoplemap is a Rails-based web application designed to support the network-centric collection & analysis of information.  At the moment, this is 
-a very naive implementation with very basic CRUD capabilities.  I've extended some prototyping I did with Andreas Ronge's neo4j wrapper for Ruby to work with a more full
-domain model, and this is the result.  Feel free to make some suggestions, but bear in mind that this is all just an early, early prototype, and my coding skills are pretty basic!
+peoplemap is a Rails-based web application designed to support the network-centric collection & analysis of information.  At the moment, this is a very naive implementation with very basic CRUD capabilities.  I've extended some prototyping I did with Andreas Ronge's neo4j wrapper for Ruby to work with a more full domain model, and this is the result.  Feel free to make some suggestions, but bear in mind that this is all just an early, early prototype, and my coding skills are pretty basic!
 
 This project is protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details
 
@@ -29,6 +27,11 @@ Apologies for the limited install info - I'll try to extend this information in 
 3. Download and add Andreas Ronge's neo4j wrapper and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem.
 
 Good luck!
+
+THINGS TO NOTE:
+- indexes may not work until you have created at least one instance of each type (person, organisation, location, event, reference) and I haven't gotten round to dealing with this yet.  The easy workaround is to go to <server>/people/new, <server>/organisations/new, etc and create an instance of each...
+- Linking is all over the shop as I am mid-way through implementing a new approach to allow date ranges, categories and subcategories, notes, etc.  It will work in places, but exepect a more consistent and generic approach soon...
+- the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
 
 I'm running this in Aptana RadRails, but you can probably get it running in NetBeans, RubyMine etc.
 

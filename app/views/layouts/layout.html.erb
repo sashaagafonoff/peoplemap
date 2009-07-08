@@ -43,9 +43,12 @@ end
 
 <%= yield %>
 <ul id="footer_menu">
-  <li>about us</li>
-  <li>&copy; copyright peoplemap <%= Date.today.year.to_s %> some rights reserved</li>
-  <li>contact us</li>
+  <!--<li>about us</li>-->
+  <li><span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dc:title" rel="dc:type"><b>people</b></>map</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/au/">Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License</a>.</li>
+  <!--<li>contact us</li>-->
 </ul>
+<div style="text-align: center; padding: 5px;">
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/au/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.5/au/88x31.png" /></a>
+</div>
 </body>
 </html>
