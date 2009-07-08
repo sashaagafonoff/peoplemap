@@ -1,0 +1,84 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%" id="all_nodes">
+  <tr>
+    <td width="20%">
+      <h2>people</h2>  
+      <% @people.each do |person| %>
+        <% if (person.neo_node_id != object.neo_node_id) then %>
+          <p>
+            <%= link_to person.first_name + ' ' + person.surname, :action => "show", :id => person %> | 
+            <%= link_to 'Link', {:action => "show", :id => object, :target_id => person, 
+                                           :link_category => "friend", 
+                                           :link_subcategory => "general friend", 
+                                           :start_date =>"2009-07-01", 
+                                           :end_date => "2010-07-01", 
+																					 :notes =>"abc"} %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+    <td width="20%">
+      <h2>organisations</h2>  
+      <% @organisations.each do |organisation| %>
+        <% if (organisation.neo_node_id != object.neo_node_id) then %>
+          <p>
+            <%= link_to organisation.name, :action => "show", :id => organisation %> | 
+            <%= link_to 'Link', {:action => "show", :id => object, :target_id => organisation, 
+                                           :link_category => "abc", 
+                                           :link_subcategory => "abc", 
+                                           :start_date =>"2009-07-01", 
+                                           :end_date => "2010-07-01", 
+																					 :notes =>"abc"} %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+    <td width="20%">
+      <h2>locations</h2>  
+      <% @locations.each do |location| %>
+        <% if (location.neo_node_id != object.neo_node_id) then %>
+          <p>
+            <%= link_to location.street_name, :action => "show", :id => location %> | 
+            <%= link_to 'Link', {:action => "show", :id => object, :target_id => location, 
+                                           :link_category => "abc", 
+                                           :link_subcategory => "abc", 
+                                           :start_date =>"2009-07-01", 
+                                           :end_date => "2010-07-01", 
+																					 :notes =>"abc"} %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+    <td width="20%">
+      <h2>events</h2>  
+      <% @events.each do |event| %>
+        <% if (event.neo_node_id != object.neo_node_id) then %>
+          <p>
+            <%= link_to event.title, :action => "show", :id => event %> | 
+            <%= link_to 'Link', {:action => "show", :id => object, :target_id => event, 
+                                           :link_category => "friend", 
+                                           :link_subcategory => "general friend", 
+                                           :start_date =>"2009-07-01", 
+                                           :end_date => "2010-07-01", 
+																					 :notes =>"abc"} %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+    <td width="20%">
+      <h2>references</h2>  
+      <% @references.each do |reference| %>
+        <% if (reference.neo_node_id != object.neo_node_id) then %>
+          <p>
+            <%= link_to reference.ref_value, :action => "show", :id => reference %> | 
+            <%= link_to 'Link', {:action => "show", :id => object, :target_id => reference, 
+                                           :link_category => "friend", 
+                                           :link_subcategory => "general friend", 
+                                           :start_date =>"2009-07-01", 
+                                           :end_date => "2010-07-01", 
+																					 :notes =>"abc"} %>
+          </p>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>

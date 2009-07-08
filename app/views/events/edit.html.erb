@@ -1,0 +1,5 @@
+<% Neo4j::Transaction.run do %>
+<h1>Editing event</h1>
+
+<%= render( :partial => "form", :object => @event) %>
+<% end %>

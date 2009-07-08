@@ -1,0 +1,29 @@
+<% form_for(@person) do |f| %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.select :title, Person::TITLE_TYPES, :prompt => "Select a title" %>
+  </p>
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label :surname %><br />
+    <%= f.text_field :surname %>
+  </p>
+  <p>
+    <%= f.label :date_of_birth %><br />
+    <%= f.calendar_date_select :date_of_birth, :embedded => true  %>
+  </p>
+  <p>
+    <%= f.label :sex %><br />
+    <%= f.select :sex, Person::SEXES, :prompt => "Select a gender" %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes, :size => "25x5" %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

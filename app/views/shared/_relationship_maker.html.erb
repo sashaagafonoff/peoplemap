@@ -1,0 +1,21 @@
+<li>
+    <% if (target.type == Person) then %>
+      <%= link_to target.first_name + " " + target.surname, :action => "show", :controller => "people", :id => target.neo_node_id %>
+    <% elsif (target.type == Organisation) then %>
+      <%= link_to target.name, :action => "show", :controller => "organisations", :id => target.neo_node_id %>
+    <% end %>
+
+    <% if (relationship.end_date.to_date > Date.today) then %><%= relationship.link_desc %><% else %><%= relationship.link_desc_past %><% end %>
+
+    <% if (origin.type == Person) then %>
+      <%= link_to origin.first_name + " " + origin.surname, :action => "show", :controller => "people", :id => origin.neo_node_id %>
+    <% elsif (origin.type == Organisation) then %>
+      <%= link_to origin.name, :action => "show", :controller => "organisations", :id => origin.neo_node_id %>
+    <% end %>
+    | (<%= relationship.start_date %> - <%= relationship.end_date %>)
+    | <%= relationship.notes %>
+    | <%= link_to 'Unlink', {:action => "show",
+                             :id => origin.neo_node_id,
+                             :target_id => target.neo_node_id,
+                             :unlink => "true" } %>
+</li>

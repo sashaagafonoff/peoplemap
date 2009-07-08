@@ -1,0 +1,25 @@
+<% Neo4j::Transaction.run do %>
+<h1><b>location</b>finder</h1>
+<p><%= link_to 'New location', new_location_path %></p>
+<table cellpadding="0" cellspacing="0" border="0" class="node_list">
+  <tr>
+    <th>Address</th>
+    <th>Suburb</th>
+    <th>City</th>
+    <th>Country</th>
+    <th colspan="3"></th>
+  </tr>
+<% @locations.each do |location| %>
+  <tr class="<%= cycle('list_odd', 'list_even') %>">
+    <td><%= location.street_number %> <%= location.street_name %> <%= location.street_type %></td>
+    <td><%= location.suburb %></td>
+    <td><%= location.city %></td>
+    <td><%= location.country %></td>
+    <td><%= link_to 'Edit', edit_location_path(location) %></td>
+    <td><%= link_to 'Show', location %></td>
+    <td><%= link_to 'Destroy', location, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+<% end %>

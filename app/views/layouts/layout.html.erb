@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>peoplemap: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag :defaults %> 
+  <%= calendar_date_select_includes %>
+</head>
+<body>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+      <td width="148px" style="border-bottom: solid 1px #000;">
+        <a href="../../people"><img src="/images/logo.png"/></a>
+      </td>
+<% 
+case controller.type.to_s
+	when "PeopleController"
+		@people_style = "color: #f1c130"
+	when "OrganisationsController"
+		@org_style = "color: #f1c130"
+	when "EventsController"
+		@event_style = "color: #f1c130"
+	when "LocationsController"
+		@location_style = "color: #f1c130"
+	when "ReferencesController"
+		@reference_style = "color: #f1c130"
+end
+%>      
+      <td style="border-bottom: solid 1px #000;">
+        <ul id="top_menu"><li><a href="../../people" style="<%= @people_style %>">people</a></li>
+          <li><a href="../../organisations" style="<%= @org_style %>">organisations</a></li>
+          <li><a href="../../locations" style="<%= @location_style %>">locations</a></li>
+          <li><a href="../../events" style="<%= @event_style %>">events</a></li>
+          <li><a href="../../references" style="<%= @reference_style %>">references</a></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield %>
+<ul id="footer_menu">
+  <li>about us</li>
+  <li>&copy; copyright peoplemap <%= Date.today.year.to_s %> some rights reserved</li>
+  <li>contact us</li>
+</ul>
+</body>
+</html>

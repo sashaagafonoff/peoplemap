@@ -1,0 +1,108 @@
+<% Neo4j::Transaction.run do %>
+<h1><%= @event.title %> (<%= @event.start_date %>)</h1>
+<ul id="node_menu">
+  <li><%= link_to '<b>event</b>finder', events_path %></li>
+  <li><%= link_to 'edit', edit_event_path(@event) %></li>
+  <li><%= link_to 'delete', @event, :confirm => 'Are you sure?', :method => :delete %></li>
+</ul>
+<table cellpadding="0" cellspacing="0" border="0" id="node_info" width="100%">
+  <tr>
+    <th width="95px">Key Image</th>
+    <th colspan="2">Detailed Information</th>
+    <th width="400px">Notes</th>
+    <th width="*">Related Images</th>
+  </tr>
+  <tr>
+    <td class="node_info_value" rowspan="3">PICTURE HERE</td>
+    <td class="node_info_label" width="100px">Description</td>
+    <td class="node_info_value" width="200px"><%= @event.description %></td>
+    <td class="node_info_value" rowspan="3"><%= @event.notes %></td>
+    <td class="node_info_value" rowspan="3">IMAGE GALLERY HERE</td>
+  </tr>
+  <tr>
+    <td class="node_info_label">Relevant Dates</td>
+    <td class="node_info_value"><%= @event.start_date %> - <%= @event.end_date %></td>
+  </tr>
+  <tr>
+    <td class="node_info_label">Event Type</td>
+    <td class="node_info_value"><%= @event.event_type %></td>
+  </tr>
+</table>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td style="vertical-align: top; " width="20%">
+      <h2>All Linkages</h2>
+			<% @origin = @event %>
+			<% @id_stack = Array.new 
+				 @id_stack.push(@origin.neo_node_id)	%>
+			<%= render( :partial => "shared/target", 
+									:object => @origin, 
+									:locals => {:id_stack => @id_stack}) %>
+    </td>
+    <td style="vertical-align: top; border-left: solid 1px #999999; " width="20%">
+      <h2>Related People</h2>
+			<% @id2_stack = Array.new 
+				 @id2_stack.push(@origin.neo_node_id)	%>
+			<%= render( :partial => "shared/filtered_target", 
+									:object => @origin, 
+									:locals => {:level_1_rel => "relates_to_person",
+															:level_2_rel => "",
+															:level_3_rel => "",
+															:id_stack => @id2_stack}) %>
+    </td>
+    <td style="vertical-align: top; border-left: solid 1px #999999; " width="20%">
+      <h2>Related Organisations</h2>
+			<% @id2_stack = Array.new 
+				 @id2_stack.push(@origin.neo_node_id)	%>
+			<%= render( :partial => "shared/filtered_target", 
+									:object => @origin, 
+									:locals => {:level_1_rel => "relates_to_organisation",
+															:level_2_rel => "",
+															:level_3_rel => "",
+															:id_stack => @id2_stack}) %>
+    </td>
+    <td style="vertical-align: top; border-left: solid 1px #999999; " width="20%">
+      <h2>Related Locations</h2>
+			<% @id2_stack = Array.new 
+				 @id2_stack.push(@origin.neo_node_id)	%>
+			<%= render( :partial => "shared/filtered_target", 
+									:object => @origin, 
+									:locals => {:level_1_rel => "location_of",
+															:level_2_rel => "",
+															:level_3_rel => "",
+															:id_stack => @id2_stack}) %>
+    </td>
+  </tr>
+</table>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td style="vertical-align: top; border-top: solid 1px #999999; " width="33%">
+      <h2>People</h2>
+      <% @people.each do |person| %>
+        <p>
+          <%= link_to person.first_name + " " + person.surname, :action => "show", :controller => "people", :id => person %> | 
+          <%= link_to 'Link to Event', {:action => "show", :id => @event, :target_id => person, :link_type => "relates_to_person"} %>
+        </p>
+      <% end %>
+    </td>
+    <td style="vertical-align: top;  border-left: solid 1px #999999;  border-top: solid 1px #999999; " width="33%">
+      <h2>Organisations</h2>
+      <% @organisations.each do |organisation| %>
+        <p>
+          <%= link_to organisation.name, :action => "show", :id => organisation %> | 
+          <%= link_to 'Link to Event', {:action => "show", :id => @organisation, :target_id => organisation, :link_type => "relates_to_organisation"} %> |
+        </p>
+      <% end %>
+    </td>
+    <td style="vertical-align: top;  border-left: solid 1px #999999;  border-top: solid 1px #999999; " width="33%">
+      <h2>Locations</h2>
+      <% @locations.each do |location| %>
+        <p>
+          <%= link_to location.street_number + " " + location.street_name + " " + location.suburb, :action => "show", :id => location %> | 
+          <%= link_to 'Link as Location', {:action => "show", :id => @location, :target_id => location, :link_type => "location_of"} %> |
+        </p>
+      <% end %>
+    </td>
+  </tr>
+</table>
+<% end %>

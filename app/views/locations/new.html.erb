@@ -1,0 +1,4 @@
+<% Neo4j::Transaction.run do %>
+<h1><b>new</b>location</h1>
+<%= render( :partial => "form", :object => @event) %>
+<% end %>

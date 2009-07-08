@@ -1,0 +1,29 @@
+<% form_for(@event) do |f| %>
+  <p>
+    <%= f.label :event_type %><br />
+    <%= f.select :event_type, Event::EVENT_TYPES, :prompt => "Select an event type" %>
+  </p>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :size => "25x5" %>
+  </p>
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.calendar_date_select :start_date, :embedded => true  %>
+  </p>
+  <p>
+    <%= f.label :end_date %><br />
+    <%= f.calendar_date_select :end_date, :embedded => true  %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes, :size => "25x5" %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
