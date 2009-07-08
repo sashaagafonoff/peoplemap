@@ -4,6 +4,8 @@ peoplemap is a Rails-based web application designed to support the network-centr
 a very naive implementation with very basic CRUD capabilities.  I've extended some prototyping I did with Andreas Ronge's neo4j wrapper for Ruby to work with a more full
 domain model, and this is the result.  Feel free to make some suggestions, but bear in mind that this is all just an early, early prototype, and my coding skills are pretty basic!
 
+This project is protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details
+
 This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!!
 
 THINGS TO DO:
@@ -29,4 +31,5 @@ Apologies for the limited install info - I'll try to extend this information in 
 Good luck!
 
 I'm running this in Aptana RadRails, but you can probably get it running in NetBeans, RubyMine etc.
+
 
