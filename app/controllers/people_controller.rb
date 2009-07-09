@@ -58,15 +58,7 @@ class PeopleController < ApplicationController
           end
           flash[:notice] = @target.neo_node_id.to_s + ' was successfully unlinked.'
         else
-          relationship_data = {:origin => @person, 
-                               :target => @target, 
-                               :link_category => params[:link_category],
-                               :link_subcategory => params[:link_subcategory],
-                               :start_date => params[:start_date],
-                               :end_date => params[:end_date],
-                               :notes => params[:notes]
-                               }
-          linker(relationship_data)
+          linker(params)
         end
       end
     end

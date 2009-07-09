@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
-  def linker(link_data) # link_data will be a hash
+  def linker # link_data will be a hash
     
-    @origin = link_data[:origin]
+    @origin = params[:origin]
     @target = link_data[:target]
 
     case link_data[:link_category]

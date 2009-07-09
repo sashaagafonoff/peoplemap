@@ -32,7 +32,7 @@
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
   <tr>
-    <td style="vertical-align: top;" width="20%">
+    <td style="vertical-align: top;">
       <h2>All Linkages</h2>
 			<% @origin = @person %>
 			<% @id_stack = Array.new 
@@ -41,7 +41,7 @@
 									:object => @origin, 
 									:locals => {:id_stack => @id_stack}) %>
     </td>
-    <td style="vertical-align: top; border-left: solid 1px #999999;" width="20%">
+    <td style="vertical-align: top; border-left: solid 1px #999999;">
       <h2>Family Relationships</h2>
 			<% @id2_stack = Array.new 
 				 @id2_stack.push(@origin.neo_node_id)	%>
@@ -51,8 +51,6 @@
 															:level_2_rel => "family_of",
 															:level_3_rel => "family_of",
 															:id_stack => @id2_stack}) %>
-    </td>
-    <td style="vertical-align: top; border-left: solid 1px #999999;" width="20%">
       <h2>Working Relationships</h2>
 			<% @id3_stack = Array.new 
 				 @id3_stack.push(@origin.neo_node_id)	%>
@@ -62,8 +60,6 @@
 															:level_2_rel => "working_rel_to",
 															:level_3_rel => "working_rel_to",
 															:id_stack => @id3_stack}) %>
-    </td>
-    <td style="vertical-align: top; border-left: solid 1px #999999;" width="20%">
       <h2>Personal Relationships</h2>
 			<% @id3_stack = Array.new 
 				 @id3_stack.push(@origin.neo_node_id)	%>
@@ -73,8 +69,6 @@
 															:level_2_rel => "personal_rel_to",
 															:level_3_rel => "personal_rel_to",
 															:id_stack => @id3_stack}) %>
-    </td>
-    <td style="vertical-align: top; border-left: solid 1px #999999;" width="20%">
       <h2>Related Organisations</h2>
 			<% @id3_stack = Array.new 
 				 @id3_stack.push(@origin.neo_node_id)	%>

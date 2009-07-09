@@ -4,9 +4,10 @@ peoplemap is a Rails-based web application designed to support the network-centr
 
 This project is protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details
 
-This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!!
+This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! I've just added a first HAML file in anticipation of converting the entire set of html.erb files over - this is a test to see how git copes...
 
 THINGS TO DO:
+- conversion to HAML (for easier code review & faster development in future)
 - Maturing the interface & consolidating display logic for common views
 - extjs & script.acu.lous libraries for enhanced user experience
 - proper ontology support to allow *.owl files to be used for defining relationship hierarchies
@@ -24,12 +25,13 @@ Apologies for the limited install info - I'll try to extend this information in 
 
 1. Install Jruby, then Rails, etc
 2. Make sure you have neo4j and lucene jars installed into your CLASSPATH
-3. Download and add Andreas Ronge's neo4j wrapper and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem.
+3. Download and add Andreas Ronge's neo4j wrapper and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
+4. Install HAML
 
 Good luck!
 
 THINGS TO NOTE:
-- lucene indexing will not work (and therefore the /people index etc) until you have created at least one instance of any one type (person, organisation, etc) and I haven't gotten round to dealing with this yet.  The workaround for now is to go to <server>/people/new and create a single instance of person...
+- lucene indexing will not work unless there is one instance of each type (person, organisation, event, location, reference) and the new code I'm writing hates this.  Until I've written code to handle this, just go to {server_name}/people/new [organisations/new, locations/new, events/new, references/new] and create a new node of each type...
 - Linking is all over the shop as I am mid-way through implementing a new approach to allow date ranges, categories and subcategories, notes, etc.  It will work in places, but exepect a more consistent and generic approach soon...
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
 

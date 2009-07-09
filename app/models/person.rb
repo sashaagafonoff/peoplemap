@@ -5,6 +5,14 @@ end
 
 class Person
   
+  Person::LINK_CATEGORIES = [
+    ["Friend", "Friend"],
+    ["Acquaintance", "Acquaintance"],
+    ["Enemy", "Enemy"],
+    ["Fan", "Fan"],
+    ["Rival", "Rival"]
+  ]
+
   Person::TITLE_TYPES = [
     ["Mr", "Mr"],
     ["Mrs", "Mrs"],

@@ -154,3 +154,26 @@ h2 {
 .list_odd td {
   background-color: #f8f3e4;
 }
+
+.linker_form {
+  display: inline;
+}
+.linker_form #params_link_category {
+  height: 17px;
+  font-size: 9px;
+}
+.linker_form .start_date, .end_date {
+  height: 10px;
+  font-size: 9px;
+  width: 47px;
+}
+.linker_form .notes {
+  height: 10px;
+  font-size: 9px;
+  width: 150px;
+}
+.linker_form .submit_link {
+  height: 18px;
+  font-size: 9px;
+  width: 35px;
+}
