@@ -1,0 +1,27 @@
+- form_for(@person) do |f|
+  %p
+    = f.label :title
+    %br
+    = f.select :title, Person::TITLE_TYPES, :prompt => "Select a title"
+  %p
+    = f.label :first_name
+    %br
+    = f.text_field :first_name
+  %p
+    = f.label :surname
+    %br
+    = f.text_field :surname
+  %p
+    = f.label :date_of_birth
+    %br
+    = f.calendar_date_select :date_of_birth, :embedded => true 
+  %p
+    = f.label :sex
+    %br
+    = f.select :sex, Person::SEXES, :prompt => "Select a gender"
+  %p
+    = f.label :notes
+    %br
+    = f.text_area :notes, :size => "25x5"
+  %p
+    = f.submit 'Update'

@@ -1,0 +1,48 @@
+- get_top_menu_style(controller.type)
+!!! XML
+!!!
+%html
+  %head
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    %title
+      peoplemap:
+      = controller.action_name
+    = stylesheet_link_tag 'scaffold'
+    = javascript_include_tag :defaults
+    = calendar_date_select_includes
+%body
+  %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%", :id => "top_menu"}
+    %tr
+      %td{:width => "148px"}
+        <a href="../../people"><img src="/images/logo.png"/>
+      %td
+        %ul
+          %li
+            %a{:href => "../../people", :style => @people_style}
+              people
+          %li
+            %a{:href => "../../organisations", :style => @org_style}
+              organisations
+          %li
+            %a{:href => "../../locations", :style => @location_style}
+              locations
+          %li
+            %a{:href => "../../events", :style => @event_style}
+              events
+          %li
+            %a{:href => "../../references", :style => @reference_style}
+              references
+      %td{:width => "88px"}
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/au/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.5/au/88x31.png" />
+  - unless flash[:notice].nil? then
+    %p{:id => "notice"}
+      = flash[:notice]
+
+  = yield
+
+  %ul{:id => "footer_menu"}
+    <!--%liabout us-->
+    %li
+      <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dc:title" rel="dc:type">
+      <b>people</b></>map is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/au/">Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License.
+    <!--%licontact us-->

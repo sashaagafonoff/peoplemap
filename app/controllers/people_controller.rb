@@ -44,24 +44,28 @@ class PeopleController < ApplicationController
       @locations = Location.find("id:[0 TO 9]").sort_by(:street_name, :suburb) # to support list in View
       @events = Event.find("id:[0 TO 9]").sort_by(:title, :event_type) # to support list in View
 
-      if params[:target_id]
-        
+      if params[:unlink] then
         @target = Neo4j.load(params[:target_id])
-        
-        if params[:unlink] then # this needs to be improved
-          @target = Neo4j.load(params[:target_id])
-          if (@person.relationships[@target]) then
-            @person.relationships[@target].delete
-          end
-          if (@target.relationships[@person]) then
-            @target.relationships[@person].delete
-          end
-          flash[:notice] = @target.neo_node_id.to_s + ' was successfully unlinked.'
-        else
-          linker(params)
+        if (@person.relationships[@target]) then
+          @person.relationships[@target].delete
         end
+        if (@target.relationships[@person]) then
+          @target.relationships[@person].delete
+        end
+        flash[:notice] = [@person.first_name, @person.surname].join(" ") + " was unlinked successfully."
       end
+
     end
+  end
+
+  def link
+    Neo4j::Transaction.run do
+
+      linker(@_params)
+
+      redirect_to(@target)
+      flash[:notice] = [@origin.first_name, @origin.surname].join(" ") + " was linked to " + [@target.first_name, @target.surname].join(" ")
+    end  
   end
   
   def new

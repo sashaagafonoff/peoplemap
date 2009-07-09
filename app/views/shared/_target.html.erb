@@ -2,10 +2,10 @@
 <%	@origin.relationships.both.each do |relationship| %>
 	<% id_stack.push(relationship.end_node.neo_node_id) # add to array of IDs in the tree (to stop looping) %>
 	<% if (@origin.neo_node_id != relationship.end_node.neo_node_id ) then %>
-		<%= render( :partial => "shared/relationship_maker", 
+		<%= render( :partial => "shared/relationship_description", 
 								:object => relationship, 
-								:locals => {:origin => relationship.end_node, 
-                            :target => @origin, 
+								:locals => {:target => relationship.end_node,
+                            :origin => @origin,
                             :relationship => relationship}) %>
 		<ul>
 			<% relationship.end_node.relationships.both.each do |subrelationship| %>
@@ -17,10 +17,10 @@
 					 end
 	      %>
 				<% if (@flag == false) then %>
-    		<%= render( :partial => "shared/relationship_maker", 
+    		<%= render( :partial => "shared/relationship_description", 
     								:object => subrelationship, 
-    								:locals => {:origin => subrelationship.end_node, 
-                                :target => relationship.end_node, 
+    								:locals => {:target => subrelationship.end_node,
+                                :origin => relationship.end_node,
                                 :relationship => subrelationship}) %>
           <% id_stack.push(subrelationship.end_node.neo_node_id) # add to array of IDs in the tree (to stop looping) %>
       		<ul>
@@ -33,10 +33,10 @@
       					 end
       	      %>
       				<% if (@flag == false) then %>
-          		<%= render( :partial => "shared/relationship_maker", 
+          		<%= render( :partial => "shared/relationship_description", 
           								:object => subsubrelationship, 
-          								:locals => {:origin => subsubrelationship.end_node, 
-                                      :target => subrelationship.end_node, 
+          								:locals => {:target => subsubrelationship.end_node,
+                                      :origin => subrelationship.end_node, 
                                       :relationship => subsubrelationship}) %>
                 <% id_stack.push(subsubrelationship.end_node.neo_node_id) # add to array of IDs in the tree (to stop looping) %>
       				<% end %>

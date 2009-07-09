@@ -4,13 +4,26 @@ class Role
 end
 
 class Person
-  
+
+  # horrible way to do this, I know, but it will work for the time being...
+
   Person::LINK_CATEGORIES = [
-    ["Friend", "Friend"],
-    ["Acquaintance", "Acquaintance"],
-    ["Enemy", "Enemy"],
-    ["Fan", "Fan"],
-    ["Rival", "Rival"]
+    ["Friend", "friend"],
+    ["Best Friend", "best_friend"],
+    ["Enemy", "enemy"],
+    ["Colleague", "colleague"],
+    ["Manager", "manager"],
+    ["Subordinate", "subordinate"],
+    ["Husband", "husband"],
+    ["Wife", "wife"],
+    ["Mother", "mother"],
+    ["Father", "father"],
+    ["Brother", "brother"],
+    ["Sister", "sister"],
+    ["Son", "son"],
+    ["Daughter", "daughter"],
+    ["Boyfriend", "boyfriend"],
+    ["Girlfriend", "girlfriend"]
   ]
 
   Person::TITLE_TYPES = [

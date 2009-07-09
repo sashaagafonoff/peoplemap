@@ -1,0 +1,30 @@
+%li
+
+  - if origin.type == Person then
+    = link_to origin.first_name + " " + origin.surname, :action => "show", :controller => "people", :id => origin.neo_node_id
+  - elsif (origin.type == Organisation) then
+    = link_to origin.name, :action => "show", :controller => "organisations", :id => origin.neo_node_id
+  - else
+
+  - if relationship.end_date.nil? then
+    = relationship.link_desc
+  - elsif relationship.end_date <= Date.today.to_s then
+    = relationship.link_desc_past
+  - elsif relationship.end_date > Date.today.to_s then
+    = relationship.link_desc
+
+  - if target.type == Person then
+    = link_to target.first_name + " " + target.surname, :action => "show", :controller => "people", :id => target.neo_node_id
+  - elsif target.type == Organisation then
+    = link_to target.name, :action => "show", :controller => "organisations", :id => target.neo_node_id
+
+  | (
+  - relationship_date_range(relationship)
+  = @date_range
+  )
+  |
+  - unless relationship.notes.nil?
+    = relationship.notes
+    |
+  = link_to 'Unlink', {:action => "show", :id => origin.neo_node_id, :target_id => target.neo_node_id, :unlink => "true" } 
+

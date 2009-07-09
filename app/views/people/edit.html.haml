@@ -1,0 +1,5 @@
+- Neo4j::Transaction.run do
+  %h1
+    <b>edit</b>person:
+    = @person.first_name + " " + @person.surname
+  = render( :partial => "form", :object => @person)

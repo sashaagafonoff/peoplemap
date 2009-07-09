@@ -1,0 +1,38 @@
+%h2 people
+%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info"}
+  - @people.each do |person|
+    - if (person.neo_node_id != object.neo_node_id) then
+      %tr{:class => cycle('list_odd', 'list_even')}
+        %td
+          = link_to person.first_name + ' ' + person.surname, :action => "show", :id => person
+        %td
+          - form_tag "link", :id => object.neo_node_id.to_s, :class => "linker_form" do
+            = hidden_field_tag "origin_id", person.neo_node_id.to_s
+            = hidden_field_tag "target_id", object.neo_node_id.to_s
+            = select('link_form', 'link_category', Person::LINK_CATEGORIES )
+            = text_field_tag 'start_date', Date.today, :class => "start_date"
+            = text_field_tag 'end_date', Date.today.advance(:years => 1), :class => "end_date"
+            %br
+            = text_field_tag 'notes', '<insert notes about this link here>', :class => "notes"
+            = submit_tag "link", :class=> "submit_link"
+
+%h2 organisations
+- @organisations.each do |organisation|
+  - if (organisation.neo_node_id != object.neo_node_id) then
+    %p 
+      = link_to organisation.name, :action => "show", :id => organisation
+%h2 locations
+- @locations.each do |location|
+  - if (location.neo_node_id != object.neo_node_id) then
+    %p 
+      = link_to location.street_name, :action => "show", :id => location |
+%h2 events
+- @events.each do |event|
+  - if (event.neo_node_id != object.neo_node_id) then
+    %p 
+      = link_to event.title, :action => "show", :id => event |
+%h2 references
+- @references.each do |reference|
+  - if (reference.neo_node_id != object.neo_node_id) then
+    %p 
+      = link_to reference.ref_value, :action => "show", :id => reference |
