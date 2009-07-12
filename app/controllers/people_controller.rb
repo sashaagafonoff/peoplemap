@@ -63,8 +63,8 @@ class PeopleController < ApplicationController
 
       linker(@_params)
 
-      redirect_to(@target)
-      flash[:notice] = [@origin.first_name, @origin.surname].join(" ") + " was linked to " + [@target.first_name, @target.surname].join(" ")
+      redirect_to(@origin)
+      flash[:notice] = [@origin.first_name, @origin.surname].join(" ") + " was linked to node" + @target.neo_node_id.to_s
     end  
   end
   

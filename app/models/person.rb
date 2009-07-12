@@ -7,7 +7,7 @@ class Person
 
   # horrible way to do this, I know, but it will work for the time being...
 
-  Person::LINK_CATEGORIES = [
+  Person::TO_PERSON_LINK_CATEGORIES = [
     ["Friend", "friend"],
     ["Best Friend", "best_friend"],
     ["Enemy", "enemy"],
@@ -25,6 +25,41 @@ class Person
     ["Boyfriend", "boyfriend"],
     ["Girlfriend", "girlfriend"]
   ]
+
+  Person::TO_ORG_LINK_CATEGORIES = [
+    ["Works For", "works"],
+    ["Member Of", "member"],
+    ["Volunteer For", "volunteer"],
+    ["Banned From", "banned"],
+    ["Supports", "supports"]
+]
+
+  Person::TO_LOC_LINK_CATEGORIES = [
+    ["Home Address", "home_address"],
+    ["Work Address", "work_address"]
+]
+
+  Person::TO_EVENT_LINK_CATEGORIES = [
+    ["Attended", "attended"],
+    ["Organised", "organised"],
+    ["Caused", "caused"],
+    ["Participated In", "participated"],
+    ["Supported", "supported"],
+    ["Objected To", "objected"]
+]
+
+  Person::TO_REF_LINK_CATEGORIES = [
+    ["Email Address", "email"],
+    ["Home Phone", "home_phone"],
+    ["Work Phone", "work_phone"],
+    ["Mobile Phone", "mobile"],
+    ["Website URL", "website"],
+    ["Facebook URL", "facebook"],
+    ["LinkedIn URL", "linkedin"],
+    ["Twitter URL", "twitter"],
+    ["Photo", "photo"],                 # obviously need to support this properly
+    ["File Attachment", "attachment"]   # this too
+]
 
   Person::TITLE_TYPES = [
     ["Mr", "Mr"],

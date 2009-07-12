@@ -8,10 +8,12 @@ This project has just started, so expect a great deal change in these files over
 
 THINGS TO DO:
 - conversion to HAML (for easier code review & faster development in future)
+- TEST CASES TEST CASES TEST CASES (I know, I know, why weren't these written first...?)
+- MASSIVE refactor of what is some of the ugliest CSS I've done in a while
+- search & index support with more mature lists
 - Maturing the interface & consolidating display logic for common views
 - extjs & script.acu.lous libraries for enhanced user experience
 - proper ontology support to allow *.owl files to be used for defining relationship hierarchies
-- improved relationship property setting (is very limited at present)
 - user management
 - admin tools
 - data visualisation (network visualisation, timeline charts, graphs, etc)
@@ -28,7 +30,7 @@ Apologies for the limited install info - I'll try to extend this information in 
 3. Download and add Andreas Ronge's neo4j wrapper and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
 4. Install HAML
 
-Good luck!  Drop me a line if you need help getting it running!
+Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
 - lucene indexing will not work unless there is one instance of each type (person, organisation, event, location, reference) and the new code I'm writing hates this.  Until I've written code to handle this, just go to {server_name}/people/new [organisations/new, locations/new, events/new, references/new] and create a new node of each type...

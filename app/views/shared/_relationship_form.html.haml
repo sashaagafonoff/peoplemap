@@ -1,0 +1,11 @@
+- # This form will ultimately be replaced with an AJAX control, allowing linking to occur without full page submits
+
+- form_tag "link", :id => object.neo_node_id.to_s, :class => "linker_form" do
+  = hidden_field_tag "target_id", target.neo_node_id.to_s
+  = hidden_field_tag "origin_id", object.neo_node_id.to_s
+  = select('link_form', 'link_category', link_category_table )
+  = text_field_tag 'start_date', Date.today, :class => "start_date"
+  = text_field_tag 'end_date', '', :class => "end_date"                # Date.today.advance(:years => 1)
+  %br
+  = text_field_tag 'notes', '<insert notes about this link here>', :class => "notes"
+  = submit_tag "link", :class=> "submit_link"

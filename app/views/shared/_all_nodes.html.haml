@@ -1,38 +1,70 @@
-%h2 people
-%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info"}
-  - @people.each do |person|
-    - if (person.neo_node_id != object.neo_node_id) then
-      %tr{:class => cycle('list_odd', 'list_even')}
-        %td
-          = link_to person.first_name + ' ' + person.surname, :action => "show", :id => person
-        %td
-          - form_tag "link", :id => object.neo_node_id.to_s, :class => "linker_form" do
-            = hidden_field_tag "origin_id", person.neo_node_id.to_s
-            = hidden_field_tag "target_id", object.neo_node_id.to_s
-            = select('link_form', 'link_category', Person::LINK_CATEGORIES )
-            = text_field_tag 'start_date', Date.today, :class => "start_date"
-            = text_field_tag 'end_date', Date.today.advance(:years => 1), :class => "end_date"
-            %br
-            = text_field_tag 'notes', '<insert notes about this link here>', :class => "notes"
-            = submit_tag "link", :class=> "submit_link"
+%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+  %tr
+    %td{:class => "all_nodes_list", :rowspan => "2"}
+      %h2 
+        people 
+        %span{:class => "new_node_link"}
+          = link_to '[+]', new_person_path
+      %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+        - @people.each do |person|
+          - if (person.neo_node_id != object.neo_node_id) then
+            %tr{:class => cycle('list_odd', 'list_even')}
+              %td
+                = link_to person.first_name + ' ' + person.surname, :action => "show", :id => person
+              %td{:class => "all_nodes_list_item"}
+                = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => Person::TO_PERSON_LINK_CATEGORIES, :target => person})
 
-%h2 organisations
-- @organisations.each do |organisation|
-  - if (organisation.neo_node_id != object.neo_node_id) then
-    %p 
-      = link_to organisation.name, :action => "show", :id => organisation
-%h2 locations
-- @locations.each do |location|
-  - if (location.neo_node_id != object.neo_node_id) then
-    %p 
-      = link_to location.street_name, :action => "show", :id => location |
-%h2 events
-- @events.each do |event|
-  - if (event.neo_node_id != object.neo_node_id) then
-    %p 
-      = link_to event.title, :action => "show", :id => event |
-%h2 references
-- @references.each do |reference|
-  - if (reference.neo_node_id != object.neo_node_id) then
-    %p 
-      = link_to reference.ref_value, :action => "show", :id => reference |
+    %td{:class => "all_nodes_list"}
+      %h2 
+        organisations
+        %span{:class => "new_node_link"}
+          = link_to '[+]', new_organisation_path
+      %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+        - @organisations.each do |organisation|
+          - if (organisation.neo_node_id != object.neo_node_id) then
+            %tr{:class => cycle('list_odd', 'list_even')}
+              %td
+                = link_to organisation.name, :action => "show", :id => organisation
+              %td{:class => "all_nodes_list_item"}
+                = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => Person::TO_ORG_LINK_CATEGORIES, :target => organisation})
+
+    %td{:class => "all_nodes_list"}
+      %h2 
+        locations
+        %span{:class => "new_node_link"}
+          = link_to '[+]', new_location_path
+      %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+        - @locations.each do |location|
+          - if (location.neo_node_id != object.neo_node_id) then
+            %tr{:class => cycle('list_odd', 'list_even')}
+              %td
+                = link_to location.street_name, :action => "show", :id => location |
+              %td{:class => "all_nodes_list_item"}
+                = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => Person::TO_LOC_LINK_CATEGORIES, :target => location})
+  %tr
+    %td{:class => "all_nodes_list"}
+      %h2 
+        events
+        %span{:class => "new_node_link"}
+          = link_to '[+]', new_event_path
+      %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+        - @events.each do |event|
+          - if (event.neo_node_id != object.neo_node_id) then
+            %tr{:class => cycle('list_odd', 'list_even')}
+              %td
+                = link_to event.title, :action => "show", :id => event |
+              %td{:class => "all_nodes_list_item"}
+                = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => Person::TO_EVENT_LINK_CATEGORIES, :target => event})
+    %td{:class => "all_nodes_list"}
+      %h2 
+        references
+        %span{:class => "new_node_link"}
+          = link_to '[+]', new_reference_path
+      %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+        - @references.each do |reference|
+          - if (reference.neo_node_id != object.neo_node_id) then
+            %tr{:class => cycle('list_odd', 'list_even')}
+              %td
+                = link_to reference.ref_value, :action => "show", :id => reference |
+              %td{:class => "all_nodes_list_item"}
+                = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => Person::TO_REF_LINK_CATEGORIES, :target => reference})

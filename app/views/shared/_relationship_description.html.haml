@@ -4,7 +4,12 @@
     = link_to origin.first_name + " " + origin.surname, :action => "show", :controller => "people", :id => origin.neo_node_id
   - elsif (origin.type == Organisation) then
     = link_to origin.name, :action => "show", :controller => "organisations", :id => origin.neo_node_id
-  - else
+  - elsif origin.type == Event then
+    = link_to origin.title, :action => "show", :controller => "events", :id => origin.neo_node_id
+  - elsif origin.type == Location then
+    = link_to [origin.street_number, origin.street_name, origin.street_type, origin.city].join(" "), :action => "show", :controller => "locations", :id => origin.neo_node_id
+  - elsif origin.type == Reference then
+    = link_to origin.name, :action => "show", :controller => "references", :id => origin.neo_node_id
 
   - if relationship.end_date.nil? then
     = relationship.link_desc
@@ -17,14 +22,20 @@
     = link_to target.first_name + " " + target.surname, :action => "show", :controller => "people", :id => target.neo_node_id
   - elsif target.type == Organisation then
     = link_to target.name, :action => "show", :controller => "organisations", :id => target.neo_node_id
+  - elsif target.type == Event then
+    = link_to target.title, :action => "show", :controller => "events", :id => target.neo_node_id
+  - elsif target.type == Location then
+    = link_to [target.street_number, target.street_name, target.street_type, target.city].join(" "), :action => "show", :controller => "locations", :id => target.neo_node_id
+  - elsif target.type == Reference then
+    = link_to target.name, :action => "show", :controller => "references", :id => target.neo_node_id
 
-  | (
+  - # get dates range for relationship
   - relationship_date_range(relationship)
   = @date_range
-  )
-  |
+
+  - # get notes for relationship
   - unless relationship.notes.nil?
-    = relationship.notes
-    |
+    = "| " + relationship.notes
+  |
   = link_to 'Unlink', {:action => "show", :id => origin.neo_node_id, :target_id => target.neo_node_id, :unlink => "true" } 
 

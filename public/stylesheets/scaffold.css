@@ -137,10 +137,6 @@ h2 {
   font-size: 12px;
   list-style: square;
 }
-
-#node_info {
-}
-
 #node_info th, .node_info_label {
   background-color: #f0f0f0;
   text-align: left;
@@ -162,10 +158,15 @@ h2 {
   border-right: none;
   margin: 0 0 0 10px;
 }
+.date_range {
+  font-size: 9px;
+  color: #999999;
+}
 .list_even td, .list_odd td, .node_list th {
   padding: 1px 5px 2px 5px;
   text-align: left;
   border-right: solid 1px #f1e9cd;
+  border-bottom: solid 1px #f1e9cd;
 }
 .list_odd td {
   background-color: #f8f3e4;
@@ -176,6 +177,7 @@ h2 {
 }
 .linker_form #link_form_link_category {
   height: 17px;
+  width: 82px;
   font-size: 9px;
 }
 .linker_form .start_date, .end_date {
@@ -187,9 +189,26 @@ h2 {
   height: 10px;
   font-size: 9px;
   width: 150px;
+  color: #666666;
 }
 .linker_form .submit_link {
   height: 18px;
   font-size: 9px;
   width: 35px;
+}
+.all_nodes_list {
+  border-top: solid 1px #888888;
+  border-right: solid 1px #888888;
+  vertical-align: top;
+}
+.all_nodes_list h2 {
+  border-bottom: solid 1px #888888;
+}
+.all_nodes_list_item {
+  width: 200px;
+  border-top: none;
+}
+.new_node_link a {
+  font-size: 12px;
+  text-decoration: none;
 }

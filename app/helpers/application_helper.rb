@@ -17,7 +17,17 @@ module ApplicationHelper
   end
 
   def relationship_date_range(relationship)
-    @date_range = relationship.start_date + " - " + relationship.end_date
+    begin
+      @start_date = relationship.start_date.to_date.year.to_s
+    rescue
+      @start_date = " "
+    end
+    begin
+      @end_date = relationship.end_date.to_date.year.to_s
+    rescue
+      @end_date = " "
+    end
+    @date_range = "| <span class='date_range'>(" + @start_date + " - " + @end_date + ")</span>"
   end
 
 end
