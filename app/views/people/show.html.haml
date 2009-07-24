@@ -1,15 +1,15 @@
 - Neo4j::Transaction.run do
 
   %h1
-    = @person.first_name
-    = @person.surname
+    = @object.first_name
+    = @object.surname
   %ul{:id => "node_menu"}
     %li
       = link_to '<b>people</b>finder', people_path
     %li
-      = link_to 'edit', edit_person_path(@person)
+      = link_to 'edit', edit_person_path(@object)
     %li
-      = link_to 'delete', @person, :confirm => 'Are you sure?', :method => :delete
+      = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
 
   %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
     %tr
@@ -27,65 +27,59 @@
       %td{:class => "node_info_label", :width => "100px"}
         Full Name
       %td{:class => "node_info_value", :width => "200px"}
-        = @person.title
-        = @person.first_name
-        = @person.surname
+        = @object.title
+        = @object.first_name
+        = @object.surname
       %td{:class => "node_info_value", :rowspan => "3"}
-        = @person.notes
+        = @object.notes
       %td{:class => "node_info_value", :rowspan => "3"}
         IMAGE GALLERY HERE
     %tr
       %td{:class => "node_info_label"}
         Sex
       %td{:class => "node_info_value"}
-        = @person.sex
+        = @object.sex
     %tr
       %td{:class => "node_info_label"}
         Date of Birth
       %td{:class => "node_info_value"}
-        = @person.date_of_birth
-
-  - @origin = @person
+        = @object.date_of_birth
 
   %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
     %tr
-      %td{:style => "vertical-align: top;"}
+      %td{:style => "vertical-align: top;", :width => "20%"}
         %h2
-          All Linkages
+          People
 
-        - @id_stack = Array.new
-        - @id_stack.push(@origin.neo_node_id)
-        = render( :partial => "shared/target", :object => @person, :locals => {:id_stack => @id_stack})
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => "person_to_person", :level_2_rel => "person_to_person", :level_3_rel => "person_to_person", :origin => @object})
 
-      %td{:style => "vertical-align: top; border-left: solid 1px #999999;"}
+      %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
 
         %h2
-          Family Relationships
+          Organisations
 
-        - @id2_stack = Array.new
-        - @id2_stack.push(@origin.neo_node_id)
-        = render( :partial => "shared/filtered_target", :object => @origin, :locals => {:level_1_rel => "family_of", :level_2_rel => "family_of", :level_3_rel => "family_of", :id_stack => @id2_stack})
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => "person_to_org", :level_2_rel => "person_to_org", :level_3_rel => "person_to_org", :origin => @object})
 
-        %h2
-          Working Relationships
-
-        - @id3_stack = Array.new
-        - @id3_stack.push(@origin.neo_node_id)
-        = render( :partial => "shared/filtered_target", :object => @origin, :locals => {:level_1_rel => "working_rel_to", :level_2_rel => "working_rel_to", :level_3_rel => "working_rel_to", :id_stack => @id3_stack})
+      %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
 
         %h2
-          Personal Relationships
+          Events
 
-        - @id3_stack = Array.new
-        - @id3_stack.push(@origin.neo_node_id)
-        = render( :partial => "shared/filtered_target", :object => @origin, :locals => {:level_1_rel => "personal_rel_to", :level_2_rel => "personal_rel_to", :level_3_rel => "personal_rel_to", :id_stack => @id3_stack})
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => "person_to_event", :level_2_rel => "nil", :level_3_rel => "nil", :origin => @object})
+
+      %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
 
         %h2
-          Related Organisations
+          Locations
 
-        - @id3_stack = Array.new
-        - @id3_stack.push(@origin.neo_node_id)
-        = render( :partial => "shared/filtered_target", :object => @origin, :locals => {:level_1_rel => "org_rel_with", :level_2_rel => "org_rel_with", :level_3_rel => "org_rel_with", :id_stack => @id3_stack})
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => "loc_to_person", :level_2_rel => "nil", :level_3_rel => "nil", :origin => @object})
+
+      %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
+
+        %h2
+          References
+
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => "person_to_ref", :level_2_rel => "nil", :level_3_rel => "nil", :origin => @object})
 
 
-  = render( :partial => "shared/all_nodes", :object => @origin )
+  = render( :partial => "shared/all_nodes", :object => @object )

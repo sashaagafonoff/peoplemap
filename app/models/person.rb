@@ -1,11 +1,15 @@
-class Role
-  include Neo4j::RelationshipMixin
-  property :link_desc, :link_desc_past, :link_category, :link_subcategory, :start_date, :end_date, :notes, :author, :reliability
-end
-
 class Person
 
-  # horrible way to do this, I know, but it will work for the time being...
+    include Neo4j::NodeMixin
+    property :title, :first_name, :middle_names, :surname, :maternal_name, :date_of_birth, :classification, :sex, :notes
+    
+    has_n(:person_to_person).to(Person).relationship(Role)
+    has_n(:person_to_org).to(Organisation).relationship(Role)
+    has_n(:event_to_person).to(Event).relationship(Role)
+    has_n(:loc_to_person).to(Location).relationship(Role)
+    has_n(:ref_to_person).to(Reference).relationship(Role)
+    
+    index :surname, :first_name, :classification
 
   Person::TO_PERSON_LINK_CATEGORIES = [
     ["Friend", "friend"],
@@ -20,8 +24,7 @@ class Person
     ["Father", "father"],
     ["Brother", "brother"],
     ["Sister", "sister"],
-    ["Son", "son"],
-    ["Daughter", "daughter"],
+    ["Child", "child"],
     ["Boyfriend", "boyfriend"],
     ["Girlfriend", "girlfriend"]
   ]
@@ -74,14 +77,4 @@ class Person
     ["Female","Female"]
   ]
   
-  include Neo4j::NodeMixin
-  property :title, :first_name, :middle_names, :surname, :maternal_name, :date_of_birth, :classification, :sex, :notes
-  has_n(:family_of).to(Person).relationship(Role)
-  has_n(:personal_rel_to).to(Person).relationship(Role)
-  has_n(:working_rel_to).to(Person).relationship(Role)
-  has_n(:org_rel_with).to(Organisation).relationship(Role)
-  has_n(:relates_to_person).to(Event).relationship(Role)
-  has_n(:address_of).to(Location).relationship(Role)
-  has_n(:reference_to_person).to(Reference).relationship(Role)
-  index :surname, :first_name, :classification
 end

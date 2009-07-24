@@ -2,8 +2,12 @@
 
 - form_tag "link", :id => object.neo_node_id.to_s, :class => "linker_form" do
   = hidden_field_tag "target_id", target.neo_node_id.to_s
+  = hidden_field_tag "id", object.neo_node_id.to_s
   = hidden_field_tag "origin_id", object.neo_node_id.to_s
-  = select('link_form', 'link_category', link_category_table )
+  = hidden_field_tag "origin_type", origin_type
+  = hidden_field_tag "target_type", target_type
+  %select{:name => "link_category", :id => "link_category"}
+    = link_category_table
   = text_field_tag 'start_date', Date.today, :class => "start_date"
   = text_field_tag 'end_date', '', :class => "end_date"                # Date.today.advance(:years => 1)
   %br

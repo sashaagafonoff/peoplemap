@@ -1,8 +1,3 @@
-class Role
-  include Neo4j::RelationshipMixin
-  property :link_desc, :link_desc_past, :link_category, :link_subcategory, :start_date, :end_date, :notes, :author, :reliability
-end
-
 class Location
   
   Location::LOCATION_TYPES = [

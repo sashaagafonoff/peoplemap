@@ -1,0 +1,11 @@
+%ul
+  -	@object.relationships.both(level_1_rel).each do |relationship|
+    = render( :partial => "shared/relationship_description", :object => relationship)
+    %ul
+      - relationship.end_node.relationships.both(level_2_rel).each do |subrelationship|
+        - unless (@object.neo_node_id == subrelationship.start_node.neo_node_id || subrelationship.end_node.neo_node_id) then
+          = render( :partial => "shared/relationship_description", :object => subrelationship)
+          %ul
+            - subrelationship.end_node.relationships.both(level_3_rel).each do |subsubrelationship|
+              - unless (@object.neo_node_id == subsubrelationship.start_node.neo_node_id || subsubrelationship.end_node.neo_node_id) then
+                = render( :partial => "shared/relationship_description", :object => subsubrelationship)

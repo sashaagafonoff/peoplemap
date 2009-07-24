@@ -1,83 +1,63 @@
 class PeopleController < ApplicationController
   
-  before_filter :find_person, :only => [:show, :edit, :update, :destroy]
+  around_filter :neo_tx
   layout 'layout'
   
   def index
-    @people = Person.find("id:[0 TO 9]").sort_by(:first_name)
+    @people = Person.all.nodes
   end
   
   def create
-    Neo4j::Transaction.run do
-      @person = Neo4j::Person.new
-      @person.update(params[:person])
-      flash[:notice] = 'Person was successfully created.'
-    end
+    @object = Neo4j::Person.new
+    @object.update(params[:person])
+    flash[:notice] = 'Person was successfully created.'
     redirect_to(people_url)
   end
   
   def update
-    Neo4j::Transaction.run do
-      @person.update(params[:person])
-      flash[:notice] = 'Person was successfully updated.'
-    end
-    redirect_to(@person)
+    @object.update(params[:person])
+    flash[:notice] = 'Person was successfully updated.'
+    redirect_to(@object)
   end
   
   def destroy
-    Neo4j::Transaction.run do
-      @person.delete
-      redirect_to(people_url)
-    end
+    @object.delete
+    redirect_to(people_url)
   end
   
   def edit
   end
   
   def show
-    Neo4j::Transaction.run do
-      @person = Neo4j.load(params[:id])
-      
-      @references = Reference.find("id:[0 TO 9]").sort_by(:ref_value, :reference_type) # to support list in View
-      @organisations = Organisation.find("id:[0 TO 9]").sort_by(:name) # to support list in View
-      @people = Person.find("id:[0 TO 9]").sort_by(:surname, :first_name) # to support list in View
-      @locations = Location.find("id:[0 TO 9]").sort_by(:street_name, :suburb) # to support list in View
-      @events = Event.find("id:[0 TO 9]").sort_by(:title, :event_type) # to support list in View
+    @references = Reference.all.nodes
+    @organisations = Organisation.all.nodes
+    @people = Person.all.nodes
+    @locations = Location.all.nodes
+    @events = Event.all.nodes
 
-      if params[:unlink] then
-        @target = Neo4j.load(params[:target_id])
-        if (@person.relationships[@target]) then
-          @person.relationships[@target].delete
-        end
-        if (@target.relationships[@person]) then
-          @target.relationships[@person].delete
-        end
-        flash[:notice] = [@person.first_name, @person.surname].join(" ") + " was unlinked successfully."
-      end
-
-    end
   end
 
   def link
-    Neo4j::Transaction.run do
-
-      linker(@_params)
-
-      redirect_to(@origin)
-      flash[:notice] = [@origin.first_name, @origin.surname].join(" ") + " was linked to node" + @target.neo_node_id.to_s
-    end  
+    linker(params)
+    redirect_to(@object)
+    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was linked to node " + @target.neo_node_id.to_s
+  end
+  
+  def unlink
+    unlinker(params)
+    redirect_to(@object)
+    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was unlinked from " + @target.neo_node_id.to_s
   end
   
   def new
-    Neo4j::Transaction.run do
-      @person = Person.value_object.new
-    end
+    @object = Person.value_object.new
   end
   
   private
-  def find_person
-    Neo4j::Transaction.run do
-      @person = Neo4j.load(params[:id])
-    end
+  def neo_tx
+    Neo4j::Transaction.new
+    @object = Neo4j.load(params[:id]) if params[:id]
+    yield
+    Neo4j::Transaction.finish
   end
 end

@@ -1,25 +1,24 @@
-- Neo4j::Transaction.run do 
-  %h1
-    <b>people</b>finder
-  %p
-    = link_to 'New person', new_person_path
-  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0" :class => "node_list"}
-    %tr
-      %th
-        Name
-      %th
-        Date of Birth
-      %th{:colspan=>"3"}
-    - @people.each do |person|
-      %tr{:class => cycle('list_odd', 'list_even')}
-        %td
-          = [person.title, person.first_name, person.surname].join " "
-        %td
-          = person.date_of_birth
-        %td
-          = link_to 'Show', :action => "show", :id => person
-        %td
-          = link_to 'Edit', edit_person_path(person)
-        %td
-          = link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete
-  %br
+%h1
+  <b>people</b>finder
+%p
+  = link_to 'New person', new_person_path
+%table{ :cellpadding => "0", :cellspacing => "0", :border => "0" :class => "node_list"}
+  %tr
+    %th
+      Name
+    %th
+      Date of Birth
+    %th{:colspan=>"3"}
+  - @people.each do |person|
+    %tr{:class => cycle('list_odd', 'list_even')}
+      %td
+        = [person.title, person.first_name, person.surname].join " "
+      %td
+        = person.date_of_birth
+      %td
+        = link_to 'Show', :action => "show", :id => person
+      %td
+        = link_to 'Edit', edit_person_path(person)
+      %td
+        = link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete
+%br

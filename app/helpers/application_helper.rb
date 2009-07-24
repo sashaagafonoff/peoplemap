@@ -30,4 +30,45 @@ module ApplicationHelper
     @date_range = "| <span class='date_range'>(" + @start_date + " - " + @end_date + ")</span>"
   end
 
+  def get_relationship_description(object) 
+
+    case controller.type.to_s
+      when "PeopleController"
+        if (object.end_date == "" || object.end_date > Date.today.to_s) then
+          if (object.start_node.sex == "male") then
+            @link_desc = "link_desc_male"
+          else
+            @link_desc = "link_desc_female"
+          end
+        else # for past relationships
+          if (object.start_node.sex == "male") then
+            @link_desc = "link_desc_male_past"
+          else
+            @link_desc = "link_desc_female_past"
+          end
+        end
+      else
+        if (object.end_date == "" || object.end_date > Date.today.to_s) then
+          @link_desc = "link_desc_male"
+        else
+          @link_desc = "link_desc_male_past"
+        end
+    end
+    xml = File.open('config/relationships.xml')
+    doc = Document.new(xml)
+    @xpath_query = '//relationships/relationship[@name="' + object.name + '"]/' + @link_desc
+    @rel_desc = XPath.first(doc, @xpath_query).text
+
+  end
+  
+  def get_type_list(controller_type, target_type)
+    xml = File.open('config/relationships.xml')
+    doc = Document.new(xml)
+    @drop_list_display = '//relationships/relationship[@subject="' + controller_type + '" and @object="' + target_type + '"]/option' # /text() will return just node values
+    @drop_list_display_hash = XPath.match(doc, @drop_list_display)
+
+    return @drop_list_display_hash
+       
+  end
+  
 end

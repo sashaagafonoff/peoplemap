@@ -2,7 +2,7 @@
 
 peoplemap is a Rails-based web application designed to support the network-centric collection & analysis of information.  At the moment, this is a very naive implementation with very basic CRUD capabilities.  I've extended some prototyping I did with Andreas Ronge's neo4j wrapper for Ruby to work with a more full domain model, and this is the result.  Feel free to make some suggestions, but bear in mind that this is all just an early, early prototype, and my coding skills are pretty basic!
 
-This project is protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details
+This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details.
 
 This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! I've started to move everything over to HAML, but haven't finished, and haven't cleaned up the repo yet...
 
@@ -13,7 +13,7 @@ THINGS TO DO:
 - search & index support with more mature lists
 - Maturing the interface & consolidating display logic for common views
 - extjs & script.acu.lous libraries for enhanced user experience
-- proper ontology support to allow *.owl files to be used for defining relationship hierarchies
+- proper ontology support to allow *.owl files to be used for defining relationship hierarchies & improved reasoning
 - user management
 - admin tools
 - data visualisation (network visualisation, timeline charts, graphs, etc)
@@ -27,13 +27,20 @@ Apologies for the limited install info - I'll try to extend this information in 
 
 1. Install Jruby, then Rails, etc
 2. Make sure you have neo4j and lucene jars installed into your CLASSPATH
-3. Download and add Andreas Ronge's neo4j wrapper and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
-4. Install HAML
+3. Download and add Andreas Ronge's neo4j wrapper (http://github.com/andreasronge/neo4j/tree/master) and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
+4. Install HAML (gem install haml)
+
+== Licenses
+Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.
+
+- Neo4j.rb: MIT, see the LICENSE file github.com/andreasronge/neo4j/tree/master/LICENSE.
+- Lucene: Apache, see lucene.apache.org/java/docs/features.html
+- Neo4j: Dual free software/commercial license, see neo4j.org/
+- haml: MIT, see http://haml-lang.com/docs/yardoc/MIT-LICENSE.html
 
 Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
-- lucene indexing will not work unless there is one instance of each type (person, organisation, event, location, reference) and the new code I'm writing hates this.  Until I've written code to handle this, just go to {server_name}/people/new [organisations/new, locations/new, events/new, references/new] and create a new node of each type...
-- Linking is still all over the shop as I am mid-way through implementing a new approach to allow date ranges, categories and subcategories, notes, etc.  It will work for people only and everything else is broken
+- Linking is not working yet across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application, but I'm trialling this for Person only
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
 
