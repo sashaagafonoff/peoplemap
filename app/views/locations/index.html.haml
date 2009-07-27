@@ -1,0 +1,34 @@
+%h1
+  <b>location</b>finder
+%p
+  = link_to 'New location', new_location_path
+%table{ :cellpadding => "0", :cellspacing => "0", :border => "0" :class => "node_list"}
+  %tr
+    %th
+      Address
+    %th
+      Suburb
+    %th
+      City
+    %th
+      Country
+    %th{:colspan=>"3"}
+  - @locations.each do |location|
+    %tr{:class => cycle('list_odd', 'list_even')}
+      %td
+        = location.street_number  
+        = location.street_name  
+        = location.street_type 
+      %td
+        = location.suburb 
+      %td
+        = location.city 
+      %td
+        = location.country 
+      %td
+        = link_to 'Edit', edit_location_path(location) 
+      %td
+        = link_to 'Show', location 
+      %td
+        = link_to 'Destroy', location, :confirm => 'Are you sure?', :method => :delete 
+%br

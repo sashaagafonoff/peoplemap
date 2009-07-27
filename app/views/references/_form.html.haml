@@ -1,0 +1,15 @@
+- form_for(@object) do |f|
+  %p
+    = f.label :reference_type
+    %br
+    = f.select :reference_type, Reference::REFERENCE_TYPES, :prompt => "Select a reference type"
+  %p
+    = f.label :ref_value
+    %br
+    = f.text_field :ref_value 
+  %p
+    = f.label :notes
+    %br
+    = f.text_area :notes, :size => "25x5" 
+  %p
+    = f.submit 'Update' 

@@ -1,0 +1,19 @@
+- form_for(@object) do |f|
+  %p
+    = f.label :sector
+    %br
+    = f.select :sector, Organisation::SECTOR_TYPES, :prompt => "Select a sector"
+  %p
+    = f.label :industry
+    %br
+    = f.select :industry, Organisation::INDUSTRY_TYPES, :prompt => "Select an industry"
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+  %p
+    = f.label :notes
+    %br
+    = f.text_area :notes, :size => "25x5"
+  %p
+    = f.submit 'Update'

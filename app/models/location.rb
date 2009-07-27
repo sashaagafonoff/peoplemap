@@ -1,5 +1,17 @@
 class Location
+
+  include Neo4j::NodeMixin
+
+  property :apt_office_floor_number, :street_number, :street_name, :street_type, :suburb, :city, :country, :postcode, :notes
   
+  has_n(:person_to_loc).from(Person).relationship(Role)
+  has_n(:org_to_loc).from(Organisation).relationship(Role)
+  has_n(:event_to_loc).from(Event).relationship(Role)
+  has_n(:loc_to_loc).to(Location).relationship(Role)
+  has_n(:loc_to_ref).to(Reference).relationship(Role)
+  
+  index :street_name, :suburb, :country
+
   Location::LOCATION_TYPES = [
     ["Street","Street"],
     ["Avenue","Avenue"],
@@ -278,11 +290,4 @@ class Location
     ["Zimbabwe","Zimbabwe"]
   ]
   
-  include Neo4j::NodeMixin
-  property :apt_office_floor_number, :street_number, :street_name, :street_type, :suburb, :city, :country, :postcode, :notes
-  has_n(:address_of).to(Person).relationship(Role)
-  has_n(:address_of).to(Organisation).relationship(Role)
-  has_n(:address_of).to(Event).relationship(Role)
-  has_n(:reference_to_loc).to(Reference).relationship(Role)
-  index :street_name, :suburb, :country
 end

@@ -1,47 +1,37 @@
-
 %h1
-  = @object.name
+  = @object.apt_office_floor_number
+  = @object.street_number
+  = @object.street_name
+  = @object.street_type
+  = @object.suburb
+  = @object.city
+  = @object.country
 %ul{:id => "node_menu"}
   %li
-    = link_to '<b>organisation</b>finder', organisations_path
+    = link_to '<b>location</b>finder', locations_path
   %li
-    = link_to 'edit', edit_organisation_path(@object)
+    = link_to 'edit', edit_location_path(@object)
   %li
     = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
 
 %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
   %tr
-    %th{:width => "95px"}
-      Profile Image
-    %th{:colspan => "2"}
-      Detailed Information
     %th{:width => "400px"}
-      Notes
+      Address
     %th{:width => "*"}
-      Related Images
+      Notes
   %tr
-    %td{:class => "node_info_value", :rowspan => "3"}
-      PICTURE HERE
-    %td{:class => "node_info_label", :width => "100px"}
-      Name
     %td{:class => "node_info_value", :width => "200px"}
-      = @object.name
+      = @object.apt_office_floor_number
+      = @object.street_number
+      = @object.street_name
+      = @object.street_type
+      = @object.suburb
+      = @object.city
+      = @object.country
+      = @object.postcode
     %td{:class => "node_info_value", :rowspan => "3"}
       = @object.notes
-    %td{:class => "node_info_value", :rowspan => "3"}
-      IMAGE GALLERY HERE
-  %tr
-    %td{:class => "node_info_label"}
-      Sector
-    %td{:class => "node_info_value"}
-      = @object.sector
-  %tr
-    %td{:class => "node_info_label"}
-      Industry
-    %td{:class => "node_info_value"}
-      = @object.industry
-
-  - @origin = @object
 
 - @person_model = ["person_to_org","nil","nil"]
 - @org_model = ["org_to_org","org_to_org","nil"]
@@ -50,6 +40,5 @@
 - @ref_model = ["org_to_ref","org_to_ref","nil"]
 
 = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
-
 
 = render( :partial => "shared/all_nodes", :object => @object )

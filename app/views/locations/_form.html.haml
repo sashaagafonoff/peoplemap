@@ -1,0 +1,31 @@
+- form_for(@object) do |f| 
+
+  %p
+    = f.label :apt_office_floor_number 
+    = f.text_field :apt_office_floor_number 
+  %p
+    = f.label :street_number 
+    = f.text_field :street_number 
+  %p
+    = f.label :street_name 
+    = f.text_field :street_name 
+  %p
+    = f.label :street_type 
+    = f.select :street_type, Location::LOCATION_TYPES, :prompt => "Select a location type" 
+  %p
+    = f.label :suburb 
+    = f.text_field :suburb 
+  %p
+    = f.label :city 
+    = f.text_field :city 
+  %p
+    = f.label :country 
+    = f.select :country, Location::COUNTRIES, :prompt => "Select a country" 
+  %p
+    = f.label :postcode 
+    = f.text_field :postcode 
+  %p
+    = f.label :notes 
+    = f.text_area :notes, :size => "25x5" 
+  %p
+    = f.submit 'Update' 

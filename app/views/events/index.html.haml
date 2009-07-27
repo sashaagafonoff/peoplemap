@@ -1,0 +1,28 @@
+%h1
+  <b>event</b>finder
+%p
+  = link_to 'New event', new_event_path
+%table{ :cellpadding => "0", :cellspacing => "0", :border => "0" :class => "node_list"}
+  %tr
+    %th
+      Title
+    %th
+      Category
+    %th
+      Date
+    %th{:colspan=>"3"}
+  - @events.each do |event|
+    %tr{:class => cycle('list_odd', 'list_even')}
+      %td
+        = event.title
+      %td
+        = event.event_type
+      %td
+        = event.start_date
+      %td
+        = link_to 'Show', :action => "show", :id => event
+      %td
+        = link_to 'Edit', edit_event_path(event)
+      %td
+        = link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete
+%br

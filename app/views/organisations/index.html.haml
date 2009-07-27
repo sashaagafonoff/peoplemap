@@ -1,0 +1,28 @@
+%h1
+  <b>organisation</b>finder
+%p
+  = link_to 'New organisation', new_organisation_path
+%table{ :cellpadding => "0", :cellspacing => "0", :border => "0" :class => "node_list"}
+  %tr
+    %th
+      Name
+    %th
+      Sector
+    %th
+      Industry
+    %th{:colspan=>"3"}
+  - @organisations.each do |organisation|
+    %tr{:class => cycle('list_odd', 'list_even')}
+      %td
+        = organisation.name
+      %td
+        = organisation.sector
+      %td
+        = organisation.industry
+      %td
+        = link_to 'Show', :action => "show", :id => organisation
+      %td
+        = link_to 'Edit', edit_organisation_path(organisation)
+      %td
+        = link_to 'Destroy', organisation, :confirm => 'Are you sure?', :method => :delete
+%br

@@ -27,24 +27,58 @@ class ApplicationController < ActionController::Base
       when "person_to_person"
         rel1 = @origin.person_to_person.new(@target)        
       when "person_to_organisation"
-        rel1 = @origin.person_to_organisation.new(@target)        
+        rel1 = @origin.person_to_org.new(@target)        
       when "person_to_location"
-        rel1 = @origin.person_to_location.new(@target)        
+        rel1 = @origin.person_to_loc.new(@target)        
       when "person_to_event"
         rel1 = @origin.person_to_event.new(@target)        
       when "person_to_reference"
-        rel1 = @origin.person_to_reference.new(@target)        
+        rel1 = @origin.person_to_ref.new(@target)        
 
       when "organisation_to_person"
-        rel1 = @origin.person_to_organisation.new(@target)        
+        rel1 = @target.person_to_org.new(@origin)   # note that the direction of the relationship necessitates inversion of the creation order
       when "organisation_to_organisation"
-        rel1 = @origin.organisation_to_organisation.new(@target)        
+        rel1 = @origin.org_to_org.new(@target)        
       when "organisation_to_location"
-        rel1 = @origin.organisation_to_location.new(@target)        
+        rel1 = @origin.org_to_loc.new(@target)        
       when "organisation_to_event"
-        rel1 = @origin.organisation_to_event.new(@target)        
+        rel1 = @origin.org_to_event.new(@target)        
       when "organisation_to_reference"
-        rel1 = @origin.organisation_to_reference.new(@target)        
+        rel1 = @origin.org_to_ref.new(@target)        
+
+      when "location_to_person"
+        rel1 = @target.person_to_loc.new(@origin)        
+      when "location_to_organisation"
+        rel1 = @target.org_to_loc.new(@origin)        
+      when "location_to_location"
+        rel1 = @origin.loc_to_loc.new(@target)        
+      when "location_to_event"
+        rel1 = @target.org_to_event.new(@origin)        
+      when "location_to_reference"
+        rel1 = @origin.org_to_ref.new(@target)        
+
+      when "event_to_person"
+        rel1 = @target.person_to_event.new(@origin)        
+      when "event_to_organisation"
+        rel1 = @target.org_to_event.new(@origin)        
+      when "event_to_location"
+        rel1 = @origin.event_to_loc.new(@target)        
+      when "event_to_event"
+        rel1 = @origin.event_to_event.new(@target)        
+      when "event_to_reference"
+        rel1 = @origin.event_to_ref.new(@target)        
+
+       when "reference_to_person"
+        rel1 = @target.person_to_ref.new(@origin)        
+      when "reference_to_organisation"
+        rel1 = @target.org_to_ref.new(@origin)        
+      when "reference_to_location"
+        rel1 = @target.loc_to_ref.new(@origin)        
+      when "reference_to_event"
+        rel1 = @target.event_to_ref.new(@origin)        
+      when "reference_to_reference"
+        rel1 = @origin.person_to_ref.new(@target)        
+
     end
 
     # relationship name (used for further domain reasoning eg direct family, wider family, etc)

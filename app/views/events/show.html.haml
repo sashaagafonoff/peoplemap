@@ -1,18 +1,19 @@
 %h1
-  = @object.first_name
-  = @object.surname
-%ul{:id => "node_menu"}
+  = @object.title  
+  (
+  = @object.start_date 
+  )
+%ul{:id=>"node_menu"}
   %li
-    = link_to '<b>people</b>finder', people_path
+    = link_to '<b>event</b>finder', events_path 
   %li
-    = link_to 'edit', edit_person_path(@object)
+    = link_to 'edit', edit_event_path(@object) 
   %li
-    = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
-
+    = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete 
 %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
   %tr
     %th{:width => "95px"}
-      Profile Picture
+      Key Image
     %th{:colspan => "2"}
       Detailed Information
     %th{:width => "400px"}
@@ -23,33 +24,33 @@
     %td{:class => "node_info_value", :rowspan => "3"}
       PICTURE HERE
     %td{:class => "node_info_label", :width => "100px"}
-      Full Name
+      Description
     %td{:class => "node_info_value", :width => "200px"}
-      = @object.title
-      = @object.first_name
-      = @object.surname
+      = @object.description 
     %td{:class => "node_info_value", :rowspan => "3"}
-      = @object.notes
+      = @object.notes 
     %td{:class => "node_info_value", :rowspan => "3"}
       IMAGE GALLERY HERE
   %tr
     %td{:class => "node_info_label"}
-      Sex
+      Relevant Dates
     %td{:class => "node_info_value"}
-      = @object.sex
+      = @object.start_date  
+      - 
+      = @object.end_date 
   %tr
     %td{:class => "node_info_label"}
-      Date of Birth
+      Event Type
     %td{:class => "node_info_value"}
-      = @object.date_of_birth
+      = @object.event_type 
 
 - @person_model = ["person_to_person","person_to_person","person_to_person"]
 - @org_model = ["person_to_org","person_to_org","nil"]
 - @loc_model = ["person_to_loc","person_to_loc","nil"]
-- @event_model = ["person_to_event","person_to_event","nil"]
+- @event_model = ["person_to_event","nil","nil"]
 - @ref_model = ["person_to_ref","person_to_ref","nil"]
 
 = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
 
-
 = render( :partial => "shared/all_nodes", :object => @object )
+        

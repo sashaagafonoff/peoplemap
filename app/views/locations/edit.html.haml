@@ -1,0 +1,4 @@
+%h1
+  <b>edit</b>location:
+  = @object.street_number + " " + @object.street_name + " " + @object.street_type + " " + @object.city
+= render( :partial => "form", :object => @object)
