@@ -6,6 +6,7 @@ class Event
   
   has_n(:person_to_event).to(Person).relationship(Role)
   has_n(:org_to_event).to(Organisation).relationship(Role)
+  has_n(:event_to_event).to(Organisation).relationship(Role)
   has_n(:event_to_loc).to(Location).relationship(Role)
   has_n(:event_to_ref).to(Reference).relationship(Role)
   

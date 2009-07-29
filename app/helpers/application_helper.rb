@@ -27,7 +27,7 @@ module ApplicationHelper
     rescue
       @end_date = " "
     end
-    @date_range = "| <span class='date_range'>(" + @start_date + " - " + @end_date + ")</span>"
+    @date_range = "<span class='date_range'>(" + @start_date + " - " + @end_date + ")</span>"
   end
 
   def get_relationship_description(object) 

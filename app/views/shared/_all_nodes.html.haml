@@ -38,7 +38,7 @@
           - if (location.neo_node_id != object.neo_node_id) then
             %tr{:class => cycle('list_odd', 'list_even')}
               %td
-                = link_to location.street_name, :action => "show", :id => location, :controller => 'locations' |
+                = link_to [location.street_number, location.street_name, location.street_type, location.suburb].join(" "), :action => "show", :id => location, :controller => 'locations' |
               %td{:class => "all_nodes_list_item"}
                 = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
   %tr

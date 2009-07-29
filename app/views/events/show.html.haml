@@ -44,11 +44,11 @@
     %td{:class => "node_info_value"}
       = @object.event_type 
 
-- @person_model = ["person_to_person","person_to_person","person_to_person"]
-- @org_model = ["person_to_org","person_to_org","nil"]
-- @loc_model = ["person_to_loc","person_to_loc","nil"]
-- @event_model = ["person_to_event","nil","nil"]
-- @ref_model = ["person_to_ref","person_to_ref","nil"]
+- @person_model = ["person_to_event","nil","nil"]
+- @org_model = ["org_to_event","nil","nil"]
+- @loc_model = ["event_to_loc","nil","nil"]
+- @event_model = ["event_to_event","person_to_event","nil"]
+- @ref_model = ["event_to_ref","nil","nil"]
 
 = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
 

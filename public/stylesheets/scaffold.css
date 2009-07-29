@@ -212,3 +212,25 @@ h2 {
   font-size: 12px;
   text-decoration: none;
 }
+ul.link_desc {
+  margin: 5px;
+  padding: 2px;
+  border: solid 1px #b39da6;
+}
+li.link_odd, li.link_even {
+  list-style: none;
+  padding: 0 5px 0 5px;
+  border-bottom: solid 1px #f9f0e8;
+}
+li.link_odd {
+  background-color: #fdfaf7;
+}
+li.link_even {
+  
+}
+a.unlink_a:link {
+  text-decoration: none;
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 9px;
+}

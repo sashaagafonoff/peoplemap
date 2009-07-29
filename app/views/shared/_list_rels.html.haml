@@ -2,25 +2,25 @@
   %tr
     %td{:style => "vertical-align: top;", :width => "20%"}
       %h2
-        People
-      = render( :partial => "shared/filtered_target", :object => object, :locals => {:level_1_rel => person_model[0], :level_2_rel => person_model[1], :level_3_rel => person_model[2], :origin => object})
+        people
+      = render( :partial => "shared/filtered_target", :object => object, :locals => {:level_1_rel => person_model[0], :level_2_rel => person_model[1], :level_3_rel => person_model[2]})
 
       %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
         %h2
-          Organisations
-        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => org_model[0], :level_2_rel => org_model[1], :level_3_rel => org_model[2], :origin => @object})
+          organisations
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => org_model[0], :level_2_rel => org_model[1], :level_3_rel => org_model[2]})
 
       %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
         %h2
-          Events
-        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => event_model[0], :level_2_rel => event_model[1], :level_3_rel => event_model[2], :origin => @object})
+          events
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => event_model[0], :level_2_rel => event_model[1], :level_3_rel => event_model[2]})
 
       %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
         %h2
-          Locations
-        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => loc_model[0], :level_2_rel => loc_model[1], :level_3_rel => loc_model[2], :origin => @object})
+          locations
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => loc_model[0], :level_2_rel => loc_model[1], :level_3_rel => loc_model[2]})
 
       %td{:style => "vertical-align: top; border-left: solid 1px #999999;", :width => "20%"}
         %h2
-          References
-        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => ref_model[0], :level_2_rel => ref_model[1], :level_3_rel => ref_model[2], :origin => @object})
+          references
+        = render( :partial => "shared/filtered_target", :object => @object, :locals => {:level_1_rel => ref_model[0], :level_2_rel => ref_model[1], :level_3_rel => ref_model[2]})
