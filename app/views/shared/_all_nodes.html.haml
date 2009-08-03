@@ -8,7 +8,7 @@
       %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
         - @people.each do |person|
           - if (person.neo_node_id != object.neo_node_id) then
-            %tr{:class => cycle('list_odd', 'list_even')}
+            %tr{:class => cycle('list_odd', 'list_even'), :id => person.neo_node_id}
               %td
                 = link_to person.first_name + ' ' + person.surname, :action => "show", :id => person, :controller => 'people'
               %td{:class => "all_nodes_list_item"}
@@ -22,7 +22,7 @@
       %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
         - @organisations.each do |organisation|
           - if (organisation.neo_node_id != object.neo_node_id) then
-            %tr{:class => cycle('list_odd', 'list_even')}
+            %tr{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_node_id}
               %td
                 = link_to organisation.name, :action => "show", :id => organisation, :controller => 'organisations'
               %td{:class => "all_nodes_list_item"}
@@ -36,7 +36,7 @@
       %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
         - @locations.each do |location|
           - if (location.neo_node_id != object.neo_node_id) then
-            %tr{:class => cycle('list_odd', 'list_even')}
+            %tr{:class => cycle('list_odd', 'list_even'), :id => location.neo_node_id}
               %td
                 = link_to [location.street_number, location.street_name, location.street_type, location.suburb].join(" "), :action => "show", :id => location, :controller => 'locations' |
               %td{:class => "all_nodes_list_item"}
@@ -50,7 +50,7 @@
       %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
         - @events.each do |event|
           - if (event.neo_node_id != object.neo_node_id) then
-            %tr{:class => cycle('list_odd', 'list_even')}
+            %tr{:class => cycle('list_odd', 'list_even'), :id => event.neo_node_id}
               %td
                 = link_to event.title, :action => "show", :id => event, :controller => 'events' |
               %td{:class => "all_nodes_list_item"}
@@ -63,7 +63,7 @@
       %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
         - @references.each do |reference|
           - if (reference.neo_node_id != object.neo_node_id) then
-            %tr{:class => cycle('list_odd', 'list_even')}
+            %tr{:class => cycle('list_odd', 'list_even'), :id => reference.neo_node_id}
               %td
                 = link_to reference.ref_value, :action => "show", :id => reference, :controller => 'references' |
               %td{:class => "all_nodes_list_item"}
