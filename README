@@ -7,7 +7,6 @@ This project is (or (ahem) will be once it matures sufficiently to deserve it) p
 This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! I've started to move everything over to HAML, but haven't finished, and haven't cleaned up the repo yet...
 
 THINGS TO DO:
-- TEST CASES TEST CASES TEST CASES (I know, I know, why weren't these written first...?)
 - MASSIVE refactor of what is some of the ugliest CSS I've done in a while
 - search & index support with more mature lists
 - Maturing the interface & consolidating display logic for common views
@@ -29,6 +28,7 @@ Apologies for the limited install info - I'll try to extend this information in 
 3. Download and add Andreas Ronge's neo4j wrapper (http://github.com/andreasronge/neo4j/tree/master) and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
 4. Install HAML (gem install haml)
 5. Install plugin: selenium-remote-control-1.0.1 (optional for running automated test suite)
+6. Install selenium-client (gem install selenium-client) (optional for running automated test suite)
 
 == Licenses
 Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.

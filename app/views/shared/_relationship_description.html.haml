@@ -10,7 +10,7 @@
   - elsif @origin.type == Event then
     = link_to @origin.title, :action => "show", :controller => "events", :id => @origin.neo_node_id
   - elsif @origin.type == Location then
-    = link_to [@origin.street_number, @origin.street_name, @origin.street_type, @origin.city].join(" "), :action => "show", :controller => "locations", :id => @origin.neo_node_id
+    = link_to [@origin.street_number, @origin.street_name, @origin.street_type, @origin.suburb].join(" "), :action => "show", :controller => "locations", :id => @origin.neo_node_id
   - elsif @origin.type == Reference then
     = link_to @origin.ref_value, :action => "show", :controller => "references", :id => @origin.neo_node_id
 
@@ -24,7 +24,7 @@
   - elsif @target.type == Event then
     = link_to @target.title, :action => "show", :controller => "events", :id => @target.neo_node_id
   - elsif @target.type == Location then
-    = link_to [@target.street_number, @target.street_name, @target.street_type, @target.city].join(" "), :action => "show", :controller => "locations", :id => @target.neo_node_id
+    = link_to [@target.street_number, @target.street_name, @target.street_type, @target.suburb].join(" "), :action => "show", :controller => "locations", :id => @target.neo_node_id
   - elsif @target.type == Reference then
     = link_to @target.ref_value, :action => "show", :controller => "references", :id => @target.neo_node_id
 

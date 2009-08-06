@@ -40,13 +40,13 @@ class LocationsController < ApplicationController
   def link
     linker(params)
     redirect_to(@object)
-    flash[:notice] = @object.neo_node_id + " was linked to node " + @target.neo_node_id.to_s
+    flash[:notice] = @object.neo_node_id.to_s + " was linked to node " + @target.neo_node_id.to_s
   end
   
   def unlink
     unlinker(params)
     redirect_to(@object)
-    flash[:notice] = @object.neo_node_id + " was unlinked from " + @target.neo_node_id.to_s
+    flash[:notice] = @object.neo_node_id.to_s + " was unlinked from " + @target.neo_node_id.to_s
   end
   
   def new

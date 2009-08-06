@@ -40,13 +40,13 @@ class ReferencesController < ApplicationController
   def link
     linker(params)
     redirect_to(@object)
-    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was linked to node " + @target.neo_node_id.to_s
+    flash[:notice] = @object.ref_value + " was linked to node " + @target.neo_node_id.to_s
   end
   
   def unlink
     unlinker(params)
     redirect_to(@object)
-    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was unlinked from " + @target.neo_node_id.to_s
+    flash[:notice] = @object.ref_value + " was unlinked from " + @target.neo_node_id.to_s
   end
   
   def new

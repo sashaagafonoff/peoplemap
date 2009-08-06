@@ -33,11 +33,11 @@
     %td{:class => "node_info_value", :rowspan => "3"}
       = @object.notes
 
-- @person_model = ["person_to_org","nil","nil"]
-- @org_model = ["org_to_org","org_to_org","nil"]
-- @loc_model = ["org_to_loc","nil","nil"]
-- @event_model = ["org_to_event","org_to_event","nil"]
-- @ref_model = ["org_to_ref","org_to_ref","nil"]
+- @person_model = ["person_to_loc","nil","nil"]
+- @org_model = ["org_to_loc","org_to_loc","nil"]
+- @loc_model = ["loc_to_loc","nil","nil"]
+- @event_model = ["event_to_loc","nil","nil"]
+- @ref_model = ["loc_to_ref","nil","nil"]
 
 = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
 

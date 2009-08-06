@@ -25,72 +25,74 @@ class ApplicationController < ActionController::Base
 
     case @rel_string
       when "person_to_person"
-        rel1 = @origin.person_to_person.new(@target)        
+        rel = @origin.person_to_person.new(@target)        
       when "person_to_organisation"
-        rel1 = @origin.person_to_org.new(@target)        
+        rel = @origin.person_to_org.new(@target)        
       when "person_to_location"
-        rel1 = @origin.person_to_loc.new(@target)        
+        rel = @origin.person_to_loc.new(@target)        
       when "person_to_event"
-        rel1 = @origin.person_to_event.new(@target)        
+        rel = @origin.person_to_event.new(@target)        
       when "person_to_reference"
-        rel1 = @origin.person_to_ref.new(@target)        
+        rel = @origin.person_to_ref.new(@target)        
 
       when "organisation_to_person"
-        rel1 = @target.person_to_org.new(@origin)   # note that the direction of the relationship necessitates inversion of the creation order
+        rel = @target.person_to_org.new(@origin)   # note that the direction of the relationship necessitates inversion of the creation order
       when "organisation_to_organisation"
-        rel1 = @origin.org_to_org.new(@target)        
+        rel = @origin.org_to_org.new(@target)        
       when "organisation_to_location"
-        rel1 = @origin.org_to_loc.new(@target)        
+        rel = @origin.org_to_loc.new(@target)        
       when "organisation_to_event"
-        rel1 = @origin.org_to_event.new(@target)        
+        rel = @origin.org_to_event.new(@target)        
       when "organisation_to_reference"
-        rel1 = @origin.org_to_ref.new(@target)        
+        rel = @origin.org_to_ref.new(@target)        
 
       when "location_to_person"
-        rel1 = @target.person_to_loc.new(@origin)        
+        rel = @target.person_to_loc.new(@origin)        
       when "location_to_organisation"
-        rel1 = @target.org_to_loc.new(@origin)        
+        rel = @target.org_to_loc.new(@origin)        
       when "location_to_location"
-        rel1 = @origin.loc_to_loc.new(@target)        
+        rel = @origin.loc_to_loc.new(@target)        
       when "location_to_event"
-        rel1 = @target.org_to_event.new(@origin)        
+        rel = @target.org_to_event.new(@origin)        
       when "location_to_reference"
-        rel1 = @origin.org_to_ref.new(@target)        
+        rel = @origin.org_to_ref.new(@target)        
 
       when "event_to_person"
-        rel1 = @target.person_to_event.new(@origin)        
+        rel = @target.person_to_event.new(@origin)        
       when "event_to_organisation"
-        rel1 = @target.org_to_event.new(@origin)        
+        rel = @target.org_to_event.new(@origin)        
       when "event_to_location"
-        rel1 = @origin.event_to_loc.new(@target)        
+        rel = @origin.event_to_loc.new(@target)        
       when "event_to_event"
-        rel1 = @origin.event_to_event.new(@target)        
+        rel = @origin.event_to_event.new(@target)        
       when "event_to_reference"
-        rel1 = @origin.event_to_ref.new(@target)        
+        rel = @origin.event_to_ref.new(@target)        
 
        when "reference_to_person"
-        rel1 = @target.person_to_ref.new(@origin)        
+        rel = @target.person_to_ref.new(@origin)        
       when "reference_to_organisation"
-        rel1 = @target.org_to_ref.new(@origin)        
+        rel = @target.org_to_ref.new(@origin)        
       when "reference_to_location"
-        rel1 = @target.loc_to_ref.new(@origin)        
+        rel = @target.loc_to_ref.new(@origin)        
       when "reference_to_event"
-        rel1 = @target.event_to_ref.new(@origin)        
+        rel = @target.event_to_ref.new(@origin)        
+
+      
       when "reference_to_reference"
-        rel1 = @origin.person_to_ref.new(@target)        
+        rel = @origin.ref_to_ref.new(@target)        
 
     end
 
     # relationship name (used for further domain reasoning eg direct family, wider family, etc)
-    rel1.name = params[:link_category]
+    rel.name = params[:link_category]
 
     # date ranges for past/ongoing plus timeline visualisation
-    rel1.start_date = params[:start_date]
-    rel1.end_date = params[:end_date]
+    rel.start_date = params[:start_date]
+    rel.end_date = params[:end_date]
 
     # notes about the relationship
     unless params[:notes] == "<insert notes about this link here>" then
-      rel1.notes = params[:notes]
+      rel.notes = params[:notes]
     end
 
   end

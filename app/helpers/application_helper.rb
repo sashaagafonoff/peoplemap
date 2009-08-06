@@ -62,8 +62,7 @@ module ApplicationHelper
   end
   
   def get_type_list(origin_type, target_type)
-    xml = File.open('config/relationships.xml')
-    case
+    case # this annoying set of nested case statements switch the order for the purposes of matching against the rel types in relationships.xml
       when (origin_type == "organisation" and target_type == "person")
         origin_type = "person" 
         target_type = "organisation"
@@ -104,6 +103,7 @@ module ApplicationHelper
             target_type = "reference"
         end
     end
+    xml = File.open('config/relationships.xml')
     doc = Document.new(xml)
     @drop_list_display = '//relationships/relationship[@subject="' + origin_type + '" and @object="' + target_type + '"]/option' # /text() will return just node values
     @drop_list_display_hash = XPath.match(doc, @drop_list_display)
