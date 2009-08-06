@@ -41,6 +41,6 @@ Note that neo4j operates under a dual free/commercial license, so check the cond
 Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
-- Linking is not working yet across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application, but I'm trialling this for Person only
+- Linking is not working yet across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application.  You can basically populate this XML file with relationship definitions to suit any domain - I've included some sample ones as a guide.
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
 
