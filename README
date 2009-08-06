@@ -1,6 +1,6 @@
 == Welcome to peoplemap
 
-peoplemap is a Rails-based web application designed to support the network-centric collection & analysis of information.  At the moment, this is a very naive implementation with very basic CRUD capabilities.  I've extended some prototyping I did with Andreas Ronge's neo4j wrapper for Ruby to work with a more full domain model, and this is the result.  Feel free to make some suggestions, but bear in mind that this is all just an early, early prototype, and my coding skills are pretty basic!
+peoplemap is a Rails-based web application designed to support the collection & analysis of information about social relationships.  At present, this uses a fairly simple user-driven CRUD model to permit manual entry of data.  Eventually this will mature with data visualisation tools like network charts, timeline visualisation, graphs, etc and I will add tools to pull data from CSV and live sources like Twitter, Facebook, LinkedIn, etc.
 
 This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details.
 
@@ -41,6 +41,6 @@ Note that neo4j operates under a dual free/commercial license, so check the cond
 Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
-- Linking is not working yet across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application.  You can basically populate this XML file with relationship definitions to suit any domain - I've included some sample ones as a guide.
+- Linking is now working across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application.  You can basically populate this XML file with relationship definitions to suit any domain - I've included some sample ones as a guide.
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
 
