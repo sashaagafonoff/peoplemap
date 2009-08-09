@@ -30,6 +30,30 @@ Apologies for the limited install info - I'll try to extend this information in 
 5. Install plugin: selenium-remote-control-1.0.1 (optional for running automated test suite)
 6. Install selenium-client (gem install selenium-client) (optional for running automated test suite)
 
+===============================
+INSTALLATION NOTES FOR UBUNTU 9
+===============================
+Here are detailed instructions for getting this rolling on a clean Ubuntu 9 VirtualBox image using Aptana Studio as the IDE.  If you have suggestions for improving this, please let me know - I'm sure there are better ways... :-)
+
+0. Install a JDK (ie sudo apt-get install openjdk-6-jre-headless)
+1. Install Git (ie sudo apt-get install git-core)
+2. Download JRuby from http://www.jruby.org/download, extract and then export PATH=$PATH:/path/to/jruby/bin
+3. From command line gem install rails  // I'm assuming you only have JRuby installed, otherwise type jruby -S gem install etc
+4. From command line gem install calendar_date_select
+5. From command line gem install haml
+6. From command line gem update
+7 .From command line git clone git://github.com/andreasronge/neo4j.git  (only need master)
+8 .From command line git clone git://github.com/sashaagafonoff/peoplemap.git
+9. From command line export CLASSPATH=$CLASSPATH:/path/to/jta-1.1.jar    // these are in the lib/neo4j/jars and lib/lucene/jars folders of the neo4jrb distribution
+10.From command line export CLASSPATH=$CLASSPATH:/path/to/lucene-core-2.4.0.jar
+11.From command line export CLASSPATH=$CLASSPATH:/path/to/neo-1.0-b8.jar
+12.From command line export CLASSPATH=$CLASSPATH:/path/to/shell-1.0-b8.jar
+13. Download and extract Aptana Studio (http://www.aptana.com), run and add RadRails plugin (Git is also useful)
+14.Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
+15.From Aptana, create new Rails project (leave all options checked) to create servers, project settings, etc then copy /app, /public, config/environment.rb, config/relationships.xml and config/routed.rb from peoplemap Git repo into the project
+16.From command line go to /neo4j (downloaded earlier via Git) and run rake:gem install
+17.Start the server and navigate to http://0.0.0.0:3000/people
+
 == Licenses
 Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.
 

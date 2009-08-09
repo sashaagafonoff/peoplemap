@@ -16,5 +16,6 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
+Lucene::Config[:store_on_file] = true 
 Lucene::Config[:storage_path] = 'db/lucene' 
 Neo4j::Config[:storage_path] = 'db/neo4j' 
