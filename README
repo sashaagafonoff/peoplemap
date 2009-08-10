@@ -37,22 +37,22 @@ Here are detailed instructions for getting this rolling on a clean Ubuntu 9 Virt
 
 0. Install a JDK (ie sudo apt-get install openjdk-6-jre-headless)
 1. Install Git (ie sudo apt-get install git-core)
-2. Download JRuby from http://www.jruby.org/download, extract and then export PATH=$PATH:/path/to/jruby/bin
-3. From command line gem install rails  // I'm assuming you only have JRuby installed, otherwise type jruby -S gem install etc
-4. From command line gem install calendar_date_select
-5. From command line gem install haml
-6. From command line gem update
-7 .From command line git clone git://github.com/andreasronge/neo4j.git  (only need master)
-8 .From command line git clone git://github.com/sashaagafonoff/peoplemap.git
-9. From command line export CLASSPATH=$CLASSPATH:/path/to/jta-1.1.jar    // these are in the lib/neo4j/jars and lib/lucene/jars folders of the neo4jrb distribution
-10.From command line export CLASSPATH=$CLASSPATH:/path/to/lucene-core-2.4.0.jar
-11.From command line export CLASSPATH=$CLASSPATH:/path/to/neo-1.0-b8.jar
-12.From command line export CLASSPATH=$CLASSPATH:/path/to/shell-1.0-b8.jar
-13. Download and extract Aptana Studio (http://www.aptana.com), run and add RadRails plugin (Git is also useful)
-14.Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
-15.From Aptana, create new Rails project (leave all options checked) to create servers, project settings, etc then copy /app, /public, config/environment.rb, config/relationships.xml and config/routed.rb from peoplemap Git repo into the project
-16.From command line go to /neo4j (downloaded earlier via Git) and run rake:gem install
-17.Start the server and navigate to http://0.0.0.0:3000/people
+2. Download JRuby from http://www.jruby.org/download, extract to your home folder eg home/sasha/jruby-1.3.1 
+3. Add the following line to ~/.profile
+   PATH=$PATH:/path/to/jruby/bin
+4. At a command line, type source ~/.profile to reload these environment variables
+5. Open a command line and issue the following commands:
+   gem install rails  // I'm assuming you only have JRuby installed, otherwise type jruby -S gem install etc
+   gem install calendar_date_select
+   gem install haml
+   gem update
+   git clone git://github.com/andreasronge/neo4j.git
+6. cd to install/dir/neo4j (downloaded earlier via Git) then run rake:gem install
+7. From command line git clone git://github.com/sashaagafonoff/peoplemap.git (some users may wish to fork instead)
+8. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
+9. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
+10.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
+11.Start the server and navigate to http://0.0.0.0:3000/people
 
 == Licenses
 Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.
