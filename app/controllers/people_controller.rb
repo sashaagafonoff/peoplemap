@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
   
   around_filter :neo_tx
-  layout 'layout'
+  layout 'layout', :except => [:json, :graphml]
   
   def index
     @people = Person.all.nodes
@@ -26,6 +26,12 @@ class PeopleController < ApplicationController
   end
   
   def edit
+  end
+  
+  def json
+  end
+
+  def graphml
   end
   
   def show

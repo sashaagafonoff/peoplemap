@@ -1,0 +1,33 @@
+- @graphml = convert_to_graphml(@object)
+%graphml
+  <!-- Generic -->
+  <key attr.type="string" id="node_class" for="node" attr.name="node_class"/>
+  <key attr.type="string" id="name" for="node" attr.name="name"/>
+  <key attr.type="string" id="notes" for="node" attr.name="notes"/>
+  <!-- Person -->
+  <key attr.type="string" id="first_name" for="node" attr.name="first_name"/>
+  <key attr.type="string" id="surname" for="node" attr.name="surname"/>
+  <key attr.type="string" id="date_of_birth" for="node" attr.name="date_of_birth"/>
+  <key attr.type="string" id="title" for="node" attr.name="title"/>
+  <!-- Organisation -->
+  <key attr.type="string" id="sector" for="node" attr.name="sector"/>
+  <key attr.type="string" id="industry" for="node" attr.name="industry"/>
+  <!-- Address -->
+  <key attr.type="string" id="apt_office_floor_number" for="node" attr.name="apt_office_floor_number"/>
+  <key attr.type="string" id="street_number" for="node" attr.name="street_number"/>
+  <key attr.type="string" id="street_name" for="node" attr.name="street_name"/>
+  <key attr.type="string" id="street_type" for="node" attr.name="street_type"/>
+  <key attr.type="string" id="suburb" for="node" attr.name="suburb"/>
+  <key attr.type="string" id="city" for="node" attr.name="city"/>
+  <key attr.type="string" id="country" for="node" attr.name="country"/>
+  <key attr.type="string" id="postcode" for="node" attr.name="postcode"/>
+  <!-- Reference -->
+  <key attr.type="string" id="description" for="node" attr.name="description"/>
+  <key attr.type="string" id="reference_type" for="node" attr.name="type"/>
+  <key attr.type="string" id="ref_value" for="node" attr.name="type"/>
+  <key attr.type="string" id="link_type" for="edge" attr.name="link_type"/>
+  <!-- Event -->
+  <key attr.type="date" id="start_date" for="edge" attr.name="start_date"/>
+  <key attr.type="date" id="end_date" for="edge" attr.name="end_date"/>
+  %graph{:edgedefault=>"undirected"}
+    = @graphml

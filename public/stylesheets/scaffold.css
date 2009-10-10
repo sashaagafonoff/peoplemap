@@ -234,3 +234,18 @@ a.unlink_a:link {
   font-weight: bold;
   font-size: 9px;
 }
+div#data_visualisation {
+  display: inline;
+  width: 300px;
+  height: auto;
+  float: left;
+  border-right: solid 1px #888888;
+}
+div#node_data {
+  display: inline;
+  width: auto;
+}
+div#page_divider {
+   border-top: solid 1px #888888;
+  clear: both;
+}
