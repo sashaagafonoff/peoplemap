@@ -9,47 +9,51 @@
   %li
     = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
 
-%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
-  %tr
-    %th{:width => "95px"}
-      Profile Image
-    %th{:colspan => "2"}
-      Detailed Information
-    %th{:width => "400px"}
-      Notes
-    %th{:width => "*"}
-      Related Images
-  %tr
-    %td{:class => "node_info_value", :rowspan => "3"}
-      PICTURE HERE
-    %td{:class => "node_info_label", :width => "100px"}
-      Name
-    %td{:class => "node_info_value", :width => "200px"}
-      = @object.name
-    %td{:class => "node_info_value", :rowspan => "3"}
-      = @object.notes
-    %td{:class => "node_info_value", :rowspan => "3"}
-      IMAGE GALLERY HERE
-  %tr
-    %td{:class => "node_info_label"}
-      Sector
-    %td{:class => "node_info_value"}
-      = @object.sector
-  %tr
-    %td{:class => "node_info_label"}
-      Industry
-    %td{:class => "node_info_value"}
-      = @object.industry
+= render :partial=>"/shared/visualisation"
 
-  - @origin = @object
+%div{:id=>"node_data"}
+  %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
+    %tr
+      %th{:width => "95px"}
+        Profile Image
+      %th{:colspan => "2"}
+        Detailed Information
+      %th{:width => "400px"}
+        Notes
+      %th{:width => "*"}
+        Related Images
+    %tr
+      %td{:class => "node_info_value", :rowspan => "3"}
+        PICTURE HERE
+      %td{:class => "node_info_label", :width => "100px"}
+        Name
+      %td{:class => "node_info_value", :width => "200px"}
+        = @object.name
+      %td{:class => "node_info_value", :rowspan => "3"}
+        = @object.notes
+      %td{:class => "node_info_value", :rowspan => "3"}
+        IMAGE GALLERY HERE
+    %tr
+      %td{:class => "node_info_label"}
+        Sector
+      %td{:class => "node_info_value"}
+        = @object.sector
+    %tr
+      %td{:class => "node_info_label"}
+        Industry
+      %td{:class => "node_info_value"}
+        = @object.industry
 
-- @person_model = ["person_to_org","nil","nil"]
-- @org_model = ["org_to_org","org_to_org","nil"]
-- @loc_model = ["org_to_loc","nil","nil"]
-- @event_model = ["org_to_event","org_to_event","nil"]
-- @ref_model = ["org_to_ref","org_to_ref","nil"]
+    - @origin = @object
 
-= render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
+%div{:id=>"page_divider"}
+  - @person_model = ["person_to_org","nil","nil"]
+  - @org_model = ["org_to_org","org_to_org","nil"]
+  - @loc_model = ["org_to_loc","nil","nil"]
+  - @event_model = ["org_to_event","org_to_event","nil"]
+  - @ref_model = ["org_to_ref","org_to_ref","nil"]
+
+  = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
 
 
-= render( :partial => "shared/all_nodes", :object => @object )
+  = render( :partial => "shared/all_nodes", :object => @object )

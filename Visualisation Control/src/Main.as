@@ -8,6 +8,7 @@ package
 	import flare.vis.Visualization;
 	import flare.vis.data.Data;
 	import flare.vis.data.NodeSprite;
+	import flare.vis.data.EdgeSprite;
 	import flare.vis.operator.filter.GraphDistanceFilter;
 	import flare.vis.operator.layout.RadialTreeLayout;
 	
@@ -16,76 +17,71 @@ package
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	
-	/**
-	 * Demo reading the graph from a graphml file
-	 *
-	 * 
-	 * @author <a href="http://goosebumps4all.net">martin dudek</a>
-	 */
-	
-	[SWF(width="300", height="300", backgroundColor="#ffffff", frameRate="30")]
+	[SWF(width="500", height="400", backgroundColor="#ffffff", frameRate="30")]
 	public class Main extends Sprite
 	{
 		
 		private var vis:Visualization;
 		
-		private var maxLabelWidth:Number;
-		private var maxLabelHeight:Number;
-		
 		private var _gdf:GraphDistanceFilter;
 		
-		private var _maxDistance:int = 2;
+		private var _maxDistance:int = 3;
 		
-		private var _transitionDuration:Number = 2;
+		private var _transitionDuration:Number = 1;
 		
 		public function Main() {
 			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
 			var flashVars:Object=this.loaderInfo.parameters;
-			gmr.read(flashVars.pm_url);
+//			gmr.read(flashVars.pm_url);
+			gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
 		}
-			
 		
 		private function onLoaded(data:Data):void {
-			
-			
-
+		
 			vis = new Visualization(data);
 			
 			var w:Number = stage.stageWidth;
 			var h:Number = stage.stageHeight;
 			
-			vis.bounds = new Rectangle(25, 25, w-50, h-50);
+			vis.bounds = new Rectangle(0, 0, w-90, h-20);
 			
 			
-			var textFormat:TextFormat = new TextFormat();
-			textFormat.color = 0xffffffff;
-			var i:int = 0;
+			var nodeTF:TextFormat = new TextFormat();
+			nodeTF.color = 0xffffffff;
+			nodeTF.font = "Arial";
+			nodeTF.size = 10;
+			nodeTF.align = "center";
+			
 			vis.data.nodes.visit(function(ns:NodeSprite):void { 
-				var ts:TextSprite = new TextSprite(ns.data.name,textFormat);	
+				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
 				ns.addChild(ts);	
+				ns.width = ts.width;
 			});
 			
 			vis.data.nodes.setProperty("x",w/2);
 			vis.data.nodes.setProperty("y",h/2);
 			
-			maxLabelWidth = getMaxTextLabelWidth();
-			maxLabelHeight = getMaxTextLabelHeight();
-			
 			vis.data.nodes.visit(function(ns:NodeSprite):void { 
-				var rs:RectSprite = new RectSprite( -maxLabelWidth/2-1,-maxLabelHeight/2 - 1, maxLabelWidth + 2, maxLabelHeight + 2);
+				var rs:RectSprite = new RectSprite( 0,0, ns.width, 18, 15, 15);
 				if (ns.data.node_class == "person") {
-					rs.fillColor = 0xff000044; 
-					rs.lineColor = 0xff000044; 
-				} else {
+					rs.fillColor = 0xff000066; 
+				} else if (ns.data.node_class == "organisation") {
 					rs.fillColor = 0xffaa0000; 
-					rs.lineColor = 0xffaa0000; 
+				} else if (ns.data.node_class == "location") {
+					rs.fillColor = 0xff006600; 
+				} else if (ns.data.node_class == "reference") {
+					rs.fillColor = 0xffaa3300; 
+				} else if (ns.data.node_class == "event") {
+					rs.fillColor = 0xff5533aa; 
+				} else { // shouldn't happen
+					rs.fillColor = 0xff000000; 
 				}
-				rs.lineWidth = 2;
+				rs.lineColor = 0xff000000; 
+				rs.lineWidth = 0.5;
 				
 				ns.addChildAt(rs, 0); // at postion 0 so that the text label is drawn above the rectangular box
 				
 				ns.size = 0;
-				adjustLabel(ns,maxLabelWidth,maxLabelHeight);
 				
 				ns.mouseChildren = false; 
 				
@@ -94,19 +90,34 @@ package
 				ns.buttonMode = true;
 			});
 			
-			
-			var lay:RadialTreeLayout =  new RadialTreeLayout();
-			lay.useNodeSize = false;
+			var layout:RadialTreeLayout =  new RadialTreeLayout();
+			layout.useNodeSize = false;
 			
 			var root:NodeSprite = vis.data.nodes[0];
 			
 			_gdf = new GraphDistanceFilter([root], _maxDistance,NodeSprite.GRAPH_LINKS); 
 			
 			vis.operators.add(_gdf); //distance filter has to be added before the layout
-			vis.operators.add(lay);
+			vis.operators.add(layout);
 			
 			addChild(vis);
 			
+			// text formatting for edge descriptions
+			var edgeTF:TextFormat = new TextFormat();
+			edgeTF.color = 0xff000000;
+			edgeTF.font = "Arial";
+			edgeTF.size = 9;
+			edgeTF.align = "center";
+			
+			// draw labels on edges
+			vis.data.edges.visit(function(es:EdgeSprite):void { 
+				var ts:TextSprite = new TextSprite(es.data.link_type,edgeTF);	
+				es.addChild(ts);	
+				ts.x = es.x;
+				ts.y = es.y;
+				trace(es.data.link_type);
+			});
+
 			updateRoot(root);
 			
 		}
@@ -132,44 +143,6 @@ package
 			vis.update(t1).play();
 			
 			
-		}
-		
-		
-				
-		private function getMaxTextLabelWidth() : Number {
-			var maxLabelWidth:Number = 0;
-			vis.data.nodes.visit(function(n:NodeSprite):void {
-				var w:Number = getTextLabelWidth(n);
-				if (w > maxLabelWidth) {
-					maxLabelWidth = w;
-				}
-				
-			});
-			return maxLabelWidth;
-		}
-		
-		private function getMaxTextLabelHeight() : Number {
-			var maxLabelHeight:Number = 0;
-			vis.data.nodes.visit(function(n:NodeSprite):void {
-				var h:Number = getTextLabelHeight(n);
-				if (h > maxLabelHeight) {
-					maxLabelHeight = h;
-				}
-				
-			});
-			return maxLabelHeight;
-		}
-			
-		private function getTextLabelWidth(s:NodeSprite) : Number {
-			var s2:TextSprite = s.getChildAt(s.numChildren-1) as TextSprite; // get the text sprite belonging to this node sprite
-			var b:Rectangle = s2.getBounds(s);
-			return s2.width;
-		}
-		
-		private function getTextLabelHeight(s:NodeSprite) : Number {
-			var s2:TextSprite = s.getChildAt(s.numChildren-1) as TextSprite; // get the text sprite belonging to this node sprite
-			var b:Rectangle = s2.getBounds(s);
-			return s2.height;
 		}
 		
 		private function adjustLabel(s:NodeSprite, w:Number, h:Number) : void {

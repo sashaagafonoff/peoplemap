@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   
   around_filter :neo_tx
-  layout 'layout'
+  layout 'layout', :except => [:graphml]
   
   def index
     @events = Event.all.nodes
@@ -53,6 +53,9 @@ class EventsController < ApplicationController
     @object = Event.value_object.new
   end
   
+  def graphml
+  end
+
   private
   def neo_tx
     Neo4j::Transaction.new

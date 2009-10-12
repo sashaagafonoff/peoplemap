@@ -1,7 +1,7 @@
 class ReferencesController < ApplicationController
   
   around_filter :neo_tx
-  layout 'layout'
+  layout 'layout', :except => [:graphml]
   
   def index
     @references = Reference.all.nodes
@@ -53,6 +53,9 @@ class ReferencesController < ApplicationController
     @object = Reference.value_object.new
   end
   
+  def graphml
+  end
+
   private
   def neo_tx
     Neo4j::Transaction.new

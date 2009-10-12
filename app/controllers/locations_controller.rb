@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   
   around_filter :neo_tx
-  layout 'layout'
+  layout 'layout', :except => [:graphml]
   
   def index
     @locations = Location.all.nodes
@@ -53,6 +53,9 @@ class LocationsController < ApplicationController
     @object = Location.value_object.new
   end
   
+  def graphml
+  end
+
   private
   def neo_tx
     Neo4j::Transaction.new

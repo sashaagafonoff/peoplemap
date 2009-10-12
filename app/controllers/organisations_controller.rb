@@ -1,7 +1,7 @@
 class OrganisationsController < ApplicationController
   
   around_filter :neo_tx
-  layout 'layout'
+  layout 'layout', :except => [:graphml]
   
   def index
     @organisations = Organisation.all.nodes
@@ -53,6 +53,9 @@ class OrganisationsController < ApplicationController
     @object = Organisation.value_object.new
   end
   
+  def graphml
+  end
+
   private
   def neo_tx
     Neo4j::Transaction.new

@@ -236,7 +236,7 @@ a.unlink_a:link {
 }
 div#data_visualisation {
   display: inline;
-  width: 300px;
+  width: 500px;
   height: auto;
   float: left;
   border-right: solid 1px #888888;

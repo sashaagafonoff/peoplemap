@@ -10,47 +10,52 @@
     = link_to 'edit', edit_event_path(@object) 
   %li
     = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete 
-%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
-  %tr
-    %th{:width => "95px"}
-      Key Image
-    %th{:colspan => "2"}
-      Detailed Information
-    %th{:width => "400px"}
-      Notes
-    %th{:width => "*"}
-      Related Images
-  %tr
-    %td{:class => "node_info_value", :rowspan => "3"}
-      PICTURE HERE
-    %td{:class => "node_info_label", :width => "100px"}
-      Description
-    %td{:class => "node_info_value", :width => "200px"}
-      = @object.description 
-    %td{:class => "node_info_value", :rowspan => "3"}
-      = @object.notes 
-    %td{:class => "node_info_value", :rowspan => "3"}
-      IMAGE GALLERY HERE
-  %tr
-    %td{:class => "node_info_label"}
-      Relevant Dates
-    %td{:class => "node_info_value"}
-      = @object.start_date  
-      - 
-      = @object.end_date 
-  %tr
-    %td{:class => "node_info_label"}
-      Event Type
-    %td{:class => "node_info_value"}
-      = @object.event_type 
 
-- @person_model = ["person_to_event","nil","nil"]
-- @org_model = ["org_to_event","nil","nil"]
-- @loc_model = ["event_to_loc","nil","nil"]
-- @event_model = ["event_to_event","person_to_event","nil"]
-- @ref_model = ["event_to_ref","nil","nil"]
+= render :partial=>"/shared/visualisation"
 
-= render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
+%div{:id=>"node_data"}
+  %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
+    %tr
+      %th{:width => "95px"}
+        Key Image
+      %th{:colspan => "2"}
+        Detailed Information
+      %th{:width => "400px"}
+        Notes
+      %th{:width => "*"}
+        Related Images
+    %tr
+      %td{:class => "node_info_value", :rowspan => "3"}
+        PICTURE HERE
+      %td{:class => "node_info_label", :width => "100px"}
+        Description
+      %td{:class => "node_info_value", :width => "200px"}
+        = @object.description
+      %td{:class => "node_info_value", :rowspan => "3"}
+        = @object.notes
+      %td{:class => "node_info_value", :rowspan => "3"}
+        IMAGE GALLERY HERE
+    %tr
+      %td{:class => "node_info_label"}
+        Relevant Dates
+      %td{:class => "node_info_value"}
+        = @object.start_date
+        -
+        = @object.end_date
+    %tr
+      %td{:class => "node_info_label"}
+        Event Type
+      %td{:class => "node_info_value"}
+        = @object.event_type
 
-= render( :partial => "shared/all_nodes", :object => @object )
+%div{:id=>"page_divider"}
+  - @person_model = ["person_to_event","nil","nil"]
+  - @org_model = ["org_to_event","nil","nil"]
+  - @loc_model = ["event_to_loc","nil","nil"]
+  - @event_model = ["event_to_event","person_to_event","nil"]
+  - @ref_model = ["event_to_ref","nil","nil"]
+
+  = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
+
+  = render( :partial => "shared/all_nodes", :object => @object )
         

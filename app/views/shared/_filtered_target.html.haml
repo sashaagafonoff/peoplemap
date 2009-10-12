@@ -3,19 +3,13 @@
   -	@object.relationships.both(level_1_rel).each do |relationship|
     - @rel_array.push(relationship.neo_relationship_id)
     = render( :partial => "shared/relationship_description", :object => relationship)
-    - if @object.neo_node_id == relationship.start_node.neo_node_id then # HAML won't seem to let me do else statements... yuk!
-      - @inverse_node = relationship.end_node 
-    - if @object.neo_node_id == relationship.end_node.neo_node_id then
-      - @inverse_node = relationship.start_node 
+    - if (@object.neo_node_id == relationship.start_node.neo_node_id) then @inverse_node = relationship.end_node else @inverse_node = relationship.start_node end
     - @inverse_node.relationships.both(level_2_rel).each do |subrelationship|
       - unless @rel_array.include? subrelationship.neo_relationship_id then
         %ul{:class => "link_desc"}
           = render( :partial => "shared/relationship_description", :object => subrelationship)
           - @rel_array.push(subrelationship.neo_relationship_id)
-          - if @inverse_node.neo_node_id == relationship.start_node.neo_node_id then # there has gotta be a better way !!! @%!#%!$!!!
-            - @sub_inverse_node = relationship.end_node 
-          - if @inverse_node.neo_node_id == relationship.end_node.neo_node_id then
-            - @sub_inverse_node = relationship.start_node 
+          - if (@inverse_node.neo_node_id == relationship.start_node.neo_node_id) then @sub_inverse_node = relationship.end_node else @sub_inverse_node = relationship.start_node end
           - @sub_inverse_node.relationships.both(level_3_rel).each do |subsubrelationship|
             - unless @rel_array.include? subsubrelationship.neo_relationship_id then
               %ul{:class => "link_desc"}
