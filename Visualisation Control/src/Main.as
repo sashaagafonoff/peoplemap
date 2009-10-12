@@ -32,8 +32,8 @@ package
 		public function Main() {
 			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
 			var flashVars:Object=this.loaderInfo.parameters;
-//			gmr.read(flashVars.pm_url);
-			gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			gmr.read(flashVars.pm_url);
+//			gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
 		}
 		
 		private function onLoaded(data:Data):void {
