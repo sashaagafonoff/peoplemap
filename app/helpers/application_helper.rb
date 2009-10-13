@@ -72,8 +72,8 @@ module ApplicationHelper
             origin_type = "person" 
             target_type = "event"
           when "organisation"
-            origin_type = "person" 
-            target_type = "organisation"
+            origin_type = "organisation"
+            target_type = "event"
         end
       when origin_type == "location"
         case target_type
