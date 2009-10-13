@@ -1,18 +1,20 @@
-﻿
-package 
+﻿package 
 {
 	import flare.animate.Transitioner;
 	import flare.data.DataSet;
 	import flare.display.RectSprite;
 	import flare.display.TextSprite;
 	import flare.vis.Visualization;
+	import flare.vis.controls.DragControl;
 	import flare.vis.data.Data;
 	import flare.vis.data.NodeSprite;
 	import flare.vis.data.EdgeSprite;
+	import flare.vis.operator.label.Labeler;
 	import flare.vis.operator.filter.GraphDistanceFilter;
 	import flare.vis.operator.layout.RadialTreeLayout;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
@@ -39,12 +41,9 @@ package
 		private function onLoaded(data:Data):void {
 		
 			vis = new Visualization(data);
-			
 			var w:Number = stage.stageWidth;
 			var h:Number = stage.stageHeight;
-			
 			vis.bounds = new Rectangle(0, 0, w-90, h-20);
-			
 			
 			var nodeTF:TextFormat = new TextFormat();
 			nodeTF.color = 0xffffffff;
@@ -52,16 +51,14 @@ package
 			nodeTF.size = 10;
 			nodeTF.align = "center";
 			
+			var dc:DragControl = new DragControl(NodeSprite);
+			vis.controls.add(dc);
+			
 			vis.data.nodes.visit(function(ns:NodeSprite):void { 
 				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
 				ns.addChild(ts);	
 				ns.width = ts.width;
-			});
-			
-			vis.data.nodes.setProperty("x",w/2);
-			vis.data.nodes.setProperty("y",h/2);
-			
-			vis.data.nodes.visit(function(ns:NodeSprite):void { 
+
 				var rs:RectSprite = new RectSprite( 0,0, ns.width, 18, 15, 15);
 				if (ns.data.node_class == "person") {
 					rs.fillColor = 0xff000066; 
@@ -76,17 +73,14 @@ package
 				} else { // shouldn't happen
 					rs.fillColor = 0xff000000; 
 				}
+
 				rs.lineColor = 0xff000000; 
 				rs.lineWidth = 0.5;
 				
-				ns.addChildAt(rs, 0); // at postion 0 so that the text label is drawn above the rectangular box
-				
+				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the rectangular box
 				ns.size = 0;
-				
 				ns.mouseChildren = false; 
-				
-				ns.addEventListener(MouseEvent.CLICK, update);
-				
+				ns.addEventListener(MouseEvent.DOUBLE_CLICK, update);
 				ns.buttonMode = true;
 			});
 			
@@ -102,7 +96,7 @@ package
 			
 			addChild(vis);
 			
-			// text formatting for edge descriptions
+			// text formatting for edge labels
 			var edgeTF:TextFormat = new TextFormat();
 			edgeTF.color = 0xff000000;
 			edgeTF.font = "Arial";
@@ -110,50 +104,45 @@ package
 			edgeTF.align = "center";
 			
 			// draw labels on edges
-			vis.data.edges.visit(function(es:EdgeSprite):void { 
-				var ts:TextSprite = new TextSprite(es.data.link_type,edgeTF);	
-				es.addChild(ts);	
-				ts.x = es.x;
-				ts.y = es.y;
-				trace(es.data.link_type);
+			var i:int = 0;
+			vis.data.edges.visit(function(es:EdgeSprite):void {
+				es.data.label = es.data.link_type,edgeTF
 			});
+			var lae:Labeler = new Labeler("data.label",Data.EDGES,edgeTF,EdgeSprite,Labeler.LAYER); 
+			vis.data.edges.visit(function(es:EdgeSprite):void {
+				es.addEventListener(Event.RENDER,updateEdgeLabelPosition);
+			});
+			vis.operators.add(lae);
 
+			vis.update();
 			updateRoot(root);
 			
 		}
 		
-		
+		private function updateEdgeLabelPosition(evt:Event):void {
+			var es:EdgeSprite = evt.target as EdgeSprite;
+			es.props.label.x = (es.source.x + es.target.x) / 2;
+			es.props.label.y = (es.source.y + es.target.y) / 2;	
+		}
 		
 		private function update(event:MouseEvent):void {
-			
 			var n:NodeSprite = event.target as NodeSprite;
 			if (n == null) return; 
-			updateRoot(n);
-			
+			updateRoot(n);			
 		}
 		
 		private function updateRoot(n:NodeSprite):void {
-			
 			vis.data.root = n; 
-			
 			_gdf.focusNodes = [n];
-			
 			var t1:Transitioner = new Transitioner(_transitionDuration);
-			
 			vis.update(t1).play();
-			
-			
 		}
 		
 		private function adjustLabel(s:NodeSprite, w:Number, h:Number) : void {
-			
 			var s2:TextSprite = s.getChildAt(s.numChildren-1) as TextSprite; // get the text sprite belonging to this node sprite
-			
 			s2.horizontalAnchor = TextSprite.CENTER;
 			s2.verticalAnchor = TextSprite.CENTER;
-						
 		}
-		
 	}
 		
 }	
