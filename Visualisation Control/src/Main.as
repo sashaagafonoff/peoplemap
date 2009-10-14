@@ -19,7 +19,7 @@
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	
-	[SWF(width="500", height="400", backgroundColor="#ffffff", frameRate="30")]
+	[SWF(width="600", height="600", backgroundColor="#ffffff", frameRate="30")]
 	public class Main extends Sprite
 	{
 		

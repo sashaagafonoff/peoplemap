@@ -16,39 +16,39 @@ module ApplicationHelper
     end
   end
 
-  def relationship_date_range(relationship)
+  def relationship_date_range(edge)
     begin
-      @start_date = relationship.start_date.to_date.year.to_s
+      @start_date = edge.start_date.to_date.year.to_s
     rescue
       @start_date = " "
     end
     begin
-      @end_date = relationship.end_date.to_date.year.to_s
+      @end_date = edge.end_date.to_date.year.to_s
     rescue
       @end_date = " "
     end
     @date_range = "<span class='date_range'>(" + @start_date + " - " + @end_date + ")</span>"
   end
 
-  def get_relationship_description(object) 
+  def get_relationship_description(edge)
 
-    case controller.type.to_s
-      when "PeopleController"
-        if (object.end_date == "" || object.end_date > Date.today.to_s) then
-          if (object.start_node.sex == "Male") then
+    case edge.start_node.class.to_s
+      when "Person"
+        if (edge.end_date == "" || edge.end_date > Date.today.to_s) then
+          if (edge.start_node.sex == "Male") then
             @link_desc = "link_desc_male"
           else
             @link_desc = "link_desc_female"
           end
         else # for past relationships
-          if (object.start_node.sex == "Male") then
+          if (edge.start_node.sex == "Male") then
             @link_desc = "link_desc_male_past"
           else
             @link_desc = "link_desc_female_past"
           end
         end
       else
-        if (object.end_date == "" || object.end_date > Date.today.to_s) then
+        if (edge.end_date == "" || edge.end_date > Date.today.to_s) then
           @link_desc = "link_desc_male"
         else
           @link_desc = "link_desc_male_past"
@@ -56,7 +56,7 @@ module ApplicationHelper
     end
     xml = File.open('config/relationships.xml')
     doc = Document.new(xml)
-    @xpath_query = '//relationships/relationship[@name="' + object.name + '"]/' + @link_desc
+    @xpath_query = '//relationships/relationship[@name="' + edge.name + '"]/' + @link_desc
     @rel_desc = XPath.first(doc, @xpath_query).text
 
   end
@@ -120,26 +120,43 @@ module ApplicationHelper
     children = Array.new
 
     # build GraphML for children nodes to target
-    object.relationships.each do |relationship|
+    object.relationships.both.each do |relationship|
 
       grandchildren = Array.new
       rel_array.push(relationship.neo_relationship_id)
 
-      if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
+      @rel_start_id = relationship.start_node.neo_node_id
+      @rel_end_id = relationship.end_node.neo_node_id
+      @rel_id = relationship.neo_relationship_id
+      unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely
+        if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
 
-      inverse_node.relationships.each do |sub_relationship|
-        unless rel_array.include? sub_relationship.neo_relationship_id then
-          if (inverse_node.neo_node_id == sub_relationship.start_node.neo_node_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
-          grandchildren.push graphml_builder(sub_inverse_node) + graphml_edge_builder(sub_relationship)
+        inverse_node.relationships.both.each do |sub_relationship|
+          unless (sub_relationship.start_node.neo_node_id == 1) then  
+            unless rel_array.include? sub_relationship.neo_relationship_id then
+              @inverse_id = inverse_node.neo_node_id
+              @sub_rel_start_id = sub_relationship.start_node.neo_node_id
+              @sub_rel_end_id = sub_relationship.end_node.neo_node_id
+              @sub_rel_id = sub_relationship.neo_relationship_id
+              if (inverse_node.neo_node_id == sub_relationship.start_node.neo_node_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
+              @sub_edges = unless (sub_relationship.start_node.neo_node_id == 1) then graphml_edge_builder(sub_relationship) else " " end
+              grandchildren.push graphml_builder(sub_inverse_node) + @sub_edges
+            end
+          end
+          rel_array.push sub_relationship.neo_relationship_id
         end
-        rel_array.push sub_relationship.neo_relationship_id
       end
 
-      children.push graphml_builder(inverse_node) + grandchildren.join("") + graphml_edge_builder(relationship)
+      @inverse_graphml = unless (inverse_node.nil?) then graphml_builder(inverse_node) else " " end    # need to catch 
+      @grandchildren = grandchildren.join("")
+      @edges = unless (relationship.start_node.neo_node_id == 1) then graphml_edge_builder(relationship) else " " end
+      children.push @inverse_graphml + @grandchildren + @edges
+
       rel_array.push relationship.neo_relationship_id
 
     end
     @graphml = graphml_builder(object) + children.join("")
+    #@graphml = rel_array.join(",")
   end
   
   # now detect class of target node and build data according to model
@@ -204,10 +221,12 @@ module ApplicationHelper
   end
   
   def graphml_edge_builder(edge)
-    '<edge source="' + edge.start_node.neo_node_id.to_s + 
-            '" target="' + edge.end_node.neo_node_id.to_s + '"
-            link_type="'+ get_relationship_description(edge) +'">
-          </edge>'
+    @rel_desc = get_relationship_description(edge)
+    #@rel_desc = "unknown"
+    '<edge source="' + edge.start_node.neo_node_id.to_s +
+       '" target="' + edge.end_node.neo_node_id.to_s + '"
+       link_type="'+ @rel_desc +'">
+     </edge>'
   end
   
 end
