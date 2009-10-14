@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
   end
   
   def create
-    @object = Neo4j::Person.new
+    @object = Person.new
     @object.update(params[:person])
     flash[:notice] = 'Person was successfully created.'
     redirect_to(people_url)

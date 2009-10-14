@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
   end
   
   def create
-    @object = Neo4j::Location.new
+    @object = Location.new
     @object.update(params[:location])
     flash[:notice] = 'Location was successfully created.'
     redirect_to(locations_url)
