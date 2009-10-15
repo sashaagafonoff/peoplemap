@@ -2,19 +2,16 @@
 
 peoplemap is a Rails-based web application designed to support the collection & analysis of information about social relationships.  At present, this uses a fairly simple user-driven CRUD model to permit manual entry of data.  Eventually this will mature with data visualisation tools like network charts, timeline visualisation, graphs, etc and I will add tools to pull data from CSV and live sources like Twitter, Facebook, LinkedIn, etc.
 
-This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-nc-sa/2.5/au/ for more details.
+This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-sa/2.5/au/ for more details.
 
-This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! I've started to move everything over to HAML, but haven't finished, and haven't cleaned up the repo yet...
+This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! If you've got suggestions for improving approaches that I'm taking in building this thing, please let me know, or make a fork and get to it!  There are plenty of bugs, so expect things to break, but if you find something, add it to the issues list and I'll get to it as quickly as I can.
 
 THINGS TO DO:
-- MASSIVE refactor of what is some of the ugliest CSS I've done in a while
 - search & index support with more mature lists
 - Maturing the interface & consolidating display logic for common views
-- extjs & script.acu.lous libraries for enhanced user experience
-- proper ontology support to allow *.owl files to be used for defining relationship hierarchies & improved reasoning
 - user management
 - admin tools
-- data visualisation (network visualisation, timeline charts, graphs, etc)
+- maturation and extension of the data visualisation (network visualisation, timeline charts, graphs, etc)
 - dataset management (allow users to save collections of nodes/edges)
 - reporting/exporting
 - data loading tools
@@ -61,10 +58,10 @@ Note that neo4j operates under a dual free/commercial license, so check the cond
 - Lucene: Apache, see lucene.apache.org/java/docs/features.html
 - Neo4j: Dual free software/commercial license, see neo4j.org/
 - haml: MIT, see http://haml-lang.com/docs/yardoc/MIT-LICENSE.html
+- Prefuse Flare library: GNU license - see http://www.gnu.org/copyleft/fdl.html
 
 Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
-- Linking is now working across all model types - this latest update uses config/relationships.xml to supply relationship type metadata for the application.  You can basically populate this XML file with relationship definitions to suit any domain - I've included some sample ones as a guide.
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
-
+- I've just added some pretty basic network visualisation of the underlying relationship data using the Prefuse Flare library (using the Radial Tree layout).  Plenty of work to do in this area, and network retrieval is only working with outgoing links.  Watch this space...
