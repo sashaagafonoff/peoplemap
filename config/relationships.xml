@@ -258,7 +258,7 @@
   <relationship name="email_for" subject="person" predicate="person_to_ref" object="reference">
     <group>email_for</group>
     <option value="email_for">Email</option>
-    <link_desc_male>is the email for</link_desc_male>
+    <link_desc_male>has the email</link_desc_male>
     <link_desc_male_past>was the email for</link_desc_male_past>
     <link_desc_female>is the email for</link_desc_female>
     <link_desc_female_past>was the email for</link_desc_female_past>
@@ -266,7 +266,7 @@
   <relationship name="home_phone_for" subject="person" predicate="person_to_ref" object="reference">
     <group>contact_number_for</group>
     <option value="home_phone_for">Home Phone</option>
-    <link_desc_male>is the home phone for</link_desc_male>
+    <link_desc_male>has the home phone</link_desc_male>
     <link_desc_male_past>was the home phone for</link_desc_male_past>
     <link_desc_female>is the home phone for</link_desc_female>
     <link_desc_female_past>was the home phone for</link_desc_female_past>
@@ -274,7 +274,7 @@
   <relationship name="work_phone_for" subject="person" predicate="person_to_ref" object="reference">
     <group>contact_number_for</group>
     <option value="work_phone_for">Work Phone</option>
-    <link_desc_male>is the work phone for</link_desc_male>
+    <link_desc_male>has the work phone</link_desc_male>
     <link_desc_male_past>was the work phone for</link_desc_male_past>
     <link_desc_female>is the work phone for</link_desc_female>
     <link_desc_female_past>was the work phone for</link_desc_female_past>
@@ -282,7 +282,7 @@
   <relationship name="mobile_phone_for" subject="person" predicate="person_to_ref" object="reference">
     <group>contact_number_for</group>
     <option value="mobile_phone_for">Mobile Phone</option>
-    <link_desc_male>is the mobile phone for</link_desc_male>
+    <link_desc_male>has the mobile phone</link_desc_male>
     <link_desc_male_past>was the mobile phone for</link_desc_male_past>
     <link_desc_female>is the mobile phone for</link_desc_female>
     <link_desc_female_past>was the mobile phone for</link_desc_female_past>
@@ -290,7 +290,7 @@
   <relationship name="profile_photo_of" subject="person" predicate="person_to_ref" object="reference">
     <group>photo_of</group>
     <option value="profile_photo_of">Profile Photo</option>
-    <link_desc_male>is the profile photo for</link_desc_male>
+    <link_desc_male>has the profile photo</link_desc_male>
     <link_desc_male_past>was the profile photo for</link_desc_male_past>
     <link_desc_female>is the profile photo for</link_desc_female>
     <link_desc_female_past>was the profile photo for</link_desc_female_past>
@@ -298,7 +298,7 @@
   <relationship name="photo_of" subject="person" predicate="person_to_ref" object="reference">
     <group>photo_of</group>
     <option value="photo_of">Photograph</option>
-    <link_desc_male>is a photo of</link_desc_male>
+    <link_desc_male>is in the photo</link_desc_male>
     <link_desc_male_past>was a photo of</link_desc_male_past>
     <link_desc_female>is a photo of</link_desc_female>
     <link_desc_female_past>was a photo of</link_desc_female_past>
@@ -306,7 +306,7 @@
   <relationship name="url_for" subject="person" predicate="person_to_ref" object="reference">
     <group>url_for</group>
     <option value="url_for">Website</option>
-    <link_desc_male>is a website for</link_desc_male>
+    <link_desc_male>has the website</link_desc_male>
     <link_desc_male_past>was a website for</link_desc_male_past>
     <link_desc_female>is a website for</link_desc_female>
     <link_desc_female_past>was a website for</link_desc_female_past>
@@ -314,7 +314,7 @@
   <relationship name="url_about" subject="person" predicate="person_to_ref" object="reference">
     <group>url_for</group>
     <option value="url_about">Related Web Page</option>
-    <link_desc_male>is a web page relating to</link_desc_male>
+    <link_desc_male>has a related web page at</link_desc_male>
     <link_desc_male_past>was a web page relating to</link_desc_male_past>
     <link_desc_female>is a web page relating to</link_desc_female>
     <link_desc_female_past>was a web page relating to</link_desc_female_past>
@@ -322,7 +322,7 @@
   <relationship name="file_about" subject="person" predicate="person_to_ref" object="reference">
     <group>file_about</group>
     <option value="file_about">File Attachment</option>
-    <link_desc_male>is a file attachment relating to</link_desc_male>
+    <link_desc_male>has a file attachment at</link_desc_male>
     <link_desc_male_past>was a file attachment relating to</link_desc_male_past>
     <link_desc_female>is a file attachment relating to</link_desc_female>
     <link_desc_female_past>was a file attachment relating to</link_desc_female_past>
