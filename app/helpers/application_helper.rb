@@ -54,7 +54,7 @@ module ApplicationHelper
           @link_desc = "link_desc_male_past"
         end
     end
-    xml = File.open('config/relationships.xml')
+    xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
     doc = Document.new(xml)
     @xpath_query = '//relationships/relationship[@name="' + edge.name + '"]/' + @link_desc
     @rel_desc = XPath.first(doc, @xpath_query).text
@@ -103,7 +103,7 @@ module ApplicationHelper
             target_type = "reference"
         end
     end
-    xml = File.open('config/relationships.xml')
+    xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
     doc = Document.new(xml)
     @drop_list_display = '//relationships/relationship[@subject="' + origin_type + '" and @object="' + target_type + '"]/option' # /text() will return just node values
     @drop_list_display_hash = XPath.match(doc, @drop_list_display)

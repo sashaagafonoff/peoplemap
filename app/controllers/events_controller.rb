@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   end
   
   def create
-    @object = Neo4j::Event.new
+    @object = Event.new
     @object.update(params[:event])
     flash[:notice] = 'Event was successfully created.'
     redirect_to(events_url)
