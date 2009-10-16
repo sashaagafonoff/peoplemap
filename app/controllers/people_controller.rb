@@ -37,7 +37,12 @@ class PeopleController < ApplicationController
     @people = Person.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
-
+    # prime filters for linked data retrieval
+    @person_model = ["person_to_person","person_to_person","person_to_person"]
+    @org_model = ["person_to_org","person_to_org","nil"]
+    @loc_model = ["person_to_loc","person_to_loc","nil"]
+    @event_model = ["person_to_event","person_to_event","nil"]
+    @ref_model = ["person_to_ref","person_to_ref","nil"]
   end
 
   def link
