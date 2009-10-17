@@ -1,39 +1,39 @@
-%li{:class => cycle('link_odd', 'link_even')}
+- @origin = object.start_node
+- @target = object.end_node
+- unless @origin.neo_node_id == 1 # this is a workaround as incoming relationship traversal also returns a relationship with the root node (1), which breaks stuff!!!
+  %li{:class => cycle('link_odd', 'link_even')}
 
-  - @origin = object.start_node
-  - @target = object.end_node
+    - if @origin.type == Person then
+      = link_to @origin.first_name + " " + @origin.surname, :action => "show", :controller => "people", :id => @origin.neo_node_id
+    - elsif (@origin.type == Organisation) then
+      = link_to @origin.name, :action => "show", :controller => "organisations", :id => @origin.neo_node_id
+    - elsif @origin.type == Event then
+      = link_to @origin.title, :action => "show", :controller => "events", :id => @origin.neo_node_id
+    - elsif @origin.type == Location then
+      = link_to [@origin.street_number, @origin.street_name, @origin.street_type, @origin.suburb].join(" "), :action => "show", :controller => "locations", :id => @origin.neo_node_id
+    - elsif @origin.type == Reference then
+      = link_to @origin.ref_value, :action => "show", :controller => "references", :id => @origin.neo_node_id
 
-  - if @origin.type == Person then
-    = link_to @origin.first_name + " " + @origin.surname, :action => "show", :controller => "people", :id => @origin.neo_node_id
-  - elsif (@origin.type == Organisation) then
-    = link_to @origin.name, :action => "show", :controller => "organisations", :id => @origin.neo_node_id
-  - elsif @origin.type == Event then
-    = link_to @origin.title, :action => "show", :controller => "events", :id => @origin.neo_node_id
-  - elsif @origin.type == Location then
-    = link_to [@origin.street_number, @origin.street_name, @origin.street_type, @origin.suburb].join(" "), :action => "show", :controller => "locations", :id => @origin.neo_node_id
-  - elsif @origin.type == Reference then
-    = link_to @origin.ref_value, :action => "show", :controller => "references", :id => @origin.neo_node_id
+    - get_relationship_description(object)
+    = @rel_desc
 
-  - get_relationship_description(object)
-  = @rel_desc
+    - if @target.type == Person then
+      = link_to @target.first_name + " " + @target.surname, :action => "show", :controller => "people", :id => @target.neo_node_id
+    - elsif @target.type == Organisation then
+      = link_to @target.name, :action => "show", :controller => "organisations", :id => @target.neo_node_id
+    - elsif @target.type == Event then
+      = link_to @target.title, :action => "show", :controller => "events", :id => @target.neo_node_id
+    - elsif @target.type == Location then
+      = link_to [@target.street_number, @target.street_name, @target.street_type, @target.suburb].join(" "), :action => "show", :controller => "locations", :id => @target.neo_node_id
+    - elsif @target.type == Reference then
+      = link_to @target.ref_value, :action => "show", :controller => "references", :id => @target.neo_node_id
 
-  - if @target.type == Person then
-    = link_to @target.first_name + " " + @target.surname, :action => "show", :controller => "people", :id => @target.neo_node_id
-  - elsif @target.type == Organisation then
-    = link_to @target.name, :action => "show", :controller => "organisations", :id => @target.neo_node_id
-  - elsif @target.type == Event then
-    = link_to @target.title, :action => "show", :controller => "events", :id => @target.neo_node_id
-  - elsif @target.type == Location then
-    = link_to [@target.street_number, @target.street_name, @target.street_type, @target.suburb].join(" "), :action => "show", :controller => "locations", :id => @target.neo_node_id
-  - elsif @target.type == Reference then
-    = link_to @target.ref_value, :action => "show", :controller => "references", :id => @target.neo_node_id
+    - # get dates range for relationship
+    - relationship_date_range(object)
+    = @date_range
 
-  - # get dates range for relationship
-  - relationship_date_range(object)
-  = @date_range
-  
-  - # get notes for relationship
-  - unless object.notes.nil?
-    = "| " + object.notes
-  = link_to '[x]', {:action => "unlink", :id => @origin.neo_node_id, :target_id => @target.neo_node_id, :neo_relationship_id => object.neo_relationship_id }, :title => "Delete this link", :class => "unlink_a" 
+    - # get notes for relationship
+    - unless object.notes.nil?
+      = "| " + object.notes
+    = link_to '[x]', {:action => "unlink", :id => @origin.neo_node_id, :target_id => @target.neo_node_id, :neo_relationship_id => object.neo_relationship_id }, :title => "Delete this link", :class => "unlink_a"
 
