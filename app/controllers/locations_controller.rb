@@ -11,7 +11,7 @@ class LocationsController < ApplicationController
     @object = Location.new
     @object.update(params[:location])
     flash[:notice] = 'Location was successfully created.'
-    redirect_to(locations_url)
+    redirect_to(@object)
   end
   
   def update

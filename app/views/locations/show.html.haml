@@ -1,48 +1,9 @@
-%h1
-  = @object.apt_office_floor_number
-  = @object.street_number
-  = @object.street_name
-  = @object.street_type
-  = @object.suburb
-  = @object.city
-  = @object.country
-%ul{:id => "node_menu"}
-  %li
-    = link_to '<b>location</b>finder', locations_path
-  %li
-    = link_to 'edit', edit_location_path(@object)
-  %li
-    = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
-
-= render :partial=>"/shared/visualisation"
-
-%div{:id=>"node_data"}
-  %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
-    %tr
-      %th{:width => "400px"}
-        Address
-      %th{:width => "*"}
-        Notes
-    %tr
-      %td{:class => "node_info_value", :width => "200px"}
-        = @object.apt_office_floor_number
-        = @object.street_number
-        = @object.street_name
-        = @object.street_type
-        = @object.suburb
-        = @object.city
-        = @object.country
-        = @object.postcode
-      %td{:class => "node_info_value", :rowspan => "3"}
-        = @object.notes
-
-%div{:id=>"page_divider"}
-  - @person_model = ["person_to_loc","nil","nil"]
-  - @org_model = ["org_to_loc","org_to_loc","nil"]
-  - @loc_model = ["loc_to_loc","nil","nil"]
-  - @event_model = ["event_to_loc","nil","nil"]
-  - @ref_model = ["loc_to_ref","nil","nil"]
-
-  = render( :partial => "shared/list_rels", :object => @object, :locals => {:person_model => @person_model, :org_model => @org_model, :loc_model => @loc_model, :event_model => @event_model, :ref_model => @ref_model})
-
-  = render( :partial => "shared/all_nodes", :object => @object )
+%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_info", :width => "100%"}
+  %tr
+    %td{:width=>"600px", :id=>"node_left_col"}
+      = render :partial=>"data"
+      %div{:id=>"visualisation"}
+        = render :partial=>"/shared/visualisation"
+    %td{:id=>"node_linker"}
+      = render( :partial => "shared/list_rels", :object => @object)
+      = render( :partial => "shared/all_nodes", :object => @object )

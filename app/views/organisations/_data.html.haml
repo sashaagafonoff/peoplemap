@@ -1,0 +1,36 @@
+%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_info", :width => "100%"}
+  %tr
+    %td{:colspan=>"3"}
+      %ul{:id => "node_menu"}
+        %b
+          current record:
+        %li
+          = link_to 'edit', edit_organisation_path(@object)
+        %li
+          = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
+  %tr
+    %td{:class => "node_info_value",:rowspan => "2"}
+      %h1
+        = @object.name
+    %th
+      Sector:
+    %td{:class => "node_info_value"}
+      = @object.sector
+  %tr
+    %th
+      Industry:
+    %td{:class => "node_info_value"}
+      = @object.industry
+  %tr
+    %th{:colspan => "3"}
+      Related Images
+  %tr
+    %td{:class => "node_info_value", :colspan => "3"}
+      IMAGE GALLERY HERE
+  %tr
+    %th{:width => "400px",:colspan => "3"}
+      Notes
+  %tr
+    %td{:class => "node_info_value", :colspan => "3"}
+      = @object.notes
+      &nbsp;

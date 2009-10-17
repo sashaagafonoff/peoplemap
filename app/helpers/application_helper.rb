@@ -228,5 +228,21 @@ module ApplicationHelper
        link_type="'+ @rel_desc +'">
      </edge>'
   end
-  
+
+  def get_display_name(object)
+    case object.class.to_s
+      when "Person"
+        @display_name = [object.first_name,object.surname].join(" ")
+      when "Organisation"
+        @display_name = object.name
+      when "Location"
+        @display_name = [object.street_number,object.street_name,object.street_type,object.suburb,object.city,object.country].join(" ")
+      when "Event"
+        @display_name = object.title
+      when "Reference"
+        @display_name = object.ref_value
+    end
+
+    return @display_name
+  end
 end

@@ -19,7 +19,7 @@
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	
-	[SWF(width="600", height="600", backgroundColor="#ffffff", frameRate="30")]
+	[SWF(width="600", height="600", backgroundColor="#001F3E", frameRate="30")]
 	public class Main extends Sprite
 	{
 		
@@ -43,10 +43,22 @@
 			vis = new Visualization(data);
 			var w:Number = stage.stageWidth;
 			var h:Number = stage.stageHeight;
-			vis.bounds = new Rectangle(0, 0, w-90, h-20);
+			vis.bounds = new Rectangle(40,0,w-60,h-100);
+						
+			var headingTF:TextFormat = new TextFormat();
+			headingTF.color = 0xffffffff;
+			headingTF.bold = true;
+			headingTF.font = "Arial";
+			headingTF.size = 12;
+			
+			var chartHeading:TextSprite = new TextSprite("Network Visualisation", headingTF);
+			chartHeading.x = 0;
+			chartHeading.y = 0;
+			vis.addChild(chartHeading);
 			
 			var nodeTF:TextFormat = new TextFormat();
 			nodeTF.color = 0xffffffff;
+			nodeTF.bold = true;
 			nodeTF.font = "Arial";
 			nodeTF.size = 10;
 			nodeTF.align = "center";
@@ -59,23 +71,34 @@
 				ns.addChild(ts);	
 				ns.width = ts.width;
 
-				var rs:RectSprite = new RectSprite( 0,0, ns.width, 18, 15, 15);
+				//var rs:RectSprite = new RectSprite( -9,-9,18,18,5,5);
+				var rs:Sprite = new Sprite();
+ 
 				if (ns.data.node_class == "person") {
-					rs.fillColor = 0xff000066; 
+					rs.graphics.lineStyle(3, 0xffFF9933);
+					rs.graphics.beginFill(0xffFF9933, 0.5);
 				} else if (ns.data.node_class == "organisation") {
-					rs.fillColor = 0xffaa0000; 
+					rs.graphics.lineStyle(3, 0xff00CC99);
+					rs.graphics.beginFill(0xff00CC99, 0.5);
 				} else if (ns.data.node_class == "location") {
-					rs.fillColor = 0xff006600; 
+					rs.graphics.lineStyle(3, 0xff9999CC);
+					rs.graphics.beginFill(0xff9999CC, 0.5);
 				} else if (ns.data.node_class == "reference") {
-					rs.fillColor = 0xffaa3300; 
+					rs.graphics.lineStyle(3, 0xff3399CC);
+					rs.graphics.beginFill(0xff3399CC, 0.5);
 				} else if (ns.data.node_class == "event") {
-					rs.fillColor = 0xff5533aa; 
+					rs.graphics.lineStyle(3, 0xffFFFF99);
+					rs.graphics.beginFill(0xffFFFF99, 0.5);
 				} else { // shouldn't happen
-					rs.fillColor = 0xff000000; 
+					rs.graphics.lineStyle(1, 0x000000);
+					rs.graphics.beginFill(0xffffff, 0.3);
 				}
-
-				rs.lineColor = 0xff000000; 
-				rs.lineWidth = 0.5;
+				
+				rs.graphics.drawCircle(0, 0, 7);
+	 
+				// center below circle
+				ts.x = rs.x - ts.width / 2 + 2;
+				ts.y = rs.y + 10;
 				
 				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the rectangular box
 				ns.size = 0;
@@ -98,7 +121,7 @@
 			
 			// text formatting for edge labels
 			var edgeTF:TextFormat = new TextFormat();
-			edgeTF.color = 0xff000000;
+			edgeTF.color = 0xffcdcdee;
 			edgeTF.font = "Arial";
 			edgeTF.size = 9;
 			edgeTF.align = "center";
@@ -122,7 +145,7 @@
 		private function updateEdgeLabelPosition(evt:Event):void {
 			var es:EdgeSprite = evt.target as EdgeSprite;
 			es.props.label.x = (es.source.x + es.target.x) / 2;
-			es.props.label.y = (es.source.y + es.target.y) / 2;	
+			es.props.label.y = (es.source.y + es.target.y) / 2 + 15;	
 		}
 		
 		private function update(event:MouseEvent):void {
@@ -138,11 +161,6 @@
 			vis.update(t1).play();
 		}
 		
-		private function adjustLabel(s:NodeSprite, w:Number, h:Number) : void {
-			var s2:TextSprite = s.getChildAt(s.numChildren-1) as TextSprite; // get the text sprite belonging to this node sprite
-			s2.horizontalAnchor = TextSprite.CENTER;
-			s2.verticalAnchor = TextSprite.CENTER;
-		}
 	}
 		
 }	

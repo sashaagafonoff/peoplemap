@@ -11,7 +11,7 @@ class PeopleController < ApplicationController
     @object = Person.new
     @object.update(params[:person])
     flash[:notice] = 'Person was successfully created.'
-    redirect_to(people_url)
+    redirect_to(@object)
   end
   
   def update
@@ -37,24 +37,18 @@ class PeopleController < ApplicationController
     @people = Person.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
-    # prime filters for linked data retrieval
-    @person_model = ["person_to_person","person_to_person","person_to_person"]
-    @org_model = ["person_to_org","person_to_org","nil"]
-    @loc_model = ["person_to_loc","person_to_loc","nil"]
-    @event_model = ["person_to_event","person_to_event","nil"]
-    @ref_model = ["person_to_ref","person_to_ref","nil"]
   end
 
   def link
     linker(params)
     redirect_to(@object)
-    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was linked to node " + @target.neo_node_id.to_s
+    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was linked to " + get_display_name(@target)
   end
   
   def unlink
     unlinker(params)
     redirect_to(@object)
-    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was unlinked from " + @target.neo_node_id.to_s
+    flash[:notice] = [@object.first_name, @object.surname].join(" ") + " was unlinked from " + get_display_name(@target)
   end
   
   def new

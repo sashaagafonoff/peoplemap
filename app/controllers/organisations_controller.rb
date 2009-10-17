@@ -11,7 +11,7 @@ class OrganisationsController < ApplicationController
     @object = Organisation.new
     @object.update(params[:organisation])
     flash[:notice] = 'Organisation was successfully created.'
-    redirect_to(organisations_url)
+    redirect_to(@object)
   end
   
   def update
@@ -34,7 +34,6 @@ class OrganisationsController < ApplicationController
     @people = Person.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
-
   end
 
   def link

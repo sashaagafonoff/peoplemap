@@ -1,0 +1,45 @@
+%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_info", :width => "100%"}
+  %tr
+    %td{:colspan => "4"}
+      %ul{:id => "node_menu"}
+        %b
+          current record:
+        %li
+          = link_to 'edit', edit_person_path(@object)
+        %li
+          = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
+  %tr
+    %td{:class => "node_info_value", :rowspan => "3"}
+      %h1
+        = get_display_name(@object)
+    %td{:class => "node_info_value", :rowspan => "3"}
+      PICTURE HERE
+    %td{:class => "node_info_label"}
+      Full Name
+    %td{:class => "node_info_value"}
+      = @object.title
+      = @object.first_name
+      = @object.surname
+  %tr
+    %td{:class => "node_info_label"}
+      Sex
+    %td{:class => "node_info_value"}
+      = @object.sex
+  %tr
+    %td{:class => "node_info_label"}
+      Date of Birth
+    %td{:class => "node_info_value"}
+      = @object.date_of_birth
+  %tr
+    %th{:colspan => "4"}
+      Related Images
+  %tr
+    %td{:class => "node_info_value",:colspan => "4"}
+      IMAGE GALLERY HERE
+  %tr
+    %th{:colspan => "4"}
+      Notes
+  %tr
+    %td{:class => "node_info_value",:colspan => "4"}
+      = @object.notes
+      &nbsp;
