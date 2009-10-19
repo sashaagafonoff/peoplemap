@@ -44,7 +44,7 @@ Here are detailed instructions for getting this rolling on a clean Ubuntu 9 Virt
    gem install haml
    gem update
    git clone git://github.com/andreasronge/neo4j.git
-6. cd to install/dir/neo4j (downloaded earlier via Git) then run rake:gem install
+6. cd to install/dir/neo4j (downloaded earlier via Git) then run rake gem:install
 7. From command line git clone git://github.com/sashaagafonoff/peoplemap.git (some users may wish to fork instead)
 8. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
 9. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
