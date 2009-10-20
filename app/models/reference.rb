@@ -4,12 +4,17 @@ class Reference
   
   property :reference_type, :ref_value, :notes
   
-  has_n(:person_to_ref).from(Person).relationship(Role)
-  has_n(:org_to_ref).from(Organisation).relationship(Role)
-  has_n(:loc_to_ref).from(Location).relationship(Role)
-  has_n(:event_to_ref).from(Event).relationship(Role)
-  has_n(:ref_to_ref).to(Reference).relationship(Role)
-  
+  has_n(:reference_to_person).to(Person).relationship(Role)
+  has_n(:reference_to_organisation).to(Organisation).relationship(Role)
+  has_n(:reference_to_location).to(Location).relationship(Role)
+  has_n(:reference_to_event).to(Event).relationship(Role)
+  has_n(:reference_to_reference).to(Reference).relationship(Role)
+
+  has_n(:person_to_reference).from(Person).relationship(Role)
+  has_n(:organisation_to_reference).from(Organisation).relationship(Role)
+  has_n(:location_to_reference).from(Location).relationship(Role)
+  has_n(:event_to_reference).from(Event).relationship(Role)
+
   index :ref_value, :reference_type
 
   Reference::REFERENCE_TYPES = [

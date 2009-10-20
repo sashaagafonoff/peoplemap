@@ -6,6 +6,5 @@
   %h2
     all
   %ul{:class => "link_desc", :style => "border-top: solid 1px #b39da6;"}
-  - # this needs to be fixed!!!! it just traverses outgoing links
   -	@object.relationships.both.each do |relationship|
     = render( :partial => "shared/relationship_description", :object => relationship)

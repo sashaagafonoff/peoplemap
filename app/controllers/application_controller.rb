@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
 
   def linker(params)
     
-    @origin = Neo4j.load(params[:origin_id]) if params[:origin_id]
-    @target = Neo4j.load(params[:target_id]) if params[:target_id]
+    @origin = Neo4j.load(params[:origin_id])
+    @target = Neo4j.load(params[:target_id])
 
     # construct predicate type
     @rel_string = params[:origin_type] + "_to_" + params[:target_type]
@@ -27,59 +27,57 @@ class ApplicationController < ActionController::Base
       when "person_to_person"
         rel = @origin.person_to_person.new(@target)        
       when "person_to_organisation"
-        rel = @origin.person_to_org.new(@target)        
+        rel = @origin.person_to_organisation.new(@target)
       when "person_to_location"
-        rel = @origin.person_to_loc.new(@target)        
+        rel = @origin.person_to_location.new(@target)
       when "person_to_event"
-        rel = @origin.person_to_event.new(@target)        
+        rel = @origin.person_to_event.new(@target)
       when "person_to_reference"
-        rel = @origin.person_to_ref.new(@target)        
+        rel = @origin.person_to_reference.new(@target)
 
       when "organisation_to_person"
-        rel = @target.person_to_org.new(@origin)   # note that the direction of the relationship necessitates inversion of the creation order
+        rel = @origin.organisation_to_person.new(@target)
       when "organisation_to_organisation"
-        rel = @origin.org_to_org.new(@target)        
+        rel = @origin.organisation_to_organisation.new(@target)
       when "organisation_to_location"
-        rel = @origin.org_to_loc.new(@target)        
+        rel = @origin.organisation_to_location.new(@target)
       when "organisation_to_event"
-        rel = @origin.org_to_event.new(@target)        
+        rel = @origin.organisation_to_event.new(@target)
       when "organisation_to_reference"
-        rel = @origin.org_to_ref.new(@target)        
+        rel = @origin.organisation_to_reference.new(@target)
 
       when "location_to_person"
-        rel = @target.person_to_loc.new(@origin)        
+        rel = @origin.location_to_person.new(@target)
       when "location_to_organisation"
-        rel = @target.org_to_loc.new(@origin)        
+        rel = @origin.location_to_organisation.new(@target)
       when "location_to_location"
-        rel = @origin.loc_to_loc.new(@target)        
+        rel = @origin.location_to_location.new(@target)
       when "location_to_event"
-        rel = @target.org_to_event.new(@origin)        
+        rel = @origin.location_to_event.new(@target)
       when "location_to_reference"
-        rel = @origin.org_to_ref.new(@target)        
+        rel = @origin.location_to_reference.new(@target)
 
       when "event_to_person"
-        rel = @target.person_to_event.new(@origin)        
+        rel = @origin.event_to_person.new(@target)
       when "event_to_organisation"
-        rel = @target.org_to_event.new(@origin)        
+        rel = @origin.event_to_organisation.new(@target)
       when "event_to_location"
-        rel = @origin.event_to_loc.new(@target)        
+        rel = @origin.event_to_location.new(@target)
       when "event_to_event"
-        rel = @origin.event_to_event.new(@target)        
+        rel = @origin.event_to_event.new(@target)
       when "event_to_reference"
-        rel = @origin.event_to_ref.new(@target)        
+        rel = @origin.event_to_reference.new(@target)
 
        when "reference_to_person"
-        rel = @target.person_to_ref.new(@origin)        
+        rel = @origin.reference_to_person.new(@target)
       when "reference_to_organisation"
-        rel = @target.org_to_ref.new(@origin)        
+        rel = @origin.reference_to_organisation.new(@target)
       when "reference_to_location"
-        rel = @target.loc_to_ref.new(@origin)        
+        rel = @origin.reference_to_location.new(@target)
       when "reference_to_event"
-        rel = @target.event_to_ref.new(@origin)        
-
-      
+        rel = @origin.reference_to_event.new(@target)
       when "reference_to_reference"
-        rel = @origin.ref_to_ref.new(@target)        
+        rel = @origin.reference_to_reference.new(@target)        
 
     end
 

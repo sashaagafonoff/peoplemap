@@ -1,594 +1,138 @@
 <relationships>
-  <relationship name="parent_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="parent_of">is the parent of</option>
-    <link_desc_male>is the father of</link_desc_male>
-    <link_desc_male_past>was the father of</link_desc_male_past>
-    <link_desc_female>is the mother of</link_desc_female>
-    <link_desc_female_past>was the mother of</link_desc_female_past>
-  </relationship>
-  <relationship name="adoptive_parent_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="adoptive_parent_of">is the adoptive parent of</option>
-    <link_desc_male>is the adoptive father of</link_desc_male>
-    <link_desc_male_past>was the adoptive father of</link_desc_male_past>
-    <link_desc_female>is the adoptive mother of</link_desc_female>
-    <link_desc_female_past>was the adoptive mother of</link_desc_female_past>
-  </relationship>
-  <relationship name="step_parent_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="step_parent_of">is the step parent of</option>
-    <link_desc_male>is the stepfather of</link_desc_male>
-    <link_desc_male_past>was the stepfather of</link_desc_male_past>
-    <link_desc_female>is the stepmother of</link_desc_female>
-    <link_desc_female_past>was the stepmother of</link_desc_female_past>
-  </relationship>
-  <relationship name="sibling_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="sibling_of">is the sibling of</option>
-    <link_desc_male>is the brother of</link_desc_male>
-    <link_desc_male_past>was the brother of</link_desc_male_past>
-    <link_desc_female>is the sister of</link_desc_female>
-    <link_desc_female_past>was the sister of</link_desc_female_past>
-  </relationship>
-  <relationship name="step_sibling_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="step_sibling_of">if the step sibling of</option>
-    <link_desc_male>is the stepbrother of</link_desc_male>
-    <link_desc_male_past>was the stepbrother of</link_desc_male_past>
-    <link_desc_female>is the stepsister of</link_desc_female>
-    <link_desc_female_past>was the stepsister of</link_desc_female_past>
-  </relationship>
-  <relationship name="adoptive_sibling_of" subject="person" predicate="person_to_person" object="person">
-    <group>direct_family_of</group>
-    <option value="adoptive_sibling_of">is the adoptive sibling of</option>
-    <link_desc_male>is the adoptive brother of</link_desc_male>
-    <link_desc_male_past>was the adoptive brother of</link_desc_male_past>
-    <link_desc_female>is the adoptive sister of</link_desc_female>
-    <link_desc_female_past>was the adoptive sister of</link_desc_female_past>
-  </relationship>
-  <relationship name="cousin_of" subject="person" predicate="person_to_person" object="person">
-    <group>wider_family_of</group>
-    <option value="cousin_of">if the cousin of</option>
-    <link_desc_male>is the cousin of</link_desc_male>
-    <link_desc_male_past>was the cousin of</link_desc_male_past>
-    <link_desc_female>is the cousin of</link_desc_female>
-    <link_desc_female_past>was the cousin of</link_desc_female_past>
-  </relationship>
-  <relationship name="friend_of" subject="person" predicate="person_to_person" object="person">
-    <group>friend_of</group>
-    <option value="friend_of">if the friend of</option>
-    <link_desc_male>is the friend of</link_desc_male>
-    <link_desc_male_past>was the friend of</link_desc_male_past>
-    <link_desc_female>is the friend of</link_desc_female>
-    <link_desc_female_past>was the friend of</link_desc_female_past>
-  </relationship>
-  <relationship name="best_friend_of" subject="person" predicate="person_to_person" object="person">
-    <group>friend_of</group>
-    <option value="best_friend_of">is the best friend of</option>
-    <link_desc_male>is the best friend of</link_desc_male>
-    <link_desc_male_past>was the best friend of</link_desc_male_past>
-    <link_desc_female>is the best friend of</link_desc_female>
-    <link_desc_female_past>was the best friend of</link_desc_female_past>
-  </relationship>
-  <relationship name="boy_girl_friend_of" subject="person" predicate="person_to_person" object="person">
-    <group>friend_of</group>
-    <option value="boy_girl_friend_of">is the boy/girlfriend of</option>
-    <link_desc_male>is the boyfriend of</link_desc_male>
-    <link_desc_male_past>was the boyfriend of</link_desc_male_past>
-    <link_desc_female>is the girlfriend of</link_desc_female>
-    <link_desc_female_past>was the girlfriend of</link_desc_female_past>
-  </relationship>
-  <relationship name="acquaintance_of" subject="person" predicate="person_to_person" object="person">
-    <group>friend_of</group>
-    <option value="acquaintance_of">is the acquaintance of</option>
-    <link_desc_male>is an acquaintance of</link_desc_male>
-    <link_desc_male_past>was an acquaintance of</link_desc_male_past>
-    <link_desc_female>is an acquaintance of</link_desc_female>
-    <link_desc_female_past>was an acquaintance of</link_desc_female_past>
-  </relationship>
-  <relationship name="colleague_of" subject="person" predicate="person_to_person" object="person">
-    <group>colleague_of</group>
-    <option value="colleague_of">is the colleague of</option>
-    <link_desc_male>is the colleague of</link_desc_male>
-    <link_desc_male_past>was the colleague of</link_desc_male_past>
-    <link_desc_female>is the colleague of</link_desc_female>
-    <link_desc_female_past>was the colleague of</link_desc_female_past>
-  </relationship>
-  <relationship name="manager_of" subject="person" predicate="person_to_person" object="person">
-    <group>colleague_of</group>
-    <option value="manager_of">is the manager of</option>
-    <link_desc_male>is the manager of</link_desc_male>
-    <link_desc_male_past>was the manager of</link_desc_male_past>
-    <link_desc_female>is the manager of</link_desc_female>
-    <link_desc_female_past>was the manager of</link_desc_female_past>
-  </relationship>
-  <relationship name="partner_of" subject="person" predicate="person_to_person" object="person">
-    <group>colleague_of</group>
-    <option value="partner_of">is the partner of</option>
-    <link_desc_male>is the partner of</link_desc_male>
-    <link_desc_male_past>was the partner of</link_desc_male_past>
-    <link_desc_female>is the partner of</link_desc_female>
-    <link_desc_female_past>was the partner of</link_desc_female_past>
-  </relationship>
-  <relationship name="associate_of" subject="person" predicate="person_to_person" object="person">
-    <group>colleague_of</group>
-    <option value="associate_of">is the associate of</option>
-    <link_desc_male>is the associate of</link_desc_male>
-    <link_desc_male_past>was the associate of</link_desc_male_past>
-    <link_desc_female>is the associate of</link_desc_female>
-    <link_desc_female_past>was the associate of</link_desc_female_past>
-  </relationship>
-  <relationship name="spouse_of" subject="person" predicate="person_to_person" object="person">
-    <group>life_partner_of</group>
-    <option value="spouse_of">is the married spouse of</option>
-    <link_desc_male>is the husband of</link_desc_male>
-    <link_desc_male_past>was the husband of</link_desc_male_past>
-    <link_desc_female>is the wife of</link_desc_female>
-    <link_desc_female_past>was the wife of</link_desc_female_past>
-  </relationship>
-  <relationship name="defacto_of" subject="person" predicate="person_to_person" object="person">
-    <group>life_partner_of</group>
-    <option value="defacto_of">is the defacto of</option>
-    <link_desc_male>is the defacto spouse of</link_desc_male>
-    <link_desc_male_past>was the defacto spouse of</link_desc_male_past>
-    <link_desc_female>is the defacto spouse of</link_desc_female>
-    <link_desc_female_past>was the defacto spouse of</link_desc_female_past>
-  </relationship>
-  <relationship name="works_for" subject="person" predicate="person_to_org" object="organisation">
-    <group>works_for</group>
-    <option value="works_for">works for</option>
-    <link_desc_male>works for</link_desc_male>
-    <link_desc_male_past>worked for</link_desc_male_past>
-    <link_desc_female>works for</link_desc_female>
-    <link_desc_female_past>worked for</link_desc_female_past>
-  </relationship>
-  <relationship name="CEO_of" subject="person" predicate="person_to_org" object="organisation">
-    <group>works_for</group>
-    <option value="CEO_of">is the CEO of</option>
-    <link_desc_male>is the CEO of</link_desc_male>
-    <link_desc_male_past>was the CEO of</link_desc_male_past>
-    <link_desc_female>is the CEO of</link_desc_female>
-    <link_desc_female_past>was the CEO of</link_desc_female_past>
-  </relationship>
-  <relationship name="boss_of" subject="person" predicate="person_to_org" object="organisation">
-    <group>works_for</group>
-    <option value="boss_of">is the boss of</option>
-    <link_desc_male>is the boss of</link_desc_male>
-    <link_desc_male_past>was the boss of</link_desc_male_past>
-    <link_desc_female>is the boss of</link_desc_female>
-    <link_desc_female_past>was the boss of</link_desc_female_past>
-  </relationship>
-  <relationship name="consultant_for" subject="person" predicate="person_to_org" object="organisation">
-    <group>works_for</group>
-    <option value="consultant_for">is a consultant for</option>
-    <link_desc_male>is a consultant for</link_desc_male>
-    <link_desc_male_past>was a consultant for</link_desc_male_past>
-    <link_desc_female>is a consultant for</link_desc_female>
-    <link_desc_female_past>was a consultant for</link_desc_female_past>
-  </relationship>
-  <relationship name="member_of" subject="person" predicate="person_to_org" object="organisation">
-    <group>member_of</group>
-    <option value="member_of">is a member of</option>
-    <link_desc_male>is a member of</link_desc_male>
-    <link_desc_male_past>was a member of</link_desc_male_past>
-    <link_desc_female>is a member of</link_desc_female>
-    <link_desc_female_past>was a member of</link_desc_female_past>
-  </relationship>
-  <relationship name="volunteer_for" subject="person" predicate="person_to_org" object="organisation">
-    <group>volunteer_for</group>
-    <option value="volunteer_for">is a volunteer for</option>
-    <link_desc_male>is a volunteer for</link_desc_male>
-    <link_desc_male_past>was a volunteer for</link_desc_male_past>
-    <link_desc_female>is a volunteer for</link_desc_female>
-    <link_desc_female_past>was a volunteer for</link_desc_female_past>
-  </relationship>
-  <relationship name="banned_from" subject="person" predicate="person_to_org" object="organisation">
-    <group>banned_from</group>
-    <option value="banned_from">is banned from</option>
-    <link_desc_male>is banned from</link_desc_male>
-    <link_desc_male_past>was banned from</link_desc_male_past>
-    <link_desc_female>is banned from</link_desc_female>
-    <link_desc_female_past>was banned from</link_desc_female_past>
-  </relationship>
-  <relationship name="supports" subject="person" predicate="person_to_org" object="organisation">
-    <group>supports</group>
-    <option value="supports">supports</option>
-    <link_desc_male>is a supporter of</link_desc_male>
-    <link_desc_male_past>was a supporter of</link_desc_male_past>
-    <link_desc_female>is a supporter of</link_desc_female>
-    <link_desc_female_past>was a supporter of</link_desc_female_past>
-  </relationship>
-  <relationship name="founder_of" subject="person" predicate="person_to_org" object="organisation">
-    <group>founder_of</group>
-    <option value="founder_of">is the founder of</option>
-    <link_desc_male>is the founder of</link_desc_male>
-    <link_desc_male_past>was the founder of</link_desc_male_past>
-    <link_desc_female>is the founder of</link_desc_female>
-    <link_desc_female_past>was the founder of</link_desc_female_past>
-  </relationship>
-  <relationship name="attended" subject="person" predicate="person_to_event" object="event">
-    <group>direct_involvement</group>
-    <option value="attended">attended/is attending</option>
-    <link_desc_male>is attending</link_desc_male>
-    <link_desc_male_past>attended</link_desc_male_past>
-    <link_desc_female>is attending</link_desc_female>
-    <link_desc_female_past>attended</link_desc_female_past>
-  </relationship>
-  <relationship name="organised" subject="person" predicate="person_to_event" object="event">
-    <group>direct_involvement</group>
-    <option value="organised">organised/is organising</option>
-    <link_desc_male>is organising</link_desc_male>
-    <link_desc_male_past>organised</link_desc_male_past>
-    <link_desc_female>is organising</link_desc_female>
-    <link_desc_female_past>organised</link_desc_female_past>
-  </relationship>
-  <relationship name="caused" subject="person" predicate="person_to_event" object="event">
-    <group>direct_involvement</group>
-    <option value="caused">caused</option>
-    <link_desc_male>will cause</link_desc_male>
-    <link_desc_male_past>caused</link_desc_male_past>
-    <link_desc_female>will cause</link_desc_female>
-    <link_desc_female_past>caused</link_desc_female_past>
-  </relationship>
-  <relationship name="participated_in" subject="person" predicate="person_to_event" object="event">
-    <group>direct_involvement</group>
-    <option value="participated_in">participated in</option>
-    <link_desc_male>will participate in</link_desc_male>
-    <link_desc_male_past>participated in</link_desc_male_past>
-    <link_desc_female>will participate in</link_desc_female>
-    <link_desc_female_past>participated in</link_desc_female_past>
-  </relationship>
-  <relationship name="supports" subject="person" predicate="person_to_event" object="event">
-    <group>indirect_involvement</group>
-    <option value="supports">supports</option>
-    <link_desc_male>is supporting</link_desc_male>
-    <link_desc_male_past>supported</link_desc_male_past>
-    <link_desc_female>is supporting</link_desc_female>
-    <link_desc_female_past>supported</link_desc_female_past>
-  </relationship>
-  <relationship name="objects_to" subject="person" predicate="person_to_event" object="event">
-    <group>indirect_involvement</group>
-    <option value="objects_to">objects to</option>
-    <link_desc_male>is objecting to</link_desc_male>
-    <link_desc_male_past>objected to</link_desc_male_past>
-    <link_desc_female>is objecting to</link_desc_female>
-    <link_desc_female_past>objected to</link_desc_female_past>
-  </relationship>
-  <relationship name="email_for" subject="person" predicate="person_to_ref" object="reference">
-    <group>email_for</group>
-    <option value="email_for">has the email</option>
-    <link_desc_male>has the email</link_desc_male>
-    <link_desc_male_past>was the email for</link_desc_male_past>
-    <link_desc_female>is the email for</link_desc_female>
-    <link_desc_female_past>was the email for</link_desc_female_past>
-  </relationship>
-  <relationship name="home_phone_for" subject="person" predicate="person_to_ref" object="reference">
-    <group>contact_number_for</group>
-    <option value="home_phone_for">has the home phone</option>
-    <link_desc_male>has the home phone</link_desc_male>
-    <link_desc_male_past>was the home phone for</link_desc_male_past>
-    <link_desc_female>is the home phone for</link_desc_female>
-    <link_desc_female_past>was the home phone for</link_desc_female_past>
-  </relationship>
-  <relationship name="work_phone_for" subject="person" predicate="person_to_ref" object="reference">
-    <group>contact_number_for</group>
-    <option value="work_phone_for">has the work phone</option>
-    <link_desc_male>has the work phone</link_desc_male>
-    <link_desc_male_past>was the work phone for</link_desc_male_past>
-    <link_desc_female>is the work phone for</link_desc_female>
-    <link_desc_female_past>was the work phone for</link_desc_female_past>
-  </relationship>
-  <relationship name="mobile_phone_for" subject="person" predicate="person_to_ref" object="reference">
-    <group>contact_number_for</group>
-    <option value="mobile_phone_for">has the mobile phone</option>
-    <link_desc_male>has the mobile phone</link_desc_male>
-    <link_desc_male_past>was the mobile phone for</link_desc_male_past>
-    <link_desc_female>is the mobile phone for</link_desc_female>
-    <link_desc_female_past>was the mobile phone for</link_desc_female_past>
-  </relationship>
-  <relationship name="profile_photo_of" subject="person" predicate="person_to_ref" object="reference">
-    <group>photo_of</group>
-    <option value="profile_photo_of">has the profile photo</option>
-    <link_desc_male>has the profile photo</link_desc_male>
-    <link_desc_male_past>was the profile photo for</link_desc_male_past>
-    <link_desc_female>is the profile photo for</link_desc_female>
-    <link_desc_female_past>was the profile photo for</link_desc_female_past>
-  </relationship>
-  <relationship name="photo_of" subject="person" predicate="person_to_ref" object="reference">
-    <group>photo_of</group>
-    <option value="photo_of">is in the photograph</option>
-    <link_desc_male>is in the photo</link_desc_male>
-    <link_desc_male_past>was a photo of</link_desc_male_past>
-    <link_desc_female>is a photo of</link_desc_female>
-    <link_desc_female_past>was a photo of</link_desc_female_past>
-  </relationship>
-  <relationship name="url_for" subject="person" predicate="person_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_for">has the website</option>
-    <link_desc_male>has the website</link_desc_male>
-    <link_desc_male_past>was a website for</link_desc_male_past>
-    <link_desc_female>is a website for</link_desc_female>
-    <link_desc_female_past>was a website for</link_desc_female_past>
-  </relationship>
-  <relationship name="url_about" subject="person" predicate="person_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_about">has a related web page at</option>
-    <link_desc_male>has a related web page at</link_desc_male>
-    <link_desc_male_past>was a web page relating to</link_desc_male_past>
-    <link_desc_female>is a web page relating to</link_desc_female>
-    <link_desc_female_past>was a web page relating to</link_desc_female_past>
-  </relationship>
-  <relationship name="file_about" subject="person" predicate="person_to_ref" object="reference">
-    <group>file_about</group>
-    <option value="file_about">has a file attachment at</option>
-    <link_desc_male>has a file attachment at</link_desc_male>
-    <link_desc_male_past>was a file attachment relating to</link_desc_male_past>
-    <link_desc_female>is a file attachment relating to</link_desc_female>
-    <link_desc_female_past>was a file attachment relating to</link_desc_female_past>
-  </relationship>
-  <relationship name="home_address_for" subject="person" predicate="person_to_loc" object="location">
-    <group>address_for</group>
-    <option value="home_address_for">has the home address</option>
-    <link_desc_male>lives at</link_desc_male>
-    <link_desc_male_past>lived at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="holiday_address_for" subject="person" predicate="person_to_loc" object="location">
-    <group>address_for</group>
-    <option value="holiday_address_for">holidays at</option>
-    <link_desc_male>holidays at</link_desc_male>
-    <link_desc_male_past>used to holiday at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="seen_at" subject="person" predicate="person_to_loc" object="location">
-    <group>location_for</group>
-    <option value="seen_at">is seen at</option>
-    <link_desc_male>is seen at</link_desc_male>
-    <link_desc_male_past>was seen at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="frequents" subject="person" predicate="person_to_loc" object="location">
-    <group>location_for</group>
-    <option value="frequents">frequents</option>
-    <link_desc_male>frequents</link_desc_male>
-    <link_desc_male_past>frequented</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="partner_of" subject="organisation" predicate="org_to_org" object="organisation">
-    <group>related_company_to</group>
-    <option value="partner_of">is the partner of</option>
-    <link_desc_male>is the partner of</link_desc_male>
-    <link_desc_male_past>was the partner of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="competitor_of" subject="organisation" predicate="org_to_org" object="organisation">
-    <group>competitor_of</group>
-    <option value="competitor_of">is the competitor of</option>
-    <link_desc_male>is a competitor of</link_desc_male>
-    <link_desc_male_past>was a competitor of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="parent_of" subject="organisation" predicate="org_to_org" object="organisation">
-    <group>related_company_to</group>
-    <option value="parent_of">is the parent company of</option>
-    <link_desc_male>is the parent company of</link_desc_male>
-    <link_desc_male_past>was the parent company of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="subsidiary_of" subject="organisation" predicate="org_to_org" object="organisation">
-    <group>related_company_to</group>
-    <option value="subsidiary_of">is the subsidiary of</option>
-    <link_desc_male>is the subsidiary of</link_desc_male>
-    <link_desc_male_past>was the subsidiary of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="organiser_of" subject="organisation" predicate="org_to_event" object="event">
-    <group>organiser_of</group>
-    <option value="organiser_of">is the organiser of</option>
-    <link_desc_male>is the organiser of</link_desc_male>
-    <link_desc_male_past>was the organwaser of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="promoter_of" subject="organisation" predicate="org_to_event" object="event">
-    <group>promoter_of</group>
-    <option value="promoter_of">is the promoter of</option>
-    <link_desc_male>is the promoter of</link_desc_male>
-    <link_desc_male_past>was the promoter of</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="affected_by" subject="organisation" predicate="org_to_event" object="event">
-    <group>affected_by</group>
-    <option value="affected_by">is affected by</option>
-    <link_desc_male>is affected by</link_desc_male>
-    <link_desc_male_past>was affected by</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="office_address_for" subject="organisation" predicate="org_to_loc" object="location">
-    <group>address_for</group>
-    <option value="office_address_for">has the office address</option>
-    <link_desc_male>has the office address</link_desc_male>
-    <link_desc_male_past>had the office address</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="hq_address_for" subject="organisation" predicate="org_to_loc" object="location">
-    <group>address_for</group>
-    <option value="hq_address_for">has its headquarters at</option>
-    <link_desc_male>has its headquarters at</link_desc_male>
-    <link_desc_male_past>had its headquarters at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="warehouse_address_for" subject="organisation" predicate="org_to_loc" object="location">
-    <group>address_for</group>
-    <option value="warehouse_address_for">has a warehouse at</option>
-    <link_desc_male>has a warehouse at</link_desc_male>
-    <link_desc_male_past>had a warehouse at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="mailing_address_for" subject="organisation" predicate="org_to_loc" object="location">
-    <group>address_for</group>
-    <option value="mailing_address_for">has the mailing address</option>
-    <link_desc_male>has the mailing address</link_desc_male>
-    <link_desc_male_past>had the mailing address</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="phone_for" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>number_for</group>
-    <option value="phone_for">has the phone number</option>
-    <link_desc_male>has the phone number</link_desc_male>
-    <link_desc_male_past>had the phone number</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="fax_for" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>number_for</group>
-    <option value="fax_for">has the fax number</option>
-    <link_desc_male>has the fax number</link_desc_male>
-    <link_desc_male_past>had the fax number</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="photo_of" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>photo_of</group>
-    <option value="photo_of">has the photo</option>
-    <link_desc_male>has the photo</link_desc_male>
-    <link_desc_male_past>had the photo</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="url_for" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_for">has a website at</option>
-    <link_desc_male>has a website at</link_desc_male>
-    <link_desc_male_past>had a website at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="url_about" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_about">has a related web page at</option>
-    <link_desc_male>has a related web page at</link_desc_male>
-    <link_desc_male_past>had a related web page at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="file_about" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>file_about</group>
-    <option value="file_about">has a related file attachment at</option>
-    <link_desc_male>has a related file attachment at</link_desc_male>
-    <link_desc_male_past>had a related file attachment at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="email_for" subject="organisation" predicate="org_to_ref" object="reference">
-    <group>email_for</group>
-    <option value="email_for">has the email address</option>
-    <link_desc_male>has the email address</link_desc_male>
-    <link_desc_male_past>has the email address</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="location_for" subject="event" predicate="event_to_loc" object="location">
-    <group>location_for</group>
-    <option value="location_for">is at the location</option>
-    <link_desc_male>is at the location</link_desc_male>
-    <link_desc_male_past>was at the location</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="related_to" subject="event" predicate="event_to_event" object="event">
-    <group>related_to</group>
-    <option value="related_to">is related to</option>
-    <link_desc_male>is related to</link_desc_male>
-    <link_desc_male_past>was related to</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="phone_for" subject="event" predicate="event_to_ref" object="reference">
-    <group>number_for</group>
-    <option value="phone_for">has the phone number</option>
-    <link_desc_male>has the phone number</link_desc_male>
-    <link_desc_male_past>had the phone number</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="url_for" subject="event" predicate="event_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_for">has a website at</option>
-    <link_desc_male>has a website at</link_desc_male>
-    <link_desc_male_past>had a website at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="url_about" subject="event" predicate="event_to_ref" object="reference">
-    <group>url_for</group>
-    <option value="url_about">has a related web page at</option>
-    <link_desc_male>has a related web page at</link_desc_male>
-    <link_desc_male_past>had a related web page at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="photo_of" subject="event" predicate="event_to_ref" object="reference">
-    <group>photo_of</group>
-    <option value="photo_of">has the photo</option>
-    <link_desc_male>has the photo</link_desc_male>
-    <link_desc_male_past>had the photo</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="file_about" subject="event" predicate="event_to_ref" object="reference">
-    <group>file_about</group>
-    <option value="file_about">has a related file attachment at</option>
-    <link_desc_male>has a related file attachment at</link_desc_male>
-    <link_desc_male_past>had a related file attachment at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="photo_of" subject="location" predicate="loc_to_ref" object="reference">
-    <group>photo_of</group>
-    <option value="photo_of">has the photo</option>
-    <link_desc_male>has the photo</link_desc_male>
-    <link_desc_male_past>had the photo</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="file_about" subject="location" predicate="loc_to_ref" object="reference">
-    <group>file_about</group>
-    <option value="file_about">has a related file attachment at</option>
-    <link_desc_male>has a related file attachment at</link_desc_male>
-    <link_desc_male_past>had a related file attachment at</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="related_loc" subject="location" predicate="loc_to_loc" object="location">
-    <group>related_loc</group>
-    <option value="related_loc">is related to</option>
-    <link_desc_male>is related to</link_desc_male>
-    <link_desc_male_past>was related to</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-  <relationship name="ref_to" subject="reference" predicate="ref_to_ref" object="reference">
-    <group>ref_to</group>
-    <option value="ref_to">is related to</option>
-    <link_desc_male>is related to</link_desc_male>
-    <link_desc_male_past>was related to</link_desc_male_past>
-    <link_desc_female>0</link_desc_female>
-    <link_desc_female_past>0</link_desc_female_past>
-  </relationship>
-</relationships>
+<relationship name="person_to_person_father" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_father">is the father of</option><link_desc>is the father of</link_desc><link_desc_past>was the father of</link_desc_past></relationship>
+<relationship name="person_to_person_mother" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_mother">is the mother of</option><link_desc>is the mother of</link_desc><link_desc_past>was the mother of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive father" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_adoptive father">is the adoptive father of</option><link_desc>is the adoptive father of</link_desc><link_desc_past>was the adoptive father of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive mother" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_adoptive mother">is the adoptive mother of</option><link_desc>is the adoptive mother of</link_desc><link_desc_past>was the adoptive mother of</link_desc_past></relationship>
+<relationship name="person_to_person_stepfather" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_stepfather">is the stepfather of</option><link_desc>is the stepfather of</link_desc><link_desc_past>was the stepfather of</link_desc_past></relationship>
+<relationship name="person_to_person_stepmother" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_stepmother">is the stepmother of</option><link_desc>is the stepmother of</link_desc><link_desc_past>was the stepmother of</link_desc_past></relationship>
+<relationship name="person_to_person_son" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_son">is the son of</option><link_desc>is the son of</link_desc><link_desc_past>was the son of</link_desc_past></relationship>
+<relationship name="person_to_person_daughter" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_daughter">is the daughter of</option><link_desc>is the daughter of</link_desc><link_desc_past>was the daughter of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive son" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_adoptive son">is the adoptive son of</option><link_desc>is the adoptive son of</link_desc><link_desc_past>was the adoptive son of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive daughter" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_adoptive daughter">is the adoptive daughter of</option><link_desc>is the adoptive daughter of</link_desc><link_desc_past>was the adoptive daughter of</link_desc_past></relationship>
+<relationship name="person_to_person_stepson" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_stepson">is the stepson of</option><link_desc>is the stepson of</link_desc><link_desc_past>was the stepson of</link_desc_past></relationship>
+<relationship name="person_to_person_stepdaughter" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_stepdaughter">is the stepdaughter of</option><link_desc>is the stepdaughter of</link_desc><link_desc_past>was the stepdaughter of</link_desc_past></relationship>
+<relationship name="person_to_person_brother" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_brother">is the brother of</option><link_desc>is the brother of</link_desc><link_desc_past>was the brother of</link_desc_past></relationship>
+<relationship name="person_to_person_sister" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_sister">is the sister of</option><link_desc>is the sister of</link_desc><link_desc_past>was the sister of</link_desc_past></relationship>
+<relationship name="person_to_person_stepbrother" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_stepbrother">is the stepbrother of</option><link_desc>is the stepbrother of</link_desc><link_desc_past>was the stepbrother of</link_desc_past></relationship>
+<relationship name="person_to_person_stepsister" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_stepsister">is the stepsister of</option><link_desc>is the stepsister of</link_desc><link_desc_past>was the stepsister of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive brother" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>direct_family_of</group><option value="person_to_person_adoptive brother">is the adoptive brother of</option><link_desc>is the adoptive brother of</link_desc><link_desc_past>was the adoptive brother of</link_desc_past></relationship>
+<relationship name="person_to_person_adoptive sister" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>direct_family_of</group><option value="person_to_person_adoptive sister">is the adoptive sister of</option><link_desc>is the adoptive sister of</link_desc><link_desc_past>was the adoptive sister of</link_desc_past></relationship>
+<relationship name="person_to_person_cousin" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>wider_family_of</group><option value="person_to_person_cousin">is the cousin of</option><link_desc>is the cousin of</link_desc><link_desc_past>was the cousin of</link_desc_past></relationship>
+<relationship name="person_to_person_friend" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>friend_of</group><option value="person_to_person_friend">is the friend of</option><link_desc>is the friend of</link_desc><link_desc_past>was the friend of</link_desc_past></relationship>
+<relationship name="person_to_person_best friend" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>friend_of</group><option value="person_to_person_best friend">is the best friend of</option><link_desc>is the best friend of</link_desc><link_desc_past>was the best friend of</link_desc_past></relationship>
+<relationship name="person_to_person_boyfriend" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>friend_of</group><option value="person_to_person_boyfriend">is the boyfriend of</option><link_desc>is the boyfriend of</link_desc><link_desc_past>was the boyfriend of</link_desc_past></relationship>
+<relationship name="person_to_person_girlfriend" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>friend_of</group><option value="person_to_person_girlfriend">is the girlfriend of</option><link_desc>is the girlfriend of</link_desc><link_desc_past>was the girlfriend of</link_desc_past></relationship>
+<relationship name="person_to_person_acquaintance" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>friend_of</group><option value="person_to_person_acquaintance">is the acquaintance of</option><link_desc>is the acquaintance of</link_desc><link_desc_past>was the acquaintance of</link_desc_past></relationship>
+<relationship name="person_to_person_colleague" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>colleague_of</group><option value="person_to_person_colleague">is the colleague of</option><link_desc>is the colleague of</link_desc><link_desc_past>was the colleague of</link_desc_past></relationship>
+<relationship name="person_to_person_manager" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>colleague_of</group><option value="person_to_person_manager">is the manager of</option><link_desc>is the manager of</link_desc><link_desc_past>was the manager of</link_desc_past></relationship>
+<relationship name="person_to_person_partner" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>colleague_of</group><option value="person_to_person_partner">is the partner of</option><link_desc>is the partner of</link_desc><link_desc_past>was the partner of</link_desc_past></relationship>
+<relationship name="person_to_person_associate" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>colleague_of</group><option value="person_to_person_associate">is the associate of</option><link_desc>is the associate of</link_desc><link_desc_past>was the associate of</link_desc_past></relationship>
+<relationship name="person_to_person_husband" subject="person" predicate="person_to_person" object="person" gender_specific="male"><group>life_partner_of</group><option value="person_to_person_husband">is the husband of</option><link_desc>is the husband of</link_desc><link_desc_past>was the husband of</link_desc_past></relationship>
+<relationship name="person_to_person_wife" subject="person" predicate="person_to_person" object="person" gender_specific="female"><group>life_partner_of</group><option value="person_to_person_wife">is the wife of</option><link_desc>is the wife of</link_desc><link_desc_past>was the wife of</link_desc_past></relationship>
+<relationship name="person_to_person_defacto" subject="person" predicate="person_to_person" object="person" gender_specific="neutral"><group>life_partner_of</group><option value="person_to_person_defacto">is the defacto of</option><link_desc>is the defacto of</link_desc><link_desc_past>was the defacto of</link_desc_past></relationship>
+<relationship name="person_to_organisation_employee" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>works_for</group><option value="person_to_organisation_employee">is an employee of</option><link_desc>is an employee of</link_desc><link_desc_past>was an employee of</link_desc_past></relationship>
+<relationship name="person_to_organisation_CEO" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>works_for</group><option value="person_to_organisation_CEO">is the CEO of</option><link_desc>is the CEO of</link_desc><link_desc_past>was the CEO of</link_desc_past></relationship>
+<relationship name="person_to_organisation_boss" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>works_for</group><option value="person_to_organisation_boss">is the boss of</option><link_desc>is the boss of</link_desc><link_desc_past>was the boss of</link_desc_past></relationship>
+<relationship name="person_to_organisation_consultant" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>works_for</group><option value="person_to_organisation_consultant">is a consultant for</option><link_desc>is a consultant for</link_desc><link_desc_past>was a consultant for</link_desc_past></relationship>
+<relationship name="person_to_organisation_member" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>member_of</group><option value="person_to_organisation_member">is a member of</option><link_desc>is a member of</link_desc><link_desc_past>was a member of</link_desc_past></relationship>
+<relationship name="person_to_organisation_volunteer" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>volunteer_for</group><option value="person_to_organisation_volunteer">is a volunteer for</option><link_desc>is a volunteer for</link_desc><link_desc_past>was a volunteer for</link_desc_past></relationship>
+<relationship name="person_to_organisation_banned" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>banned_from</group><option value="person_to_organisation_banned">is banned from</option><link_desc>is banned from</link_desc><link_desc_past>was banned from</link_desc_past></relationship>
+<relationship name="person_to_organisation_supporter" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>supports</group><option value="person_to_organisation_supporter">is a supporter of</option><link_desc>is a supporter of</link_desc><link_desc_past>was a supporter of</link_desc_past></relationship>
+<relationship name="person_to_organisation_founder" subject="person" predicate="person_to_organisation" object="organisation" gender_specific="neutral"><group>founder_of</group><option value="person_to_organisation_founder">is the founder of</option><link_desc>is the founder of</link_desc><link_desc_past>was the founder of</link_desc_past></relationship>
+<relationship name="organisation_to_person_employer" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>works_for</group><option value="organisation_to_person_employer">is an employer of</option><link_desc>is an employer of</link_desc><link_desc_past>was an employer of</link_desc_past></relationship>
+<relationship name="organisation_to_person_CEO" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>works_for</group><option value="organisation_to_person_CEO">has as its CEO</option><link_desc>has as its CEO</link_desc><link_desc_past>had as its CEO</link_desc_past></relationship>
+<relationship name="organisation_to_person_boss" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>works_for</group><option value="organisation_to_person_boss">has as its boss</option><link_desc>has as its boss</link_desc><link_desc_past>had as its boss</link_desc_past></relationship>
+<relationship name="organisation_to_person_consultant" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>works_for</group><option value="organisation_to_person_consultant">has as a consultant</option><link_desc>has as a consultant</link_desc><link_desc_past>had as a consultant</link_desc_past></relationship>
+<relationship name="organisation_to_person_member" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>member_of</group><option value="organisation_to_person_member">has as a member</option><link_desc>has as a member</link_desc><link_desc_past>had as a member</link_desc_past></relationship>
+<relationship name="organisation_to_person_volunteer" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>volunteer_for</group><option value="organisation_to_person_volunteer">has as a volunteer</option><link_desc>has as a volunteer</link_desc><link_desc_past>had as a volunteer</link_desc_past></relationship>
+<relationship name="organisation_to_person_banned" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>banned_from</group><option value="organisation_to_person_banned">is banned from</option><link_desc>is banned from</link_desc><link_desc_past>was banned from</link_desc_past></relationship>
+<relationship name="organisation_to_person_supporter" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>supports</group><option value="organisation_to_person_supporter">is a supporter of</option><link_desc>is a supporter of</link_desc><link_desc_past>was a supporter of</link_desc_past></relationship>
+<relationship name="organisation_to_person_founder" subject="organisation" predicate="organisation_to_person" object="person" gender_specific="neutral"><group>founder_of</group><option value="organisation_to_person_founder">is a founder of</option><link_desc>is a founder of</link_desc><link_desc_past>was a founder of</link_desc_past></relationship>
+  <relationship name="person_to_event_attendee" subject="person" predicate="person_to_event" object="event" gender_specific="neutral"><group>direct_involvement</group><option value="person_to_event_attendee">is an attendee at</option><link_desc>is an attendee at</link_desc><link_desc_past>was an attendee at</link_desc_past></relationship>
+  <relationship name="person_to_event_organiser" subject="person" predicate="person_to_event" object="event" gender_specific="neutral"><group>direct_involvement</group><option value="person_to_event_organiser">is an organiser of</option><link_desc>is an organiser of</link_desc><link_desc_past>was an organiser of</link_desc_past></relationship>
+  <relationship name="person_to_event_participant" subject="person" predicate="person_to_event" object="event" gender_specific="neutral"><group>direct_involvement</group><option value="person_to_event_participant">is a participant in</option><link_desc>is a participant in</link_desc><link_desc_past>was a participant in</link_desc_past></relationship>
+  <relationship name="person_to_event_supporter" subject="person" predicate="person_to_event" object="event" gender_specific="neutral"><group>indirect_involvement</group><option value="person_to_event_supporter">is a supporter of</option><link_desc>is a supporter of</link_desc><link_desc_past>was a supporter of</link_desc_past></relationship>
+  <relationship name="person_to_event_objection" subject="person" predicate="person_to_event" object="event" gender_specific="neutral"><group>indirect_involvement</group><option value="person_to_event_objection">has an objection to</option><link_desc>has an objection to</link_desc><link_desc_past>had an objection to</link_desc_past></relationship>
+  <relationship name="event_to_person_attended" subject="event" predicate="event_to_person" object="person" gender_specific="neutral"><group>direct_involvement</group><option value="event_to_person_attended">is attended by</option><link_desc>is attended by</link_desc><link_desc_past>was attended by</link_desc_past></relationship>
+  <relationship name="event_to_person_organised" subject="event" predicate="event_to_person" object="person" gender_specific="neutral"><group>direct_involvement</group><option value="event_to_person_organised">is organised by</option><link_desc>is organised by</link_desc><link_desc_past>was organised by</link_desc_past></relationship>
+  <relationship name="event_to_person_participated in" subject="event" predicate="event_to_person" object="person" gender_specific="neutral"><group>direct_involvement</group><option value="event_to_person_participated in">is participated in by</option><link_desc>is participated in by</link_desc><link_desc_past>was participated in by</link_desc_past></relationship>
+  <relationship name="event_to_person_supported" subject="event" predicate="event_to_person" object="person" gender_specific="neutral"><group>indirect_involvement</group><option value="event_to_person_supported">is supported by</option><link_desc>is supported by</link_desc><link_desc_past>was supported by</link_desc_past></relationship>
+  <relationship name="event_to_person_objected to" subject="event" predicate="event_to_person" object="person" gender_specific="neutral"><group>indirect_involvement</group><option value="event_to_person_objected to">is objected to by</option><link_desc>is objected to by</link_desc><link_desc_past>was objected to by</link_desc_past></relationship>
+  <relationship name="person_to_reference_email address" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>email_for</group><option value="person_to_reference_email address">has the email address of</option><link_desc>has the email address of</link_desc><link_desc_past>had the email address of</link_desc_past></relationship>
+  <relationship name="person_to_reference_home phone" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>contact_number_for</group><option value="person_to_reference_home phone">has the home phone of</option><link_desc>has the home phone of</link_desc><link_desc_past>had the home phone of</link_desc_past></relationship>
+  <relationship name="person_to_reference_work phone" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>contact_number_for</group><option value="person_to_reference_work phone">has the work phone of</option><link_desc>has the work phone of</link_desc><link_desc_past>had the work phone of</link_desc_past></relationship>
+  <relationship name="person_to_reference_mobile phone" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>contact_number_for</group><option value="person_to_reference_mobile phone">has the mobile phone of</option><link_desc>has the mobile phone of</link_desc><link_desc_past>had the mobile phone of</link_desc_past></relationship>
+  <relationship name="person_to_reference_profile photo" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>photo_of</group><option value="person_to_reference_profile photo">has a profile photo at</option><link_desc>has a profile photo at</link_desc><link_desc_past>had a profile photo at</link_desc_past></relationship>
+  <relationship name="person_to_reference_photograph" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>photo_of</group><option value="person_to_reference_photograph">is in the photograph at</option><link_desc>is in the photograph at</link_desc><link_desc_past>is in the photograph at</link_desc_past></relationship>
+  <relationship name="person_to_reference_website" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="person_to_reference_website">has the website at</option><link_desc>has the website at</link_desc><link_desc_past>had the website at</link_desc_past></relationship>
+  <relationship name="person_to_reference_related web page" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="person_to_reference_related web page">has a related web page at</option><link_desc>has a related web page at</link_desc><link_desc_past>had a related web page at</link_desc_past></relationship>
+  <relationship name="person_to_reference_file attachment" subject="person" predicate="person_to_reference" object="reference" gender_specific="neutral"><group>file_about</group><option value="person_to_reference_file attachment">has a file attachment at</option><link_desc>has a file attachment at</link_desc><link_desc_past>had a file attachment at</link_desc_past></relationship>
+  <relationship name="reference_to_person_email address" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>email_for</group><option value="reference_to_person_email address">is an email address for</option><link_desc>is an email address for</link_desc><link_desc_past>was an email address for</link_desc_past></relationship>
+  <relationship name="reference_to_person_home phone" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>contact_number_for</group><option value="reference_to_person_home phone">is the home phone for</option><link_desc>is the home phone for</link_desc><link_desc_past>was the home phone for</link_desc_past></relationship>
+  <relationship name="reference_to_person_work phone" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>contact_number_for</group><option value="reference_to_person_work phone">is the work phone for</option><link_desc>is the work phone for</link_desc><link_desc_past>was the work phone for</link_desc_past></relationship>
+  <relationship name="reference_to_person_mobile phone" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>contact_number_for</group><option value="reference_to_person_mobile phone">is the mobile phone for</option><link_desc>is the mobile phone for</link_desc><link_desc_past>was the mobile phone for</link_desc_past></relationship>
+  <relationship name="reference_to_person_profile photo" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>photo_of</group><option value="reference_to_person_profile photo">is the profile photo of</option><link_desc>is the profile photo of</link_desc><link_desc_past>was the profile photo of</link_desc_past></relationship>
+  <relationship name="reference_to_person_photograph" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>photo_of</group><option value="reference_to_person_photograph">is a photograph of</option><link_desc>is a photograph of</link_desc><link_desc_past>was a photograph of</link_desc_past></relationship>
+  <relationship name="reference_to_person_website" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>url_for</group><option value="reference_to_person_website">is a website for</option><link_desc>is a website for</link_desc><link_desc_past>was a website for</link_desc_past></relationship>
+  <relationship name="reference_to_person_related web page" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>url_for</group><option value="reference_to_person_related web page">is a related web page for</option><link_desc>is a related web page for</link_desc><link_desc_past>was a related web page for</link_desc_past></relationship>
+  <relationship name="reference_to_person_file attachment" subject="reference" predicate="reference_to_person" object="person" gender_specific="neutral"><group>file_about</group><option value="reference_to_person_file attachment">is a file attachment in relation to</option><link_desc>is a file attachment in relation to</link_desc><link_desc_past>was a file attachment in relation to</link_desc_past></relationship>
+  <relationship name="person_to_location_home address" subject="person" predicate="person_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="person_to_location_home address">has the home address of</option><link_desc>has the home address of</link_desc><link_desc_past>had the home address of</link_desc_past></relationship>
+  <relationship name="person_to_location_holidays" subject="person" predicate="person_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="person_to_location_holidays">takes holidays at</option><link_desc>takes holidays at</link_desc><link_desc_past>took holidays at</link_desc_past></relationship>
+  <relationship name="person_to_location_seen" subject="person" predicate="person_to_location" object="location" gender_specific="neutral"><group>location_for</group><option value="person_to_location_seen">is seen at</option><link_desc>is seen at</link_desc><link_desc_past>was seen at</link_desc_past></relationship>
+  <relationship name="person_to_location_frequent" subject="person" predicate="person_to_location" object="location" gender_specific="neutral"><group>location_for</group><option value="person_to_location_frequent">is known to frequent the location</option><link_desc>is known to frequent the location</link_desc><link_desc_past>was known to frequent the location</link_desc_past></relationship>
+  <relationship name="location_to_person_home address" subject="location" predicate="location_to_person" object="person" gender_specific="neutral"><group>address_for</group><option value="location_to_person_home address">is the home address for</option><link_desc>is the home address for</link_desc><link_desc_past>was the home address for</link_desc_past></relationship>
+  <relationship name="location_to_person_holidays at" subject="location" predicate="location_to_person" object="person" gender_specific="neutral"><group>address_for</group><option value="location_to_person_holidays at">is a location for holidays at by</option><link_desc>is a location for holidays at by</link_desc><link_desc_past>was a location for holidays at by</link_desc_past></relationship>
+  <relationship name="location_to_person_see" subject="location" predicate="location_to_person" object="person" gender_specific="neutral"><group>location_for</group><option value="location_to_person_see">is a location where you can see the person</option><link_desc>is a location where you can see the person</link_desc><link_desc_past>was a location where you could see the person</link_desc_past></relationship>
+  <relationship name="location_to_person_frequented" subject="location" predicate="location_to_person" object="person" gender_specific="neutral"><group>location_for</group><option value="location_to_person_frequented">is a location known to be frequented by</option><link_desc>is a location known to be frequented by</link_desc><link_desc_past>was a location which was known to be frequented by</link_desc_past></relationship>
+  <relationship name="organisation_to_organisation_partner" subject="organisation" predicate="organisation_to_organisation" object="organisation" gender_specific="neutral"><group>related_company_to</group><option value="organisation_to_organisation_partner">is the partner of</option><link_desc>is the partner of</link_desc><link_desc_past>was the partner of</link_desc_past></relationship>
+  <relationship name="organisation_to_organisation_competitor" subject="organisation" predicate="organisation_to_organisation" object="organisation" gender_specific="neutral"><group>competitor_of</group><option value="organisation_to_organisation_competitor">is the competitor of</option><link_desc>is the competitor of</link_desc><link_desc_past>was the competitor of</link_desc_past></relationship>
+  <relationship name="organisation_to_organisation_parent company" subject="organisation" predicate="organisation_to_organisation" object="organisation" gender_specific="neutral"><group>related_company_to</group><option value="organisation_to_organisation_parent company">is the parent company of</option><link_desc>is the parent company of</link_desc><link_desc_past>was the parent company of</link_desc_past></relationship>
+  <relationship name="organisation_to_organisation_subsidiary" subject="organisation" predicate="organisation_to_organisation" object="organisation" gender_specific="neutral"><group>related_company_to</group><option value="organisation_to_organisation_subsidiary">is the subsidiary of</option><link_desc>is the subsidiary of</link_desc><link_desc_past>was the subsidiary of</link_desc_past></relationship>
+  <relationship name="organisation_to_event_organiser" subject="organisation" predicate="organisation_to_event" object="event" gender_specific="neutral"><group>organiser_of</group><option value="organisation_to_event_organiser">is the organiser of</option><link_desc>is the organiser of</link_desc><link_desc_past>was the organiser of</link_desc_past></relationship>
+  <relationship name="organisation_to_event_promoter" subject="organisation" predicate="organisation_to_event" object="event" gender_specific="neutral"><group>promoter_of</group><option value="organisation_to_event_promoter">is the promoter of</option><link_desc>is the promoter of</link_desc><link_desc_past>was the promoter of</link_desc_past></relationship>
+  <relationship name="organisation_to_event_affected" subject="organisation" predicate="organisation_to_event" object="event" gender_specific="neutral"><group>affected_by</group><option value="organisation_to_event_affected">is affected by</option><link_desc>is affected by</link_desc><link_desc_past>was affected by</link_desc_past></relationship>
+  <relationship name="event_to_organisation_organised" subject="event" predicate="event_to_organisation" object="organisation" gender_specific="neutral"><group>organiser_of</group><option value="event_to_organisation_organised">is being organised by</option><link_desc>is being organised by</link_desc><link_desc_past>was organised by</link_desc_past></relationship>
+  <relationship name="event_to_organisation_promoted" subject="event" predicate="event_to_organisation" object="organisation" gender_specific="neutral"><group>promoter_of</group><option value="event_to_organisation_promoted">is being promoted by</option><link_desc>is being promoted by</link_desc><link_desc_past>was promoted by</link_desc_past></relationship>
+  <relationship name="event_to_organisation_effect" subject="event" predicate="event_to_organisation" object="organisation" gender_specific="neutral"><group>affected_by</group><option value="event_to_organisation_effect">has an effect on</option><link_desc>has an effect on</link_desc><link_desc_past>had an effect on</link_desc_past></relationship>
+  <relationship name="organisation_to_location_office address" subject="organisation" predicate="organisation_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="organisation_to_location_office address">has the office address at</option><link_desc>has the office address at</link_desc><link_desc_past>had the office address at</link_desc_past></relationship>
+  <relationship name="organisation_to_location_headquarters" subject="organisation" predicate="organisation_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="organisation_to_location_headquarters">has its headquarters at</option><link_desc>has its headquarters at</link_desc><link_desc_past>had its headquarters at</link_desc_past></relationship>
+  <relationship name="organisation_to_location_warehouse" subject="organisation" predicate="organisation_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="organisation_to_location_warehouse">has a warehouse at</option><link_desc>has a warehouse at</link_desc><link_desc_past>had a warehouse at</link_desc_past></relationship>
+  <relationship name="organisation_to_location_mailing address" subject="organisation" predicate="organisation_to_location" object="location" gender_specific="neutral"><group>address_for</group><option value="organisation_to_location_mailing address">has the mailing address at</option><link_desc>has the mailing address at</link_desc><link_desc_past>had the mailing address at</link_desc_past></relationship>
+  <relationship name="location_to_organisation_office address" subject="location" predicate="location_to_organisation" object="organisation" gender_specific="neutral"><group>address_for</group><option value="location_to_organisation_office address">is the office address of</option><link_desc>is the office address of</link_desc><link_desc_past>was the office address of</link_desc_past></relationship>
+  <relationship name="location_to_organisation_headquarters" subject="location" predicate="location_to_organisation" object="organisation" gender_specific="neutral"><group>address_for</group><option value="location_to_organisation_headquarters">is the headquarters of</option><link_desc>is the headquarters of</link_desc><link_desc_past>was the headquarters of</link_desc_past></relationship>
+  <relationship name="location_to_organisation_warehouse" subject="location" predicate="location_to_organisation" object="organisation" gender_specific="neutral"><group>address_for</group><option value="location_to_organisation_warehouse">is the warehouse of</option><link_desc>is the warehouse of</link_desc><link_desc_past>was the warehouse of</link_desc_past></relationship>
+  <relationship name="location_to_organisation_mailing address" subject="location" predicate="location_to_organisation" object="organisation" gender_specific="neutral"><group>address_for</group><option value="location_to_organisation_mailing address">is the mailing address of</option><link_desc>is the mailing address of</link_desc><link_desc_past>was the mailing address of</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_phone number" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>number_for</group><option value="organisation_to_reference_phone number">has the phone number of</option><link_desc>has the phone number of</link_desc><link_desc_past>had the phone number of</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_fax number" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>number_for</group><option value="organisation_to_reference_fax number">has the fax number of</option><link_desc>has the fax number of</link_desc><link_desc_past>had the fax number of</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_photo" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>photo_of</group><option value="organisation_to_reference_photo">has the photo at</option><link_desc>has the photo at</link_desc><link_desc_past>had the photo at</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_website" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="organisation_to_reference_website">has a website at</option><link_desc>has a website at</link_desc><link_desc_past>had a website at</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_related web page" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="organisation_to_reference_related web page">has a related web page at</option><link_desc>has a related web page at</link_desc><link_desc_past>had a related web page at</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_file attachment" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>file_about</group><option value="organisation_to_reference_file attachment">has a related file attachment at</option><link_desc>has a related file attachment at</link_desc><link_desc_past>had a related file attachment at</link_desc_past></relationship>
+  <relationship name="organisation_to_reference_email address" subject="organisation" predicate="organisation_to_reference" object="reference" gender_specific="neutral"><group>email_for</group><option value="organisation_to_reference_email address">has the email address of</option><link_desc>has the email address of</link_desc><link_desc_past>had the email address of</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_phone number" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>number_for</group><option value="reference_to_organisation_phone number">is a phone number for</option><link_desc>is a phone number for</link_desc><link_desc_past>was a phone number for</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_fax number" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>number_for</group><option value="reference_to_organisation_fax number">is a fax number for</option><link_desc>is a fax number for</link_desc><link_desc_past>was a fax number for</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_photo" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>photo_of</group><option value="reference_to_organisation_photo">is a photo for</option><link_desc>is a photo for</link_desc><link_desc_past>was a photo for</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_website" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>url_for</group><option value="reference_to_organisation_website">is a website for</option><link_desc>is a website for</link_desc><link_desc_past>was a website for</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_related web page" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>url_for</group><option value="reference_to_organisation_related web page">is a related web page to</option><link_desc>is a related web page to</link_desc><link_desc_past>was a related web page to</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_file attachment" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>file_about</group><option value="reference_to_organisation_file attachment">is a file attachment in relation to</option><link_desc>is a file attachment in relation to</link_desc><link_desc_past>was a file attachment in relation to</link_desc_past></relationship>
+  <relationship name="reference_to_organisation_email address" subject="reference" predicate="reference_to_organisation" object="organisation" gender_specific="neutral"><group>email_for</group><option value="reference_to_organisation_email address">is a email address for</option><link_desc>is a email address for</link_desc><link_desc_past>was a email address for</link_desc_past></relationship>
+  <relationship name="event_to_location_location" subject="event" predicate="event_to_location" object="location" gender_specific="neutral"><group>location_for</group><option value="event_to_location_location">is at the location of</option><link_desc>is at the location of</link_desc><link_desc_past>was at the location of</link_desc_past></relationship>
+  <relationship name="location_to_event_location" subject="location" predicate="location_to_event" object="event" gender_specific="neutral"><group>location_for</group><option value="location_to_event_location">is the location for</option><link_desc>is the location for</link_desc><link_desc_past>was the location for</link_desc_past></relationship>
+  <relationship name="event_to_event_related" subject="event" predicate="event_to_event" object="event" gender_specific="neutral"><group>related_to</group><option value="event_to_event_related">is related to</option><link_desc>is related to</link_desc><link_desc_past>was related to</link_desc_past></relationship>
+  <relationship name="event_to_reference_phone number" subject="event" predicate="event_to_reference" object="reference" gender_specific="neutral"><group>number_for</group><option value="event_to_reference_phone number">has the phone number of</option><link_desc>has the phone number of</link_desc><link_desc_past>had the phone number of</link_desc_past></relationship>
+  <relationship name="event_to_reference_website" subject="event" predicate="event_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="event_to_reference_website">has a website at</option><link_desc>has a website at</link_desc><link_desc_past>had a website at</link_desc_past></relationship>
+  <relationship name="event_to_reference_related web page" subject="event" predicate="event_to_reference" object="reference" gender_specific="neutral"><group>url_for</group><option value="event_to_reference_related web page">has a related web page at</option><link_desc>has a related web page at</link_desc><link_desc_past>had a related web page at</link_desc_past></relationship>
+  <relationship name="event_to_reference_photo" subject="event" predicate="event_to_reference" object="reference" gender_specific="neutral"><group>photo_of</group><option value="event_to_reference_photo">has the photo at</option><link_desc>has the photo at</link_desc><link_desc_past>had the photo at</link_desc_past></relationship>
+  <relationship name="event_to_reference_file attachment" subject="event" predicate="event_to_reference" object="reference" gender_specific="neutral"><group>file_about</group><option value="event_to_reference_file attachment">has a related file attachment at</option><link_desc>has a related file attachment at</link_desc><link_desc_past>had a related file attachment at</link_desc_past></relationship>
+  <relationship name="reference_to_event_phone number" subject="reference" predicate="reference_to_event" object="event" gender_specific="neutral"><group>number_for</group><option value="reference_to_event_phone number">is a phone number for</option><link_desc>is a phone number for</link_desc><link_desc_past>was a phone number for</link_desc_past></relationship>
+  <relationship name="reference_to_event_website" subject="reference" predicate="reference_to_event" object="event" gender_specific="neutral"><group>url_for</group><option value="reference_to_event_website">is a website for</option><link_desc>is a website for</link_desc><link_desc_past>was a website for</link_desc_past></relationship>
+  <relationship name="reference_to_event_related web page" subject="reference" predicate="reference_to_event" object="event" gender_specific="neutral"><group>url_for</group><option value="reference_to_event_related web page">is a related web page for</option><link_desc>is a related web page for</link_desc><link_desc_past>was a related web page for</link_desc_past></relationship>
+  <relationship name="reference_to_event_photo" subject="reference" predicate="reference_to_event" object="event" gender_specific="neutral"><group>photo_of</group><option value="reference_to_event_photo">is a photo of</option><link_desc>is a photo of</link_desc><link_desc_past>was a photo of</link_desc_past></relationship>
+  <relationship name="reference_to_event_file attachment" subject="reference" predicate="reference_to_event" object="event" gender_specific="neutral"><group>file_about</group><option value="reference_to_event_file attachment">is a file attachment for</option><link_desc>is a file attachment for</link_desc><link_desc_past>was a file attachment for</link_desc_past></relationship>
+  <relationship name="location_to_reference_photo" subject="location" predicate="location_to_reference" object="reference" gender_specific="neutral"><group>photo_of</group><option value="location_to_reference_photo">has the photo at</option><link_desc>has the photo at</link_desc><link_desc_past>had the photo at</link_desc_past></relationship>
+  <relationship name="location_to_reference_file attachment" subject="location" predicate="location_to_reference" object="reference" gender_specific="neutral"><group>file_about</group><option value="location_to_reference_file attachment">is a file attachment in relation to</option><link_desc>is a file attachment in relation to</link_desc><link_desc_past>was a file attachment in relation to</link_desc_past></relationship>
+  <relationship name="reference_to_location_photo" subject="reference" predicate="reference_to_location" object="location" gender_specific="neutral"><group>photo_of</group><option value="reference_to_location_photo">is a photo of</option><link_desc>is a photo of</link_desc><link_desc_past>was a photo of</link_desc_past></relationship>
+  <relationship name="reference_to_location_file attachment" subject="reference" predicate="reference_to_location" object="location" gender_specific="neutral"><group>file_about</group><option value="reference_to_location_file attachment">is a file attachment in relation to</option><link_desc>is a file attachment in relation to</link_desc><link_desc_past>was a file attachment in relation to</link_desc_past></relationship>
+  <relationship name="location_to_location_related" subject="location" predicate="location_to_location" object="location" gender_specific="neutral"><group>related_loc</group><option value="location_to_location_related">is related to</option><link_desc>is related to</link_desc><link_desc_past>was related to</link_desc_past></relationship>
+  <relationship name="reference_to_reference_related" subject="reference" predicate="reference_to_reference" object="reference" gender_specific="neutral"><group>ref_to</group><option value="reference_to_reference_related">is related to</option><link_desc>is related to</link_desc><link_desc_past>was related to</link_desc_past></relationship>
+  </relationships>																								

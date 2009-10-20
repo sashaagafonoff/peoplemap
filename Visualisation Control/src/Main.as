@@ -47,7 +47,6 @@
 						
 			var headingTF:TextFormat = new TextFormat();
 			headingTF.color = 0xffffffff;
-			headingTF.bold = true;
 			headingTF.font = "Arial";
 			headingTF.size = 12;
 			
@@ -70,36 +69,40 @@
 				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
 				ns.addChild(ts);	
 				ns.width = ts.width;
-
-				//var rs:RectSprite = new RectSprite( -9,-9,18,18,5,5);
-				var rs:Sprite = new Sprite();
- 
+				
+				var rs:Sprite = new Sprite;
+				
 				if (ns.data.node_class == "person") {
-					rs.graphics.lineStyle(3, 0xffFF9933);
-					rs.graphics.beginFill(0xffFF9933, 0.5);
+					if (ns.data.sex == "Female") {
+						rs.addChild(new female);
+					} else {
+						rs.addChild(new male);
+					}
 				} else if (ns.data.node_class == "organisation") {
-					rs.graphics.lineStyle(3, 0xff00CC99);
-					rs.graphics.beginFill(0xff00CC99, 0.5);
+					rs.addChild(new organisation);
 				} else if (ns.data.node_class == "location") {
-					rs.graphics.lineStyle(3, 0xff9999CC);
-					rs.graphics.beginFill(0xff9999CC, 0.5);
+					rs.addChild(new location);
 				} else if (ns.data.node_class == "reference") {
-					rs.graphics.lineStyle(3, 0xff3399CC);
-					rs.graphics.beginFill(0xff3399CC, 0.5);
+					switch(ns.data.reference_type) {
+						case "email":
+							rs.addChild(new email);
+							break;
+						default:
+							rs.addChild(new reference);
+					}
 				} else if (ns.data.node_class == "event") {
-					rs.graphics.lineStyle(3, 0xffFFFF99);
-					rs.graphics.beginFill(0xffFFFF99, 0.5);
+					rs.addChild(new event);
 				} else { // shouldn't happen
-					rs.graphics.lineStyle(1, 0x000000);
-					rs.graphics.beginFill(0xffffff, 0.3);
+					rs.addChild(new reference);
 				}
 				
-				rs.graphics.drawCircle(0, 0, 7);
-	 
-				// center below circle
-				ts.x = rs.x - ts.width / 2 + 2;
-				ts.y = rs.y + 10;
+				rs.x = -20;
+				rs.y = -20;
 				
+				// center below circle
+				ts.x = rs.x - ts.width / 2 + 15;
+				ts.y = rs.y + 40;
+
 				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the rectangular box
 				ns.size = 0;
 				ns.mouseChildren = false; 

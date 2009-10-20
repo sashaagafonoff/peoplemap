@@ -32,11 +32,11 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @references = Reference.all.nodes
-    @organisations = Organisation.all.nodes
-    @people = Person.all.nodes
-    @locations = Location.all.nodes
-    @events = Event.all.nodes
+    @references = Reference.all.nodes.to_a
+    @organisations = Organisation.all.nodes.to_a
+    @people = Person.all.nodes.to_a
+    @locations = Location.all.nodes.to_a
+    @events = Event.all.nodes.to_a
   end
 
   def link

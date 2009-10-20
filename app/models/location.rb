@@ -4,12 +4,17 @@ class Location
 
   property :apt_office_floor_number, :street_number, :street_name, :street_type, :suburb, :city, :country, :postcode, :notes
   
-  has_n(:person_to_loc).from(Person).relationship(Role)
-  has_n(:org_to_loc).from(Organisation).relationship(Role)
-  has_n(:event_to_loc).from(Event).relationship(Role)
-  has_n(:loc_to_loc).to(Location).relationship(Role)
-  has_n(:loc_to_ref).to(Reference).relationship(Role)
-  
+  has_n(:location_to_person).to(Person).relationship(Role)
+  has_n(:location_to_organisation).to(Organisation).relationship(Role)
+  has_n(:location_to_event).to(Event).relationship(Role)
+  has_n(:location_to_location).to(Location).relationship(Role)
+  has_n(:location_to_reference).to(Reference).relationship(Role)
+
+  has_n(:person_to_location).from(Person).relationship(Role)
+  has_n(:organisation_to_location).from(Organisation).relationship(Role)
+  has_n(:event_to_location).from(Event).relationship(Role)
+  has_n(:reference_to_location).from(Reference).relationship(Role)
+
   index :street_name, :suburb, :country
 
   Location::LOCATION_TYPES = [

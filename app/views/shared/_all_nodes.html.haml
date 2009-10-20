@@ -2,6 +2,7 @@
   Node Finder
 %p
   This panel allows you to search for nodes in the underlying database and link to them from this node.
+  At the moment this panel lists every single node in the database, but soon it will provide a search function which will list matching results ordered by node type.
 %div{:class => "all_nodes_list"}
   %h2
     people
@@ -10,7 +11,7 @@
   - @people.each do |person|
     - if (person.neo_node_id != object.neo_node_id) then
       %div{:class => cycle('list_odd', 'list_even'), :id => person.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "person"), :target => person, :origin_type => object.class.to_s.downcase, :target_type => "person"})
+        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "person",get_gender(object)), :target => person, :origin_type => object.class.to_s.downcase, :target_type => "person"})
 
 %div{:class => "all_nodes_list"}
   %h2
@@ -20,7 +21,7 @@
   - @organisations.each do |organisation|
     - if (organisation.neo_node_id != object.neo_node_id) then
       %div{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "organisation"), :target => organisation, :origin_type => object.class.to_s.downcase, :target_type => "organisation"})
+        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "organisation","neutral"), :target => organisation, :origin_type => object.class.to_s.downcase, :target_type => "organisation"})
 
 %div{:class => "all_nodes_list"}
   %h2
@@ -30,7 +31,7 @@
   - @locations.each do |location|
     - if (location.neo_node_id != object.neo_node_id) then
       %div{:class => cycle('list_odd', 'list_even'), :id => location.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
+        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location","neutral"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
 %div{:class => "all_nodes_list"}
   %h2
     events
@@ -39,7 +40,7 @@
   - @events.each do |event|
     - if (event.neo_node_id != object.neo_node_id) then
       %div{:class => cycle('list_odd', 'list_even'), :id => event.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "event"), :target => event, :origin_type => object.class.to_s.downcase, :target_type => "event"})
+        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "event","neutral"), :target => event, :origin_type => object.class.to_s.downcase, :target_type => "event"})
 
 %div{:class => "all_nodes_list"}
   %h2
@@ -49,4 +50,4 @@
   - @references.each do |reference|
     - if (reference.neo_node_id != object.neo_node_id) then
       %div{:class => cycle('list_odd', 'list_even'), :id => reference.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "reference"), :target => reference, :origin_type => object.class.to_s.downcase, :target_type => "reference"})
+        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "reference","neutral"), :target => reference, :origin_type => object.class.to_s.downcase, :target_type => "reference"})
