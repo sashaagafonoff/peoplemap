@@ -4,7 +4,10 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
+  caches_page :show, :graphml, :index
+
   around_filter :neo_tx
+  after_filter :invalidate_cache,  :only => [:create, :update, :link, :unlink]
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -126,5 +129,15 @@ class ApplicationController < ActionController::Base
     Neo4j::Transaction.new
     yield
     Neo4j::Transaction.finish
+  end
+
+  def invalidate_cache
+    cache_dir = ActionController::Base.page_cache_directory
+    RAILS_DEFAULT_LOGGER.info "INVALIDATE CACHE #{cache_dir}"
+    unless cache_dir == RAILS_ROOT+"/public"
+      RAILS_DEFAULT_LOGGER.info "remove cache dir '#{cache_dir}'"
+      FileUtils.rm_r(Dir.glob(cache_dir+"/*")) rescue Errno::ENOENT
+      RAILS_DEFAULT_LOGGER.info("Cache directory '#{cache_dir}' fully swept.")
+    end
   end
 end
