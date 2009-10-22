@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   caches_page :show, :graphml, :index
 
   around_filter :neo_tx
-  after_filter :invalidate_cache,  :only => [:create, :update, :link, :unlink]
+  after_filter :invalidate_cache,  :only => [:create, :update, :link, :unlink, :destroy]
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
