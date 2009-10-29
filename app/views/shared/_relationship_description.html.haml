@@ -35,5 +35,10 @@
     - # get notes for relationship
     - unless object.notes.nil?
       = "| " + object.notes
-    = link_to '[x]', {:action => "unlink", :id => @origin.neo_node_id, :target_id => @target.neo_node_id, :neo_relationship_id => object.neo_relationship_id }, :title => "Delete this link", :class => "unlink_a"
+
+    - # display link to delete relationship
+    - if @originating_node_id == @origin.neo_node_id then
+      = link_to '[x]', {:action => "unlink", :id => @origin.neo_node_id, :target_id => @target.neo_node_id, :neo_relationship_id => object.neo_relationship_id }, :title => "Delete this link", :class => "unlink_a"
+    - else
+      = link_to '[x]', {:action => "unlink", :id => @target.neo_node_id, :target_id => @origin.neo_node_id, :neo_relationship_id => object.neo_relationship_id }, :title => "Delete this link", :class => "unlink_a"
 
