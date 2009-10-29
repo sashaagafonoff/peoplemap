@@ -71,7 +71,8 @@ module ApplicationHelper
 
   def convert_to_graphml(object)
 
-    rel_array = Array.new
+    node_array = Array.new # need to track node IDs to avoid duplication in the generated GraphML
+    rel_array = Array.new  # need to track relationships to avoid recursion
     children = Array.new
 
     # build GraphML for children nodes to target
@@ -83,6 +84,8 @@ module ApplicationHelper
       @rel_start_id = relationship.start_node.neo_node_id
       @rel_end_id = relationship.end_node.neo_node_id
       @rel_id = relationship.neo_relationship_id
+      node_array.push relationship.start_node.neo_node_id
+      node_array.push relationship.end_node.neo_node_id
       unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely
         if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
 
@@ -94,8 +97,11 @@ module ApplicationHelper
               @sub_rel_end_id = sub_relationship.end_node.neo_node_id
               @sub_rel_id = sub_relationship.neo_relationship_id
               if (inverse_node.neo_node_id == sub_relationship.start_node.neo_node_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
+              @sub_nodes = unless (node_array.include? sub_inverse_node.neo_node_id) then graphml_builder(sub_inverse_node) else " " end
               @sub_edges = unless (sub_relationship.start_node.neo_node_id == 1) then graphml_edge_builder(sub_relationship) else " " end
-              grandchildren.push graphml_builder(sub_inverse_node) + @sub_edges
+              grandchildren.push @sub_nodes + @sub_edges
+              node_array.push sub_relationship.start_node.neo_node_id
+              node_array.push sub_relationship.end_node.neo_node_id
             end
           end
           rel_array.push sub_relationship.neo_relationship_id
