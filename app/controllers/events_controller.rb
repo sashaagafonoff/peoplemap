@@ -40,13 +40,13 @@ class EventsController < ApplicationController
   def link
     linker(params)
     redirect_to(@object)
-    flash[:notice] = @object.title + " was linked to node " + @target.neo_node_id.to_s
+    flash[:notice] = get_display_name(@object) + " was linked to " + get_display_name(@target)
   end
   
   def unlink
     unlinker(params)
     redirect_to(@object)
-    flash[:notice] = @object.title + " was unlinked from " + @target.neo_node_id.to_s
+    flash[:notice] = get_display_name(@object) + " was unlinked " + get_display_name(@target)
   end
   
   def new

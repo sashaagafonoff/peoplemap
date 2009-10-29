@@ -36,27 +36,37 @@ module ApplicationHelper
     else # for past relationships
       @link_desc = "link_desc_past"
     end
-    xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
-    doc = Document.new(xml)
-    @edge_name = edge.name
-    @xpath_query = '//relationships/relationship[@name="' + @edge_name + '"]/' + @link_desc
-    @rel_desc = XPath.first(doc, @xpath_query).text
+    @@cache ||= {}
+    unless @@cache[edge.name]
+      xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
+      doc = Document.new(xml)
+      @edge_name = edge.name
+      xpath_query = '//relationships/relationship[@name="' + @edge_name + '"]/' + @link_desc
+      @@cache[edge.name] = XPath.first(doc, xpath_query).text
+      xml.close
+    end
+    @rel_desc = @@cache[edge.name]
   end
   
   def get_type_list(origin_type, target_type, origin_gender)
-    xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
-    doc = Document.new(xml)
-    case origin_gender
-      when "Male"
-        @gender_modifier = ' and (@gender_specific="male" or @gender_specific="neutral")'
-      when "Female"
-        @gender_modifier = ' and (@gender_specific="female" or @gender_specific="neutral")'
-      else
-        @gender_modifier = ''
+    @@cache2 ||= {}
+    key = origin_type + target_type
+    unless @@cache2[key]
+      xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
+      doc = Document.new(xml)
+      case origin_gender
+        when "Male"
+          @gender_modifier = ' and (@gender_specific="male" or @gender_specific="neutral")'
+        when "Female"
+          @gender_modifier = ' and (@gender_specific="female" or @gender_specific="neutral")'
+        else
+          @gender_modifier = ''
+      end
+      drop_list_display = '//relationships/relationship[@predicate="' + origin_type + '_to_' + target_type + '"'+ @gender_modifier +']/option' # /text() will return just node values
+      @@cache2[key] = XPath.match(doc, drop_list_display)
+      xml.close
     end
-    @drop_list_display = '//relationships/relationship[@predicate="' + origin_type + '_to_' + target_type + '"'+ @gender_modifier +']/option' # /text() will return just node values
-    @drop_list_display_hash = XPath.match(doc, @drop_list_display)
-    return @drop_list_display_hash
+    return @@cache2[key]
   end
 
   def get_gender(object)
