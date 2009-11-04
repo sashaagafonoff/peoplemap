@@ -1,48 +1,59 @@
 ﻿package 
 {
-	import flare.animate.Transitioner;
 	import flare.display.TextSprite;
-	import flare.vis.Visualization;
-	import flare.vis.controls.DragControl;
-	import flare.vis.data.Data;
-	import flare.vis.data.EdgeSprite;
-	import flare.vis.data.NodeSprite;
+	import flash.text.TextField;
+
 	import flare.animate.FunctionSequence;
 	import flare.animate.Transition;
 	import flare.animate.TransitionEvent;
 	import flare.animate.Transitioner;
-	import flare.demos.util.GraphUtil;
-	import flare.demos.util.Link;
-	import flare.query.methods.add;
+	
+
 	import flare.util.Shapes;
+	
 	import flare.vis.Visualization;
+
+	import flare.vis.data.Data;
+	import flare.vis.data.EdgeSprite;
+	import flare.vis.data.NodeSprite;
+	import flare.vis.data.DataList;
+	import flare.vis.data.render.ArrowType;
+	
 	import flare.vis.controls.DragControl;
+	import flare.vis.controls.PanZoomControl;
 	import flare.vis.controls.ExpandControl;
 	import flare.vis.controls.HoverControl;
 	import flare.vis.controls.IControl;
-	import flare.vis.data.Data;
-	import flare.vis.data.DataList;
-	import flare.vis.data.NodeSprite;
+	
 	import flare.vis.events.SelectionEvent;
+	
 	import flare.vis.operator.OperatorSwitch;
+	
 	import flare.vis.operator.encoder.PropertyEncoder;
+	
 	import flare.vis.operator.layout.CircleLayout;
-	import flare.vis.operator.layout.CirclePackingLayout;
-	import flare.vis.operator.layout.DendrogramLayout;
 	import flare.vis.operator.layout.ForceDirectedLayout;
-	import flare.vis.operator.layout.IcicleTreeLayout;
 	import flare.vis.operator.layout.IndentedTreeLayout;
 	import flare.vis.operator.layout.Layout;
 	import flare.vis.operator.layout.NodeLinkTreeLayout;
 	import flare.vis.operator.layout.RadialTreeLayout;
-	import flare.vis.operator.filter.GraphDistanceFilter;
-	import flare.vis.operator.label.Labeler;
 	
-	import flash.geom.Point;
+	import flare.vis.operator.filter.GraphDistanceFilter;
+	
+	import flare.vis.operator.label.Labeler;
+	import flare.vis.operator.label.RadialLabeler;
+	
 	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	
 	import flash.text.TextFormat;
 	
 	import peoplemap.GraphMLReader;
@@ -50,27 +61,29 @@
 	[SWF(width="600", height="600", backgroundColor="#001F3E", frameRate="30")]
 	public class Main extends Sprite
 	{
+		
 		// add UI components (from /lib/peoplemap.swc)
 		private var mb:menuBar = new menuBar;
 		private var preloaderAnimation:loaderComponent = new loaderComponent;
 		private var bmb:baseMenuBar = new baseMenuBar;
-		
-		// add 
+
 		private var vis:Visualization;
 		
 		private var opt:Array;
 		private var idx:int = -1;
+		private var cur:Object = new Object;
+		private var stgHeight:int = stage.stageHeight;
 		
-		private var w:int = 500;
-		private var h:int = 500;
 /*		
  * 		Set up the basic layout and set links for the buttons
 */
-		
+	
 		public function Main() {
 			
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			// get configured options for visualisation types 
-			opt = options(w, h);
+			opt = options(stage.width-50,stage.height-50);
 			
 			// set default visualisation to tree (first in options index)
 			idx = 0;
@@ -81,18 +94,21 @@
 			addChild(preloaderAnimation);
 			
 			// build menu buttons
-			mb.x = 0;
-			mb.y = 0;
+			mb.menuBgd.width = stage.stageWidth;
+			mb.x = stage.stageWidth - mb.menuBgd.width + 20;
 			addChild(mb);
 			
 			// set the highlight state of the Tree button to up as it is always displayed first
 			mb.treeBtn.upState = mb.treeBtn.overState;
 
 			// build base menu
-			bmb.x = 0;
-			bmb.y = 575;
+			bmb.baseMenuBgd.width = stage.stageWidth;
+			bmb.y = stage.stageHeight - bmb.baseMenuBgd.height;
 			addChild(bmb);
 			
+			bmb.btnFullScreen.addEventListener(MouseEvent.CLICK, toggleFullScreen);
+			stage.addEventListener(Event.RESIZE, resize);
+
 			// set up listeners for each of the buttons from the menuBar component (in /lib/peoplemap.swc)
 			for (var i:uint=0; i<opt.length; ++i) {
 				this.mb.getChildByName(opt[i].button).addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void { 
@@ -131,31 +147,24 @@
 			// hide preloader
 			removeChild(preloaderAnimation);
 			
+			
 			// set up visualisation space
 			vis = new Visualization(data);
-			vis.bounds = new Rectangle(50, 50, w, h); // x/y/w/h
+			vis.x = 0;
+			vis.y = 50;
+			vis.operators.add(opt[idx].op);
+			vis.setOperator("nodes", new PropertyEncoder(opt[idx].nodes, "nodes"));
+			vis.setOperator("edges", new PropertyEncoder(opt[idx].edges, "edges"));
 						
-			vis.controls.add(opt[idx].ctrl);
-
 			var dc:DragControl = new DragControl(NodeSprite);
 			vis.controls.add(dc);
 
-			// set up text formatting of node labels
-			var nodeTF:TextFormat = new TextFormat();
-			nodeTF.color = 0xffffffff;
-			nodeTF.bold = true;
-			nodeTF.font = "Arial";
-			nodeTF.size = 10;
-			nodeTF.align = "center";
- 
+			var pzc:PanZoomControl = new PanZoomControl();
+			vis.controls.add(pzc);
+			
 			// set up icons for visualisation
 			vis.data.nodes.visit(function(ns:NodeSprite):void { 
 				
-				// get name of node for label
-				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
-				ns.addChild(ts);	
-				ns.width = ts.width;
- 
 				// rs is the icon
 				var rs:Sprite = new Sprite;
  
@@ -194,16 +203,27 @@
 				rs.x = -20;
 				rs.y = -20;
  
-				// center below circle
-				ts.x = rs.x - ts.width / 2 + 15;
-				ts.y = rs.y + 40;
- 
-				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the rectangular box
+				// set up text formatting of node labels
+				var nodeTF:TextFormat = new TextFormat();
+				nodeTF.color = 0xffffffff;
+				nodeTF.bold = true;
+				nodeTF.font = "Arial";
+				nodeTF.size = 10;
+				nodeTF.align = "center";
+	 
+				// get name of node for label
+				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
+				ns.addChild(ts);	
+
+				// center below icon
+				ts.x = ns.x - ns.width / 2;
+				ts.y = ns.y + 20;
+
+				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the icon
 				ns.size = 0;
 				ns.mouseChildren = false; 
 				ns.buttonMode = true;
 			});
-
 
 			// update visualisation and add to Stage
 			addChild(vis);
@@ -211,8 +231,6 @@
 			// make the default layout a Tree
 			switchTo("treeBtn").play();
  
-			// wierd workaround b/c menu was being sucked behind visualisation object, but vis didn't respond to setChildIndex...
-			vis.addChild(mb); 
  
 		}
 		
@@ -225,8 +243,8 @@
 				{
 					name: "Tree",
 					button: "treeBtn",
-					op: new NodeLinkTreeLayout("topToBottom",30,20,30),
-					canStraighten: true
+					op: new NodeLinkTreeLayout("topToBottom", 30, 20, 30),
+					param: {layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/4)}
 				},
 				{
 					name: "Force",
@@ -235,29 +253,34 @@
 					param: {
 						"simulation.dragForce.drag": 0.7,
 						defaultParticleMass: 1,
-						defaultSpringLength: 175,
-						defaultSpringTension: 0.1
+						defaultSpringLength: 125,
+						defaultSpringTension: 0.1,
+						layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/3)
 					},
 					update: true
 				},
 				{
 					name: "Indent",
 					button: "indentBtn",
-					op: new IndentedTreeLayout(50,25),
-					param: { layoutAnchor: new Point(75, 70) }
+					op: new IndentedTreeLayout(50,10),
+					param: { layoutAnchor: new Point(stage.stageWidth/2, 70) }
 				},
 				{
 					name: "Radial",
 					button: "radialBtn",
-					op: new RadialTreeLayout(100,false,true),
-					param: { useNodeSize: true,
-							 layoutAnchor: new Point(500, 500)}
+					op: new RadialTreeLayout(50,true,true),
+					param: { layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/3),
+							angleWidth: -2 * Math.PI,
+							radiusIncrement: 45,
+							useNodeSize: true
+							 }
 				},
 				{
 					name: "Circle",
 					button: "circleBtn",
 					op: new CircleLayout(  null, null, false),
-					param: {angleWidth: -2*Math.PI}
+					param: { angleWidth: -2 * Math.PI,
+							 layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/2.5)}
 				}
 			];
 			
@@ -267,7 +290,7 @@
 				fillColor: 0x99666699,
 				lineColor: 0xffffffff,
 				lineWidth: 0,
-				size: 0,
+				size: 1,
 				alpha: 1,
 				visible: true
 			}
@@ -288,19 +311,16 @@
 				else for (name in nodes)
 					if (o.nodes[name]==undefined)
 						o.nodes[name] = nodes[name];
-					
+ 
 				if (!o.edges)
 					o.edges = edges;
 				else for (name in edges)
 					if (o.edges[name]==undefined)
 						o.edges[name] = edges[name];
-				
-				if (!("ctrl" in o)) o.ctrl = ctrl;
-				if (o.param) o.op.parameters = o.param;
+ 				if (o.param) o.op.parameters = o.param;
 			}
 			return a;
 		}
-
 		
 		/*		
  * 		This function 
@@ -311,7 +331,7 @@
 			for (idx=0; idx<opt.length; ++idx) {
 				if (opt[idx].button == visualisationType) break;
 			}
-			var cur:Object = opt[idx];
+			cur = opt[idx];
 
 			vis.continuousUpdates = false;
 			vis.operators.clear();
@@ -330,11 +350,8 @@
 			vis.data.edges.visit(function(es:EdgeSprite):void {
 				es.data.label = es.data.link_type,edgeTF
 			});
-			var lae:Labeler = new Labeler("data.label",Data.EDGES,edgeTF,EdgeSprite,Labeler.LAYER); 
-			vis.data.edges.visit(function(es:EdgeSprite):void {
-				es.addEventListener(Event.RENDER,updateEdgeLabelPosition);
-			});
-			vis.operators.add(lae);
+			vis.data.edges.setProperty("arrowType", ArrowType.TRIANGLE);
+			vis.data.edges.setProperty("arrowWidth", 8);
 			
 			// To handle animated transtions, we use a function sequence
 			// this is like a normal animation sequence, except that each
@@ -342,9 +359,13 @@
 			// rather than generating the values for all segments up front.
 			// This can help simplify the handling of intermediate values.
 			var seq:FunctionSequence = new FunctionSequence();
-			
+			var nodes:DataList = vis.data.nodes;
+			var edges:DataList = vis.data.edges;
 			seq.push(vis.updateLater("nodes", "edges", "main"), 2);
 			
+			if (old.straighten && !(cur.straighten || cur.canStraighten)) {
+				seq.add(Layout.straightenEdges(edges, new Transitioner(1)));
+			}
 			// If performing a force-directed layout, set up
 			// continuous updates and ease in the edge tensions.
 			if (cur.update) {
@@ -360,10 +381,10 @@
 				);
 			}
 			
-			if (cur.name == "Radial") {
-				
-			}
-			
+			var lae:Labeler = new Labeler("data.label",Data.EDGES,edgeTF,EdgeSprite,Labeler.LAYER); 
+			vis.data.edges.visit(function(es:EdgeSprite):void {es.addEventListener(Event.RENDER,updateEdgeLabelPosition);});
+			vis.operators.add(lae);
+
 			return seq;
 		}
 
@@ -382,6 +403,33 @@
 		{
 			vis.continuousUpdates = false;
 		}
+		
+		private function toggleFullScreen(evt:MouseEvent):void {
+			if (stage.displayState == StageDisplayState.NORMAL) {
+				stage.displayState = StageDisplayState.FULL_SCREEN;
+				bmb.btnFullScreen.upState = bmb.btnFullScreen.overState;
+			} else {
+				stage.displayState = StageDisplayState.NORMAL;
+				bmb.btnFullScreen.upState = bmb.btnFullScreen.downState;
+			}
+
+		}
+		
+		private function resize(evt:Event):void {
+			mb.x = mb.x - (stage.stageWidth - mb.menuBgd.width)/2; // float left
+			mb.menuBgd.width = stage.stageWidth;
+			mb.y = Math.round((stgHeight - stage.stageHeight)/2); // float top
+
+			bmb.x = bmb.x + (stage.stageWidth - bmb.baseMenuBgd.width)/2;  // float right
+			bmb.baseMenuBgd.width = stage.stageWidth;
+			bmb.y = Math.round((stgHeight - stage.stageHeight) / 2) + stage.stageHeight - bmb.baseMenuBgd.height; // float bottom
+			
+			vis.bounds.width = stage.stageWidth - 100;
+			vis.bounds.height = stage.stageHeight - 100;
+			vis.update();
+			
+		}
+
 	}
 		
 }	
