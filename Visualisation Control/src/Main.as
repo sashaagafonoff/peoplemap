@@ -1,6 +1,9 @@
 ﻿package 
 {
+	import fl.controls.Button;
 	import flare.display.TextSprite;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.text.TextField;
 
 	import flare.animate.FunctionSequence;
@@ -54,6 +57,10 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+    import flash.net.navigateToURL;
+    import flash.net.URLRequest;
+    import flash.net.URLRequestMethod;
+
 	import flash.text.TextFormat;
 	
 	import peoplemap.GraphMLReader;
@@ -74,6 +81,8 @@
 		private var cur:Object = new Object;
 		private var stgHeight:int = stage.stageHeight;
 		
+		private var currentActionMenuID:int = -1; // used to store ID of current actionMenu (if present)
+		
 /*		
  * 		Set up the basic layout and set links for the buttons
 */
@@ -88,10 +97,7 @@
 			// set default visualisation to tree (first in options index)
 			idx = 0;
 
-			// show preloader
-			preloaderAnimation.x = 170;
-			preloaderAnimation.y = 270;
-			addChild(preloaderAnimation);
+			showPreLoader();
 			
 			// build menu buttons
 			mb.menuBgd.width = stage.stageWidth;
@@ -122,15 +128,13 @@
 			// ADD CODE HERE FOR ZOOM CONTROL	
 				
 				
-			// read GraphML from server
-			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
-			var flashVars:Object=this.loaderInfo.parameters;
-
-			gmr.read(flashVars.pm_url); // variable loaded from embed code in page
-			//gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			updateGraph();
 
 		}
-		
+/*		
+//		toggle all menu buttons when switching states
+//		
+*/
 		private function downstateMenuBtns():void {
 			mb.treeBtn.upState = mb.treeBtn.downState;
 			mb.indentBtn.upState = mb.indentBtn.downState;
@@ -140,7 +144,7 @@
 		}
 		
 /*		
- * 		Once the GraphML data has been loaded
+ * 		Once the GraphML data has been loaded, build the visualisation
 */
 		private function onLoaded(data:Data):void {
 			
@@ -202,6 +206,8 @@
 				// move node to center it against edge lines
 				rs.x = -20;
 				rs.y = -20;
+				
+				ns.addEventListener(MouseEvent.CLICK, showActionMenu);
  
 				// set up text formatting of node labels
 				var nodeTF:TextFormat = new TextFormat();
@@ -323,7 +329,7 @@
 		}
 		
 		/*		
- * 		This function 
+ * 		This function supports switching between layout types
 */
 		private function switchTo(visualisationType:String):Transition {
 			
@@ -394,6 +400,114 @@
 			es.props.label.y = (es.source.y + es.target.y) / 2 + 15;	
 		}
 		
+		private function showActionMenu(evt:MouseEvent):void {
+			
+			// remove the current actionMenu (if present)
+			if (currentActionMenuID != -1) { 
+				removeChildAt(currentActionMenuID); 
+			} 
+			
+			var actionMenu:cptNodeActions = new cptNodeActions;
+			actionMenu.nodeID = evt.target.data.id;
+			actionMenu.nodeType = evt.target.data.node_class;
+			actionMenu.x = evt.target.x-97;
+			actionMenu.y = evt.target.y-35;
+			addChild(actionMenu);
+			actionMenu.btnClose.addEventListener(MouseEvent.CLICK, hideActionMenu);
+			actionMenu.btnGetTwitterData.addEventListener(MouseEvent.CLICK, getTwitterData);
+			actionMenu.btnGetFacebookData.addEventListener(MouseEvent.CLICK, getFacebookData);
+			actionMenu.btnGetNearbyNodes.addEventListener(MouseEvent.CLICK, getNearbyNodes);
+			actionMenu.btnEditNodeData.addEventListener(MouseEvent.CLICK, editNodeData);
+			actionMenu.btnAddComment.addEventListener(MouseEvent.CLICK, addComment);
+			actionMenu.btnDeleteNode.addEventListener(MouseEvent.CLICK, deleteNode);
+			
+			currentActionMenuID = getChildIndex(actionMenu);
+		}
+		
+		private function hideActionMenu(evt:MouseEvent):void {
+			removeChild(evt.target.parent);
+			currentActionMenuID = -1;
+		}
+		
+		private function getTwitterData(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
+			// retrieve Twitter data for node
+			// ie followers, followed by, tweets by followers/followees, own tweets
+		}
+		
+		private function getFacebookData(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
+			// retrieve Facebook data for node
+			// ie first circle of friends
+			// status updates, linked content, etc
+		}
+		
+		private function getNearbyNodes(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
+			// retrieve immediate network around node
+			// add limiter to retrieval to allow setting of number of records retrieved (probably in Rails, with setting of limit from this control)
+		}
+		
+		private function editNodeData(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
+			// view the appropriate form for the node type
+		}
+		
+		private function addComment(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
+			// add a comment to the node
+		}
+		
+		private function deleteNode(evt:MouseEvent):void {
+			// keep the button state up for this operation
+			evt.target.upState = evt.target.overState;
+			var nodeClass:String = new String;
+			switch(evt.target.parent.nodeType) {
+				case "person" :
+					nodeClass = "people";
+					break;
+				case "organisation" :
+					nodeClass = "organisations";
+					break;
+				case "event" :
+					nodeClass = "events";
+					break;
+				case "location" :
+					nodeClass = "locations";
+					break;
+				case "reference" :
+					nodeClass = "references";
+					break;
+				default:
+					nodeClass = "error"; // should not happen
+			}
+			
+			// delete the node
+			var deleteRequest:URLRequest = new URLRequest("http://localhost:3001/" + nodeClass + "/destroy/" + evt.target.parent.nodeID);
+			deleteRequest.method = URLRequestMethod.POST;
+			var loader:URLLoader = new URLLoader();
+			loader.addEventListener(Event.COMPLETE, handleRESTfulRequest);
+			loader.load(deleteRequest);
+			hideActionMenu(evt);
+		}
+		
+		private function handleRESTfulRequest(evt:Event):void {
+			// confirm event type in GUI
+			showPreLoader();
+			updateGraph();
+		}
+
+		private function updateGraph():void {
+			if (vis) { removeChild(vis); }
+			
+			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
+			var flashVars:Object=this.loaderInfo.parameters;
+
+			//gmr.read(flashVars.pm_url); // variable loaded from embed code in page
+			gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			
+		}
+		
 		public function play():void
 		{
 			if (opt[idx].update) vis.continuousUpdates = true;
@@ -415,6 +529,13 @@
 
 		}
 		
+		private function showPreLoader():void {
+			// show preloader
+			preloaderAnimation.x = 170;
+			preloaderAnimation.y = 270;
+			addChild(preloaderAnimation);
+		}
+		
 		private function resize(evt:Event):void {
 			mb.x = mb.x - (stage.stageWidth - mb.menuBgd.width)/2; // float left
 			mb.menuBgd.width = stage.stageWidth;
@@ -429,7 +550,6 @@
 			vis.update();
 			
 		}
-
 	}
 		
 }	

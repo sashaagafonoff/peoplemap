@@ -1,3 +1,13 @@
+:javascript
+  $(document).ready(function() {
+    $('input.date_field').datepicker({
+      // Add options here...
+      dateFormat: 'yy-mm-dd',
+      defaultDate: '-30y',
+      changeMonth: true,
+      changeYear: true
+  	});
+  });
 - form_for(@object) do |f|
   %p
     = f.label :title
@@ -14,8 +24,8 @@
   %p
     = f.label :date_of_birth
     %br
-    = f.calendar_date_select :date_of_birth, :embedded => true 
-  %p
+    = f.text_field :date_of_birth, :embedded => true, :class => "date_field"
+    %p
     = f.label :sex
     %br
     = f.select :sex, Person::SEXES, :prompt => "Select a gender"

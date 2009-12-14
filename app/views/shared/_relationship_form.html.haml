@@ -1,3 +1,13 @@
+:javascript
+  $(document).ready(function() {
+    $('input.rel_date').datepicker({
+      // Add options here...
+      dateFormat: 'yy-mm-dd',
+      defaultDate: '-30y',
+      changeMonth: true,
+      changeYear: true
+  	});
+  });
 - form_tag "link", :id => "linker_form_"+target.neo_node_id.to_s, :class => "linker_form" do
   = hidden_field_tag "target_id", target.neo_node_id.to_s
   = hidden_field_tag "id", object.neo_node_id.to_s
@@ -9,8 +19,8 @@
     = link_category_table
   = link_to get_display_name(target), :action => "show", :id => target, :controller=>target.class.to_s.downcase.pluralize
   from
-  = text_field_tag 'start_date', Date.today, :class => "start_date"
+  = text_field_tag 'start_date', Date.today, :class => "rel_date"
   to
-  = text_field_tag 'end_date', '', :class => "end_date"                # Date.today.advance(:years => 1)
+  = text_field_tag 'end_date', '', :class => "rel_date"                # Date.today.advance(:years => 1)
   = text_field_tag 'notes', '<insert notes about this link here>', :class => "notes"
   = submit_tag "link", :class=> "submit_link"

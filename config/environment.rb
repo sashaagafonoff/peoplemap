@@ -31,9 +31,8 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
   config.frameworks -= [ :active_record ] #, :active_resource, :action_mailer ]
-  config.gem "neo4j", :version => "0.3.2"
+  config.gem "neo4j"
   config.gem "haml"
-  config.gem "calendar_date_select"
   
 #  xml = File.read('config/entity_model.xml')
 #  RELATIONSHIP_MODEL = Hash.from_xml(xml)

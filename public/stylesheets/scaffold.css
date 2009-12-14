@@ -186,7 +186,7 @@ form.linker_form select#link_category {
   height: 17px;
   font-size: 9px;
 }
-form.linker_form input.start_date, input.end_date {
+form.linker_form input.rel_date {
   height: 10px;
   font-size: 9px;
   width: 47px;

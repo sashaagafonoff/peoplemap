@@ -20,7 +20,7 @@ THINGS TO DO:
 
 Apologies for the limited install info - I'll try to extend this information in future.  Feel free to contact me if you're trying to get it working.
 
-1. Install Jruby, then Rails, etc
+1. Install JRuby, then Rails, etc
 2. Make sure you have neo4j and lucene jars installed into your CLASSPATH
 3. Download and add Andreas Ronge's neo4j wrapper (http://github.com/andreasronge/neo4j/tree/master) and add it to your project vendor/plugins folder - make sure you compile from the latest source - don't use the current gem!!!!
 4. Install HAML (gem install haml)
@@ -40,16 +40,27 @@ Here are detailed instructions for getting this rolling on a clean Ubuntu 9 Virt
 4. At a command line, type source ~/.profile to reload these environment variables
 5. Open a command line and issue the following commands:
    gem install rails  // I'm assuming you only have JRuby installed, otherwise type jruby -S gem install etc
-   gem install calendar_date_select
    gem install haml
    gem update
    git clone git://github.com/andreasronge/neo4j.git
 6. cd to install/dir/neo4j (downloaded earlier via Git) then run rake gem:install
-7. From command line git clone git://github.com/sashaagafonoff/peoplemap.git (some users may wish to fork instead)
-8. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
-9. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
-10.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
-11.Start the server and navigate to http://0.0.0.0:3000/people
+7. From command line git clone git://github.com/sashaagafonoff/peoplemap.git
+8. Download and install NiftyCube into /public/stylesheets/ and /public/javascripts/ respectively from http://www.html.it/articoli/niftycube/index.html
+9. Download and install JQueryUI into /public/stylesheets/ and /public/javascripts/ respectively from http://jqueryui.com/
+10. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
+11. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
+12.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
+13.Start the server and navigate to http://0.0.0.0:3000/people
+
+=====================================
+COMPILING THE VISUALISATION COMPONENT
+=====================================
+This as set up as a pure Actionscript component (compiling with the free FlashDevelop product), using the /lib/peoplemap.swc file to provide additional icons and controls. The SWC control is built using Adobe Flash CS4 - the master file is /Visualisation Control/src/Main.fla
+
+1. You will need to download the Flare Prefuse ActionScript library from http://flare.prefuse.org/ and copy this to the /src folder.  I have not included this external library as part of the core source code.
+2. Open /src/Main.as in FlashDevelop, select Project | Build Project etc
+
+That should be it!!!  With a bit of work, you can also set this up as a pure Flash project (I was getting some instability with the compiler), and probably as a pure Flex application as well (I didn't want to shell out for both Flash and Flex/Flash Builder).
 
 == Licenses
 Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.
@@ -64,4 +75,3 @@ Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
 THINGS TO NOTE:
 - the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
-- I've just added some pretty basic network visualisation of the underlying relationship data using the Prefuse Flare library (using the Radial Tree layout).  Plenty of work to do in this area, and network retrieval is only working with outgoing links.  Watch this space...
