@@ -1,18 +1,19 @@
   def enter_link_data(id,link_category,start_date,end_date,notes)
-    @selenium.select "//*[@id='" + id + "']/form/select[@id='link_category']", link_category
-    @selenium.type "//*[@id='" + id + "']/form/input[@id='start_date']", start_date
-    @selenium.type "//*[@id='" + id + "']/form/input[@id='end_date']", end_date
-    @selenium.type "//*[@id='" + id + "']/form/input[@id='notes']", notes
-    @selenium.click "//*[@id='" + id + "']/form/input[@name='commit']"
+    @selenium.select "//*[@id='" + id + "']/td/select[@id='link_category']", link_category
+    @selenium.type "//*[@id='" + id + "']/td/input[@id='start_date']", start_date
+    @selenium.type "//*[@id='" + id + "']/td/input[@id='end_date']", end_date
+    @selenium.type "//*[@id='" + id + "']/td/input[@id='notes']", notes
+    @selenium.click "//*[@id='" + id + "']/td/input[@name='commit']"
     wait
   end
 
   # :title, :first_name, :middle_names, :surname, :maternal_name, :date_of_birth, :classification, :sex, :notes
-  def enter_new_person_data(title,first_name,surname,sex, notes)
+  def enter_new_person_data(title,first_name,surname,sex,date_of_birth,notes)
     @selenium.select "person_title", title
     @selenium.type "person_first_name", first_name
     @selenium.type "person_surname", surname
     @selenium.select "person_sex", sex
+    @selenium.type "person_date_of_birth", date_of_birth
     @selenium.type "person_notes", notes
     
     @selenium.click "person_submit"
@@ -69,5 +70,5 @@
   end
 
   def wait
-    @selenium.wait_for_page_to_load "25000"
+    @selenium.wait_for_page_to_load "100000"
   end

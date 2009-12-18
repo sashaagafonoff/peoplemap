@@ -1,45 +1,28 @@
-%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_info", :width => "100%"}
-  %tr
-    %td{:colspan => "4"}
-      %ul{:id => "node_menu"}
-        %b
-          current record:
-        %li
-          = link_to 'edit', edit_person_path(@object)
-        %li
-          = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
-  %tr
-    %td{:class => "node_info_value", :rowspan => "3"}
-      %h1
-        = get_display_name(@object)
-    %td{:class => "node_info_value", :rowspan => "3"}
-      PICTURE HERE
-    %td{:class => "node_info_label"}
-      Full Name
-    %td{:class => "node_info_value"}
-      = @object.title
-      = @object.first_name
-      = @object.surname
-  %tr
-    %td{:class => "node_info_label"}
-      Sex
-    %td{:class => "node_info_value"}
-      = @object.sex
-  %tr
-    %td{:class => "node_info_label"}
-      Date of Birth
-    %td{:class => "node_info_value"}
-      = @object.date_of_birth
-  %tr
-    %th{:colspan => "4"}
-      Related Images
-  %tr
-    %td{:class => "node_info_value",:colspan => "4"}
-      IMAGE GALLERY HERE
-  %tr
-    %th{:colspan => "4"}
-      Notes
-  %tr
-    %td{:class => "node_info_value",:colspan => "4"}
-      = @object.notes
-      &nbsp;
+%h1
+  %img{:src=>@current_node_icon, :alt=>"Person icon", :width=>"56",:height=>"46"}
+  = get_display_name(@object)
+  = link_to image_tag("/images/icons/delete_S_f2.png",:width=>"46",:height=>"41",:alt=>"Delete this record",:class=>"action_btn"), @object, :confirm => 'Are you sure?', :method => :delete
+  = link_to image_tag("/images/icons/edit_S_f2.png",:width=>"46",:height=>"41",:alt=>"Edit this record",:class=>"action_btn"), edit_person_path(@object)
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Full Name
+  = @object.title
+  = @object.first_name
+  = @object.surname
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Sex
+  = @object.sex
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Date of Birth
+  = @object.date_of_birth
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Related Images
+  IMAGE GALLERY HERE
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Notes
+  = @object.notes
+  &nbsp;

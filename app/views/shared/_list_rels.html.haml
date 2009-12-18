@@ -1,10 +1,10 @@
-%h1
-  Related Nodes
+%h2
+  Existing Links
 %p
-  This panel lists all of the nodes to which the current node is linked.
+  This panel lists all of the records to which the current record (
+  = get_display_name(@object)
+  ) is linked.
 %div{:class=>"linked_nodes"}
-  %h2
-    all
   %ul{:class => "link_desc", :style => "border-top: solid 1px #b39da6;"}
   -	@object.relationships.both.each do |relationship|
     = render( :partial => "shared/relationship_description", :object => relationship, :locals => {:originating_node_id => @object.neo_node_id})

@@ -1,37 +1,41 @@
 :javascript
   $(document).ready(function() {
-    $('input.date_field').datepicker({
+    $('.datepicker').datepicker({
       // Add options here...
       dateFormat: 'yy-mm-dd',
       defaultDate: '-30y',
       changeMonth: true,
       changeYear: true
   	});
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
   });
-- form_for(@object) do |f|
-  %p
-    = f.label :title
-    %br
-    = f.select :title, Person::TITLE_TYPES, :prompt => "Select a title"
-  %p
-    = f.label :first_name
-    %br
-    = f.text_field :first_name
-  %p
-    = f.label :surname
-    %br
-    = f.text_field :surname
-  %p
-    = f.label :date_of_birth
-    %br
-    = f.text_field :date_of_birth, :embedded => true, :class => "date_field"
-    %p
-    = f.label :sex
-    %br
-    = f.select :sex, Person::SEXES, :prompt => "Select a gender"
-  %p
-    = f.label :notes
-    %br
-    = f.text_area :notes, :size => "25x5"
-  %p
-    = f.submit 'Update'
+%div{:id=>"form_wrapper"}
+  - form_for(@object) do |f|
+    %div{:class=>"form_explanation"}
+      %img{:src=>"/images/icons/info.png",:alt=>"Info icon",:class=>"notice_icon",:height=>"42",:width=>"43"}
+      = @form_explanation
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      %p
+        = f.label :title
+        = f.select :title, Person::TITLE_TYPES, :prompt => "Select a title"
+      %p
+        = f.label :first_name
+        = f.text_field :first_name
+      %p
+        = f.label :surname
+        = f.text_field :surname
+      %p
+        = f.label :sex
+        = f.select :sex, Person::SEXES, :prompt => "Select a gender"
+      %p
+        = f.label :date_of_birth
+        = f.text_field :date_of_birth, :class=>"datepicker"
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      = f.label :notes
+      = f.text_area :notes, :size => "65x10"
+    %div{:id=>"form_submit"}
+      = f.submit @form_operation

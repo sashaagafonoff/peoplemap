@@ -1,24 +1,34 @@
+:javascript
+  $(document).ready(function() {
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
+  });
 %h1
+  %img{:src=>@current_node_icon, :alt=>"Person icon", :width=>"56",:height=>"46"}
   <b>people</b>finder
-%p
-  = link_to 'New person', new_person_path
-%table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
-  %tr
-    %th
-      Name
-    %th
-      Date of Birth
-    %th{:colspan=>"3"}
-  - @people.each do |person|
-    %tr{:class => cycle('list_odd', 'list_even')}
-      %td
-        = [person.title, person.first_name, person.surname].join " "
-      %td
-        = person.date_of_birth
-      %td
-        = link_to 'Show', :action => "show", :id => person
-      %td
-        = link_to 'Edit', edit_person_path(person)
-      %td
-        = link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete
+%div{:id=>"form_wrapper"}
+  %div{:class=>"form_explanation"}
+    = link_to image_tag("/images/icons/new_S_f2.png",:alt=>"New Person",:class=>"notice_icon",:height=>"41",:width=>"46"), new_person_path
+    = link_to 'Click here to add a new person record to the database', new_person_path
+%div{:id=>"index_list_wrapper"}
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Name
+      %th
+        Date of Birth
+      %th{:colspan=>"3"}
+    - @people.each do |person|
+      %tr{:class => cycle('list_odd', 'list_even')}
+        %td
+          = [person.title, person.first_name, person.surname].join " "
+        %td
+          = person.date_of_birth
+        %td
+          = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :action => "show", :id => person
+        %td
+          = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_person_path(person)
+        %td
+          = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), person, :confirm => 'Are you sure?', :method => :delete
 %br

@@ -9,11 +9,12 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="9" />
-    <movie background="#FFFFFF" />
+    <movie background="#000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
+    <class path="lib" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -43,7 +44,10 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\menuBar.swc" />
+    <element path="lib\loaderComponent.swc" />
+    <element path="lib\baseMenuBar.swc" />
+    <element path="lib\peoplemap.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -77,7 +81,6 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="OpenDocument" />
-    <option testMovieCommand="http://localhost:3001/people/2" />
+    <option testMovie="Default" />
   </options>
 </project>

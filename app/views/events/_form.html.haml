@@ -1,27 +1,41 @@
-- form_for(@object) do |f| 
-  %p
-    = f.label :event_type 
-    %br
-    = f.select :event_type, Event::EVENT_TYPES, :prompt => "Select an event type" 
-  %p
-    = f.label :title 
-    %br
-    = f.text_field :title 
-  %p
-    = f.label :description 
-    %br
-    = f.text_area :description, :size => "25x5" 
-  %p
-    = f.label :start_date 
-    %br
-    = f.calendar_date_select :start_date, :embedded => true  
-  %p
-    = f.label :end_date 
-    %br
-    = f.calendar_date_select :end_date, :embedded => true  
-  %p
-    = f.label :notes 
-    %br
-    = f.text_area :notes, :size => "25x5" 
-  %p
-    = f.submit 'Update' 
+:javascript
+  $(document).ready(function() {
+    $('.datepicker').datepicker({
+      // Add options here...
+      dateFormat: 'yy-mm-dd',
+      defaultDate: '-30y',
+      changeMonth: true,
+      changeYear: true
+  	});
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
+  });
+%div{:id=>"form_wrapper"}
+  - form_for(@object) do |f|
+    %div{:class=>"form_explanation"}
+      %img{:src=>"/images/icons/info.png",:alt=>"Info icon",:class=>"notice_icon",:height=>"42",:width=>"43"}
+      = @form_explanation
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      %p
+        = f.label :title
+        = f.text_field :title
+      %p
+        = f.label :event_type
+        = f.select :event_type, Event::EVENT_TYPES, :prompt => "Select an event type"
+      %p
+        = f.label :start_date
+        = f.text_field :start_date, :class=>"datepicker"
+      %p
+        = f.label :end_date
+        = f.text_field :end_date, :class=>"datepicker"
+      %p
+        = f.label :description
+        = f.text_area :description, :size => "65x10"
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      = f.label :notes
+      = f.text_area :notes, :size => "65x10"
+    %div{:id=>"form_submit"}
+      = f.submit @form_operation

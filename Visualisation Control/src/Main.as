@@ -1,6 +1,5 @@
 ﻿package 
 {
-	import fl.controls.Button;
 	import flare.display.TextSprite;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -65,7 +64,7 @@
 	
 	import peoplemap.GraphMLReader;
 	
-	[SWF(width="600", height="600", backgroundColor="#001F3E", frameRate="30")]
+	[SWF(width="800", height="800", backgroundColor="#ffffff", frameRate="30")]
 	public class Main extends Sprite
 	{
 		
@@ -211,7 +210,7 @@
  
 				// set up text formatting of node labels
 				var nodeTF:TextFormat = new TextFormat();
-				nodeTF.color = 0xffffffff;
+				nodeTF.color = 0xff333333;
 				nodeTF.bold = true;
 				nodeTF.font = "Arial";
 				nodeTF.size = 10;
@@ -301,7 +300,7 @@
 				visible: true
 			}
 			var edges:Object = {
-				lineColor: 0xff555588,
+				lineColor: 0x99666666,
 				lineWidth: 2,
 				alpha: 1,
 				visible: true
@@ -347,7 +346,7 @@
 			
 			// text formatting for edge labels
 			var edgeTF:TextFormat = new TextFormat();
-			edgeTF.color = 0xffcdcdee;
+			edgeTF.color = 0xff333333;
 			edgeTF.font = "Arial";
 			edgeTF.size = 9;
 			edgeTF.align = "center";
@@ -483,7 +482,8 @@
 			}
 			
 			// delete the node
-			var deleteRequest:URLRequest = new URLRequest("http://localhost:3001/" + nodeClass + "/destroy/" + evt.target.parent.nodeID);
+			var deleteRequest:URLRequest = new URLRequest("/" + nodeClass + "/destroy/" + evt.target.parent.nodeID);
+			removeChildAt(evt.target.parent.index);
 			deleteRequest.method = URLRequestMethod.POST;
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, handleRESTfulRequest);
@@ -503,8 +503,8 @@
 			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
 			var flashVars:Object=this.loaderInfo.parameters;
 
-			//gmr.read(flashVars.pm_url); // variable loaded from embed code in page
-			gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			gmr.read(flashVars.pm_url); // variable loaded from embed code in page
+			//gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
 			
 		}
 		
@@ -531,8 +531,8 @@
 		
 		private function showPreLoader():void {
 			// show preloader
-			preloaderAnimation.x = 170;
-			preloaderAnimation.y = 270;
+			preloaderAnimation.x = stage.stageWidth/2 - preloaderAnimation.width/2;
+			preloaderAnimation.y = stage.stageHeight/2;
 			addChild(preloaderAnimation);
 		}
 		
@@ -541,12 +541,12 @@
 			mb.menuBgd.width = stage.stageWidth;
 			mb.y = Math.round((stgHeight - stage.stageHeight)/2); // float top
 
-			bmb.x = bmb.x + (stage.stageWidth - bmb.baseMenuBgd.width)/2;  // float right
+			bmb.x = bmb.x - (stage.stageWidth - bmb.baseMenuBgd.width)/2;  // float left
 			bmb.baseMenuBgd.width = stage.stageWidth;
 			bmb.y = Math.round((stgHeight - stage.stageHeight) / 2) + stage.stageHeight - bmb.baseMenuBgd.height; // float bottom
 			
-			vis.bounds.width = stage.stageWidth - 100;
-			vis.bounds.height = stage.stageHeight - 100;
+			vis.bounds.width = stage.stageWidth - 50;
+			vis.bounds.height = stage.stageHeight - 50;
 			vis.update();
 			
 		}

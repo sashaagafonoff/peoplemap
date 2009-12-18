@@ -2,9 +2,10 @@ class PeopleController < ApplicationController
   
   around_filter :neo_tx
   layout 'layout', :except => [:graphml]
-  
+
   def index
     @people = Person.all.nodes
+    @current_node_icon = "/images/icons/male.png"
   end
   
   def create
@@ -26,6 +27,13 @@ class PeopleController < ApplicationController
   end
   
   def edit
+    @form_explanation = "This form will update the record.  Click <strong>Update</strong> to save it."
+    @form_operation = "Update Person"
+    if @object.sex == "Female"
+      @current_node_icon = "/images/icons/female.png"
+    else
+      @current_node_icon = "/images/icons/male.png"
+    end
   end
   
   def graphml
@@ -37,6 +45,11 @@ class PeopleController < ApplicationController
     @people = Person.all.nodes.to_a
     @locations = Location.all.nodes.to_a
     @events = Event.all.nodes.to_a
+    if @object.sex == "Female"
+      @current_node_icon = "/images/icons/female.png"
+    else
+      @current_node_icon = "/images/icons/male.png"
+    end
   end
 
   def link
@@ -53,6 +66,9 @@ class PeopleController < ApplicationController
   
   def new
     @object = Person.value_object.new
+    @form_explanation = "This will create a new person record.  Click <strong>Update</strong> to add it to the system."
+    @form_operation = "Create Person"
+    @current_node_icon = "/images/icons/male.png"
   end
   
   private

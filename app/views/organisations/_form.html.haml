@@ -1,19 +1,28 @@
-- form_for(@object) do |f|
-  %p
-    = f.label :sector
-    %br
-    = f.select :sector, Organisation::SECTOR_TYPES, :prompt => "Select a sector"
-  %p
-    = f.label :industry
-    %br
-    = f.select :industry, Organisation::INDUSTRY_TYPES, :prompt => "Select an industry"
-  %p
-    = f.label :name
-    %br
-    = f.text_field :name
-  %p
-    = f.label :notes
-    %br
-    = f.text_area :notes, :size => "25x5"
-  %p
-    = f.submit 'Update'
+:javascript
+  $(document).ready(function() {
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
+  });
+%div{:id=>"form_wrapper"}
+  - form_for(@object) do |f|
+    %div{:class=>"form_explanation"}
+      %img{:src=>"/images/icons/info.png",:alt=>"Info icon",:class=>"notice_icon",:height=>"42",:width=>"43"}
+      = @form_explanation
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      %p
+        = f.label :name
+        = f.text_field :name
+      %p
+        = f.label :sector
+        = f.select :sector, Organisation::SECTOR_TYPES, :prompt => "Select a sector"
+      %p
+        = f.label :industry
+        = f.select :industry, Organisation::INDUSTRY_TYPES, :prompt => "Select an industry"
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      = f.label :notes
+      = f.text_area :notes, :size => "65x10"
+    %div{:id=>"form_submit"}
+      = f.submit @form_operation

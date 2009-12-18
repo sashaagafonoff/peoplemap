@@ -5,6 +5,7 @@ class ReferencesController < ApplicationController
   
   def index
     @references = Reference.all.nodes
+    @current_node_icon = "/images/icons/note.png"
   end
   
   def create
@@ -26,6 +27,9 @@ class ReferencesController < ApplicationController
   end
   
   def edit
+    @form_explanation = "This form will update the record.  Click <strong>Update</strong> to save it."
+    @form_operation = "Update Reference"
+    @current_node_icon = "/images/icons/note.png"
   end
   
   def show
@@ -34,7 +38,7 @@ class ReferencesController < ApplicationController
     @references = Reference.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
-
+    @current_node_icon = "/images/icons/note.png"
   end
 
   def link
@@ -51,6 +55,9 @@ class ReferencesController < ApplicationController
   
   def new
     @object = Reference.value_object.new
+    @form_explanation = "This will create a new reference. Click <strong>Update</strong> to add it to the system."
+    @form_operation = "Create Reference"
+    @current_node_icon = "/images/icons/note.png"
   end
   
   def graphml

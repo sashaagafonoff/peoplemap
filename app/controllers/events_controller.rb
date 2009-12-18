@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   
   def index
     @events = Event.all.nodes
+    @current_node_icon = "/images/icons/event.png"
   end
   
   def create
@@ -26,6 +27,9 @@ class EventsController < ApplicationController
   end
   
   def edit
+    @form_explanation = "This form will update the record.  Click <strong>Update</strong> to save it."
+    @form_operation = "Update Event"
+    @current_node_icon = "/images/icons/event.png"
   end
   
   def show
@@ -34,7 +38,7 @@ class EventsController < ApplicationController
     @people = Person.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
-
+    @current_node_icon = "/images/icons/event.png"
   end
 
   def link
@@ -51,6 +55,9 @@ class EventsController < ApplicationController
   
   def new
     @object = Event.value_object.new
+    @form_explanation = "This will create a new event record.  Click <strong>Update</strong> to add it to the system."
+    @form_operation = "Create Event"
+    @current_node_icon = "/images/icons/event.png"
   end
   
   def graphml

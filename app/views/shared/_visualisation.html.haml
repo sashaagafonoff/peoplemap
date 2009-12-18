@@ -1,4 +1,4 @@
-%object{:id=>"FlashID", :classid=>"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000", :width=>"600", :height=>"600"}
+%object{:id=>"FlashID", :classid=>"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000", :width=>"800", :height=>"800"}
   %param{:name=>"movie", :value=>"/peoplemap.swf"}
   %param{:name=>"quality", :value=>"high"}
   %param{:name=>"wmode", :value=>"opaque"}
@@ -9,6 +9,6 @@
          :FlashVars=>"pm_url=/"+@controller.type.to_s.downcase.gsub("controller","")+"/graphml/"+@object.neo_node_id.to_s,
          :swfversion=>"9.0.45.0",
          :wmode=>"opaque",
-         :width=>"600",
-         :height=>"600",
+         :width=>"800",
+         :height=>"800",
          :allowFullScreen=>"true"}

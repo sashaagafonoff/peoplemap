@@ -1,53 +1,67 @@
-%h1
-  Node Finder
-%p
-  This panel allows you to search for nodes in the underlying database and link to them from this node.
-  At the moment this panel lists every single node in the database, but soon it will provide a search function which will list matching results ordered by node type.
-%div{:class => "all_nodes_list"}
-  %h2
-    people
-    %span{:class => "new_node_link"}
-      = link_to '[+]', new_person_path, :title => "Add a New Person"
-  - @people.each do |person|
-    - if (person.neo_node_id != object.neo_node_id) then
-      %div{:class => cycle('list_odd', 'list_even'), :id => person.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "person",get_gender(object)), :target => person, :origin_type => object.class.to_s.downcase, :target_type => "person"})
+:javascript
+  $(function() {
+    $("#accordion").accordion();
+  });
 
-%div{:class => "all_nodes_list"}
-  %h2
-    organisations
+%h2
+  Link Records
+%div{:class=>"general_explanation",:style=>"margin:0;"}
+  %img{:src=>"/images/icons/info.png",:alt=>"Info icon",:height=>"42",:width=>"43"}
+  This panel allows you to search for records in the database and link to them from the current record (
+  = get_display_name(@object)
+  ).
+  At the moment this panel lists every single node in the database, but in future it will provide a search function that will list matching results ordered by node type.
+%div{:id=>"accordion"}
+  %h3
+    <a href="#">people</a>
+  %div{:class => "all_nodes_list"}
     %span{:class => "new_node_link"}
-      = link_to '[+]', new_organisation_path, :title => "Add a New Organisation"
-  - @organisations.each do |organisation|
-    - if (organisation.neo_node_id != object.neo_node_id) then
-      %div{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "organisation","neutral"), :target => organisation, :origin_type => object.class.to_s.downcase, :target_type => "organisation"})
+      = link_to '[+] Add a new person to the system', new_person_path, :title => "Add a New Person"
+    %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+      - @people.each do |person|
+        - if (person.neo_node_id != object.neo_node_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => person.neo_node_id}
+            = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "person",get_gender(object)), :target => person, :origin_type => object.class.to_s.downcase, :target_type => "person"})
 
-%div{:class => "all_nodes_list"}
-  %h2
-    locations
+  %h3
+    <a href="#">organisations</a>
+  %div{:class => "all_nodes_list"}
     %span{:class => "new_node_link"}
-      = link_to '[+]', new_location_path, :title => "Add a New Location"
-  - @locations.each do |location|
-    - if (location.neo_node_id != object.neo_node_id) then
-      %div{:class => cycle('list_odd', 'list_even'), :id => location.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location","neutral"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
-%div{:class => "all_nodes_list"}
-  %h2
-    events
-    %span{:class => "new_node_link"}
-      = link_to '[+]', new_event_path, :title => "Add a New Event"
-  - @events.each do |event|
-    - if (event.neo_node_id != object.neo_node_id) then
-      %div{:class => cycle('list_odd', 'list_even'), :id => event.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "event","neutral"), :target => event, :origin_type => object.class.to_s.downcase, :target_type => "event"})
+      = link_to '[+] Add a new organisation to the system', new_organisation_path, :title => "Add a New Organisation"
+    %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+      - @organisations.each do |organisation|
+        - if (organisation.neo_node_id != object.neo_node_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_node_id}
+            = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "organisation","neutral"), :target => organisation, :origin_type => object.class.to_s.downcase, :target_type => "organisation"})
 
-%div{:class => "all_nodes_list"}
-  %h2
-    references
+  %h3
+    <a href="#">locations</a>
+  %div{:class => "all_nodes_list"}
     %span{:class => "new_node_link"}
-      = link_to '[+]', new_reference_path, :title => "Add a New Reference"
-  - @references.each do |reference|
-    - if (reference.neo_node_id != object.neo_node_id) then
-      %div{:class => cycle('list_odd', 'list_even'), :id => reference.neo_node_id}
-        = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "reference","neutral"), :target => reference, :origin_type => object.class.to_s.downcase, :target_type => "reference"})
+      = link_to '[+] Add a new location to the system', new_location_path, :title => "Add a New Location"
+    %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+      - @locations.each do |location|
+        - if (location.neo_node_id != object.neo_node_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => location.neo_node_id}
+            = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location","neutral"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
+  %h3
+    <a href="#">events</a>
+  %div{:class => "all_nodes_list"}
+    %span{:class => "new_node_link"}
+      = link_to '[+] Add a new event to the system', new_event_path, :title => "Add a New Event"
+    %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+      - @events.each do |event|
+        - if (event.neo_node_id != object.neo_node_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => event.neo_node_id}
+            = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "event","neutral"), :target => event, :origin_type => object.class.to_s.downcase, :target_type => "event"})
+
+  %h3
+    <a href="#">references</a>
+  %div{:class => "all_nodes_list"}
+    %span{:class => "new_node_link"}
+      = link_to '[+] Add a new reference to the system', new_reference_path, :title => "Add a New Reference"
+    %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
+      - @references.each do |reference|
+        - if (reference.neo_node_id != object.neo_node_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => reference.neo_node_id}
+            = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "reference","neutral"), :target => reference, :origin_type => object.class.to_s.downcase, :target_type => "reference"})

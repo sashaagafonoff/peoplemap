@@ -5,6 +5,7 @@ class OrganisationsController < ApplicationController
   
   def index
     @organisations = Organisation.all.nodes
+    @current_node_icon = "/images/icons/organisation.png"
   end
   
   def create
@@ -26,6 +27,9 @@ class OrganisationsController < ApplicationController
   end
   
   def edit
+    @form_explanation = "This form will update the record.  Click <strong>Update</strong> to save it."
+    @form_operation = "Update Organisation"
+    @current_node_icon = "/images/icons/organisation.png"
   end
   
   def show
@@ -34,6 +38,7 @@ class OrganisationsController < ApplicationController
     @people = Person.all.nodes
     @locations = Location.all.nodes
     @events = Event.all.nodes
+    @current_node_icon = "/images/icons/organisation.png"
   end
 
   def link
@@ -50,6 +55,9 @@ class OrganisationsController < ApplicationController
   
   def new
     @object = Organisation.value_object.new
+    @form_explanation = "This will create a new organisation record.  Click <strong>Update</strong> to add it to the system."
+    @form_operation = "Create Organisation"
+    @current_node_icon = "/images/icons/organisation.png"
   end
   
   def graphml

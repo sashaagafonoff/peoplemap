@@ -7,40 +7,33 @@
     %title
       peoplemap:
       = controller.action_name
-    = stylesheet_link_tag 'scaffold'
-    = stylesheet_link_tag '/stylesheets/ui-lightness/jquery-ui-1.7.2.custom.css'
-    = javascript_include_tag(['/javascripts/jquery-1.3.2.min.js','/javascripts/jquery-ui-1.7.2.custom.min.js'])
+    = stylesheet_link_tag(['/stylesheets/ui-lightness/jquery-ui-1.7.2.custom.css','niftyCorners','scaffold'])
+    = javascript_include_tag(['/javascripts/jquery-1.3.2.min.js','/javascripts/jquery-ui-1.7.2.custom.min.js','niftycube'])
 %body
-  %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%", :id => "top_menu"}
-    %tr
-      %td{:width => "148px"}
-        <a href="../../people"><img src="/images/logo.png" style="border: none;"/>
-      %td
-        %ul
-          %li
-            %a{:href => "../../people", :style => @people_style}
-              people
-          %li
-            %a{:href => "../../organisations", :style => @org_style}
-              organisations
-          %li
-            %a{:href => "../../locations", :style => @location_style}
-              locations
-          %li
-            %a{:href => "../../events", :style => @event_style}
-              events
-          %li
-            %a{:href => "../../references", :style => @reference_style}
-              references
-      %td{:width => "88px"}
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/"><img alt="Creative Commons License" style="border-width:0" src="/images/88x31.png" /></a>
-    %p{:id => "notice"}
+  %div{:id => "top_menu"}
+    %div{:id => "logo"}
+      <a href="../../people"><img src="/images/logo.png" style="border: none;"/>
+    %ul
+      %li
+        %a{:href => "../../people", :style => @people_style}
+          people
+      %li
+        %a{:href => "../../organisations", :style => @org_style}
+          organisations
+      %li
+        %a{:href => "../../locations", :style => @location_style}
+          locations
+      %li
+        %a{:href => "../../events", :style => @event_style}
+          events
+      %li
+        %a{:href => "../../references", :style => @reference_style}
+          references
+    %div{:id => "CCL"}
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/"><img alt="Creative Commons License" style="border-width:0" src="/images/88x31.png" /></a>
+  - if flash[:notice]
+    %div{:id => "notice"}
       = flash[:notice]
-
   = yield
-
-  %ul{:id => "footer_menu"}
-    <!--%liabout us-->
-    %li
-      <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dc:title" rel="dc:type"><b>people</b>map</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sasha Agafonoff</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/">Creative Commons Attribution-Share Alike 2.5 Australia License</a>.
-    <!--%licontact us-->
+  %div{:id => "footer_menu"}
+    <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dc:title" rel="dc:type"><b>people</b>map</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sasha Agafonoff</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/">Creative Commons Attribution-Share Alike 2.5 Australia License</a>.

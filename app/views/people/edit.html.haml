@@ -1,4 +1,5 @@
 %h1
+  %img{:src=>@current_node_icon, :alt=>"Person icon", :width=>"56",:height=>"46"}
   <b>edit</b>person:
   = @object.first_name + " " + @object.surname
 = render( :partial => "form", :object => @object)

@@ -1,13 +1,29 @@
+==================================
 == Welcome to peoplemap
+==================================
 
 peoplemap is a Rails-based web application designed to support the collection & analysis of information about social relationships.  At present, this uses a fairly simple user-driven CRUD model to permit manual entry of data.  Eventually this will mature with data visualisation tools like network charts, timeline visualisation, graphs, etc and I will add tools to pull data from CSV and live sources like Twitter, Facebook, LinkedIn, etc.
 
-This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-sa/2.5/au/ for more details.
+This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-sa/2.5/au/ for more details.  For non-lawyers or people who can't be bothered with the details, this means (within the limitations imposed by other IP contained within this solution), do whatever you like with it, as long as you publish any changes you make to the code and attribute my (and all contributors') authorship.
 
-This project has just started, so expect a great deal change in these files over coming months.  Nothing is stable yet!!! If you've got suggestions for improving approaches that I'm taking in building this thing, please let me know, or make a fork and get to it!  There are plenty of bugs, so expect things to break, but if you find something, add it to the issues list and I'll get to it as quickly as I can.
+This project has just started, so expect a great deal change over the coming year.  Not everything is stable yet!!! If you've got suggestions for improving approaches that I'm taking in building this thing, please let me know, or make a fork and get to it!  There are plenty of bugs, so expect things to break, but if you find something, add it to the issues list and I'll get to it as quickly as I can.
 
-THINGS TO DO:
-- search & index support with more mature lists
+==================================
+== I NEED HELP!!!!
+==================================
+If you're interested in this project, and are looking for ways to contribute, please let me know.  I've got some ideas about where I could use some help:
+- Getting a good unit test structure set up: I'm more of a BA than a coder, so a lot of this config stuff is a challenge for me: I have only developed a handful of fairly brittle Selenium tests since I can't rely on ActiveRecord and fixtures etc because of the way neo4j.rb works, and it doesn't make sense to do too much dev without getting a solid test base in place.
+- Suggestions/feedback from some experienced coders/architects on refactoring opportunities in the existing code - I really doubt that what I've done to date would be very efficient, and I know that a bit of a glance over the code by some seasoned veterans would make a huge difference.
+- Ideas on how to discard the Flash visualisation component in favour of a pure Javascript option (perhaps processing.js, JQuery, etc) so that the UI is cleaner and easier to treat as a single app (also for easier test automation).
+- Implementing a bulk data loader - perhaps using the Batchinserter from the neo4j guys at http://wiki.neo4j.org/content/Batch_Insert.
+- Implementing a really good search capability into the system
+
+There are probably a million other things I haven't thought of - please drop me a line if you've got some thoughts...
+
+==================================
+== THINGS TO DO (at a very high level):
+==================================
+- search & index support with more mature lists (highlight matches, fuzzy matches, traverse edges as well as nodes)
 - Maturing the interface & consolidating display logic for common views
 - user management
 - admin tools
@@ -15,10 +31,13 @@ THINGS TO DO:
 - dataset management (allow users to save collections of nodes/edges)
 - reporting/exporting
 - data loading tools
+- integration with Facebook/Twitter to retrieve data
 
+==================================
 == Getting Started
+==================================
 
-Apologies for the limited install info - I'll try to extend this information in future.  Feel free to contact me if you're trying to get it working.
+Feel free to contact me if you're trying to get it working.
 
 1. Install JRuby, then Rails, etc
 2. Make sure you have neo4j and lucene jars installed into your CLASSPATH
@@ -28,9 +47,9 @@ Apologies for the limited install info - I'll try to extend this information in 
 6. Install selenium-client (gem install selenium-client) (optional for running automated test suite)
 
 ===============================
-INSTALLATION NOTES FOR UBUNTU 9
+== INSTALLATION NOTES FOR UBUNTU 9
 ===============================
-Here are detailed instructions for getting this rolling on a clean Ubuntu 9 VirtualBox image using Aptana Studio as the IDE.  If you have suggestions for improving this, please let me know - I'm sure there are better ways... :-)
+Here are detailed instructions for getting this rolling on a clean Ubuntu 9 VirtualBox image using Aptana Studio as the IDE. It assumes you are running a GUI and not command-lining it.  If you have suggestions for improving this, please let me know - I'm sure there are better ways... :-)
 
 0. Install a JDK (ie sudo apt-get install openjdk-6-jre-headless)
 1. Install Git (ie sudo apt-get install git-core)
@@ -45,15 +64,13 @@ Here are detailed instructions for getting this rolling on a clean Ubuntu 9 Virt
    git clone git://github.com/andreasronge/neo4j.git
 6. cd to install/dir/neo4j (downloaded earlier via Git) then run rake gem:install
 7. From command line git clone git://github.com/sashaagafonoff/peoplemap.git
-8. Download and install NiftyCube into /public/stylesheets/ and /public/javascripts/ respectively from http://www.html.it/articoli/niftycube/index.html
-9. Download and install JQueryUI into /public/stylesheets/ and /public/javascripts/ respectively from http://jqueryui.com/
-10. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
-11. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
-12.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
-13.Start the server and navigate to http://0.0.0.0:3000/people
+8. Download (http://www.aptana.com) and extract Aptana Studio to your home folder, run and add RadRails plugin (Git is also useful)
+9. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
+10.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
+11.Start the server and navigate to http://0.0.0.0:3000/people
 
 =====================================
-COMPILING THE VISUALISATION COMPONENT
+== COMPILING THE VISUALISATION COMPONENT
 =====================================
 This as set up as a pure Actionscript component (compiling with the free FlashDevelop product), using the /lib/peoplemap.swc file to provide additional icons and controls. The SWC control is built using Adobe Flash CS4 - the master file is /Visualisation Control/src/Main.fla
 
@@ -62,16 +79,25 @@ This as set up as a pure Actionscript component (compiling with the free FlashDe
 
 That should be it!!!  With a bit of work, you can also set this up as a pure Flash project (I was getting some instability with the compiler), and probably as a pure Flex application as well (I didn't want to shell out for both Flash and Flex/Flash Builder).
 
+==================================
 == Licenses
+==================================
 Note that neo4j operates under a dual free/commercial license, so check the conditions before you use it for anything.
 
-- Neo4j.rb: MIT, see the LICENSE file github.com/andreasronge/neo4j/tree/master/LICENSE.
+- Neo4j.rb: MIT, see the LICENSE file github.com/andreasronge/neo4j/tree/master/LICENSE
 - Lucene: Apache, see lucene.apache.org/java/docs/features.html
 - Neo4j: Dual free software/commercial license, see neo4j.org/
 - haml: MIT, see http://haml-lang.com/docs/yardoc/MIT-LICENSE.html
-- Prefuse Flare library: GNU license - see http://www.gnu.org/copyleft/fdl.html
+- Prefuse Flare library: BSD License (according to Sourceforge, but no link provided)
+- NiftyCube: GPL - see http://www.gnu.org/copyleft/gpl.html
+- JQueryUI: MIT (http://jquery-ui.googlecode.com/svn/tags/latest/MIT-LICENSE.txt) and GPL (http://jquery-ui.googlecode.com/svn/tags/latest/GPL-LICENSE.txt) licenses
 
 Good luck!  Drop me a line if you are trying it out - I'm keen to hear views...
 
-THINGS TO NOTE:
-- the index pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet.
+==================================
+== THINGS TO NOTE:
+==================================
+- The new node menu is very much incomplete - the only thing working is the delete function (which fails very badly if it's done on the root node for the visualisation), but it should give a good indication of where things are heading.
+- The index and node/show pages are not designed to handle large volumes yet. I won't implement an indexing, search or recent nodes capabilities for a few iterations yet, but it's on my mind...
+- I have modified (very slightly) the JQueryUI CSS (ui-lightness theme) and so have included the full set of JQUeryUI files used for this project.  This is to improve the layout of the node lists on the node/show pages.
+- I have included the NiftyCube JS and CSS without modification to make installation that much simpler.  Note the license as listed above...

@@ -1,45 +1,35 @@
-%table{:cellpadding => "0", :cellspacing => "0", :border => "0", :id => "node_info", :width => "100%"}
-  %tr
-    %td{:colspan=>"3"}
-      %ul{:id => "node_menu"}
-        %b
-          current record:
-        %li
-          = link_to 'edit', edit_event_path(@object)
-        %li
-          = link_to 'delete', @object, :confirm => 'Are you sure?', :method => :delete
-  %tr
-    %td{:class => "node_info_value", :rowspan=>"3"}
-      %h1
-        = @object.title
-    %th
-      Event Type
-    %td{:class => "node_info_value"}
-      = @object.event_type
-  %tr
-    %th
-      Start Date
-    %td{:class => "node_info_value"}
-      = @object.start_date
-  %tr
-    %th
-      End Date
-    %td{:class => "node_info_value"}
-      = @object.end_date
-  %tr
-    %td{:class => "node_info_value",:colspan=>"3"}
-      = @object.description
-      &nbsp;
-  %tr
-    %th{:colspan=>"3"}
-      Related Images
-  %tr
-    %td{:class => "node_info_value", :colspan=>"3"}
-      IMAGE GALLERY HERE
-  %tr
-    %th{:colspan=>"3"}
-      Notes
-  %tr
-    %td{:class => "node_info_value",:colspan=>"3"}
-      = @object.notes
-      &nbsp;
+%h1
+  %img{:src=>@current_node_icon, :alt=>"event icon", :width=>"56",:height=>"46"}
+  = get_display_name(@object)
+  = link_to image_tag("/images/icons/delete_S_f2.png",:width=>"46",:height=>"41",:alt=>"Delete this record",:class=>"action_btn"), @object, :confirm => 'Are you sure?', :method => :delete
+  = link_to image_tag("/images/icons/edit_S_f2.png",:width=>"46",:height=>"41",:alt=>"Edit this record",:class=>"action_btn"), edit_event_path(@object)
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Title
+  = @object.title
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Event Type
+  = @object.event_type
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Start Date
+  = @object.start_date
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    End Date
+  = @object.end_date
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Description
+  = @object.description
+  &nbsp;
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Related Images
+  IMAGE GALLERY HERE
+%div{:class => "node_data"}
+  %label{:class => "node_data_label"}
+    Notes
+  = @object.notes
+  &nbsp;

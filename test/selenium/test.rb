@@ -37,19 +37,19 @@ class NewTest < Test::Unit::TestCase
 
     @selenium.click "//*[@href='/people/new']"
     wait
-    enter_new_person_data("Mr","Burt","Reynolds","Male","These are some notes")
+    enter_new_person_data("Mr","Burt","Reynolds","Male","1972-10-12","These are some notes")
     wait
     assert @selenium.is_text_present("Burt Reynolds")
 
     @selenium.open "/people/new"
     wait
-    enter_new_person_data("Ms","Dolly","Parton","Female","These are some notes")
+    enter_new_person_data("Ms","Dolly","Parton","Female","1971-09-12","These are some notes")
     wait
     assert @selenium.is_text_present("Dolly Parton")
 
     @selenium.open "/people/new"
     wait
-    enter_new_person_data("Ms","Sheena","Easton","Female","These are some notes")
+    enter_new_person_data("Ms","Sheena","Easton","Female","1970-08-12","These are some notes")
     wait
     assert @selenium.is_text_present("Sheena Easton")
 

@@ -1,31 +1,43 @@
-- form_for(@object) do |f| 
-
-  %p
-    = f.label :apt_office_floor_number 
-    = f.text_field :apt_office_floor_number 
-  %p
-    = f.label :street_number 
-    = f.text_field :street_number 
-  %p
-    = f.label :street_name 
-    = f.text_field :street_name 
-  %p
-    = f.label :street_type 
-    = f.select :street_type, Location::LOCATION_TYPES, :prompt => "Select a location type" 
-  %p
-    = f.label :suburb 
-    = f.text_field :suburb 
-  %p
-    = f.label :city 
-    = f.text_field :city 
-  %p
-    = f.label :country 
-    = f.select :country, Location::COUNTRIES, :prompt => "Select a country" 
-  %p
-    = f.label :postcode 
-    = f.text_field :postcode 
-  %p
-    = f.label :notes 
-    = f.text_area :notes, :size => "25x5" 
-  %p
-    = f.submit 'Update' 
+:javascript
+  $(document).ready(function() {
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
+  });
+%div{:id=>"form_wrapper"}
+  - form_for(@object) do |f|
+    %div{:class=>"form_explanation"}
+      %img{:src=>"/images/icons/info.png",:alt=>"Info icon",:class=>"notice_icon",:height=>"42",:width=>"43"}
+      = @form_explanation
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      %p
+        = f.label :apt_office_floor_number
+        = f.text_field :apt_office_floor_number
+      %p
+        = f.label :street_number
+        = f.text_field :street_number
+      %p
+        = f.label :street_name
+        = f.text_field :street_name
+      %p
+        = f.label :street_type
+        = f.select :street_type, Location::LOCATION_TYPES, :prompt => "Select a location type"
+      %p
+        = f.label :suburb
+        = f.text_field :suburb
+      %p
+        = f.label :city
+        = f.text_field :city
+      %p
+        = f.label :country
+        = f.select :country, Location::COUNTRIES, :prompt => "Select a country"
+      %p
+        = f.label :postcode
+        = f.text_field :postcode
+    %div{:class=>"clear_all"}
+    %div{:class=>"form_group"}
+      = f.label :notes
+      = f.text_area :notes, :size => "65x10"
+    %div{:id=>"form_submit"}
+      = f.submit @form_operation

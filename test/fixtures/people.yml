@@ -1,7 +1,9 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  name: MyString
+  salary: 1
+  age: 1
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+two:
+  name: MyString
+  salary: 1
+  age: 1

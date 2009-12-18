@@ -1,34 +1,44 @@
+:javascript
+  $(document).ready(function() {
+  	Nifty('div#form_wrapper','medium');
+  	Nifty('div.form_explanation','medium');
+  	Nifty('div.form_group','medium');
+  });
 %h1
+  %img{:src=>@current_node_icon, :alt=>"Location icon", :width=>"56",:height=>"46"}
   <b>location</b>finder
-%p
-  = link_to 'New location', new_location_path
-%table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
-  %tr
-    %th
-      Address
-    %th
-      Suburb
-    %th
-      City
-    %th
-      Country
-    %th{:colspan=>"3"}
-  - @locations.each do |location|
-    %tr{:class => cycle('list_odd', 'list_even')}
-      %td
-        = location.street_number  
-        = location.street_name  
-        = location.street_type 
-      %td
-        = location.suburb 
-      %td
-        = location.city 
-      %td
-        = location.country 
-      %td
-        = link_to 'Edit', edit_location_path(location) 
-      %td
-        = link_to 'Show', location 
-      %td
-        = link_to 'Destroy', location, :confirm => 'Are you sure?', :method => :delete 
+%div{:id=>"form_wrapper"}
+  %div{:class=>"form_explanation"}
+    = link_to image_tag("/images/icons/new_S_f2.png",:alt=>"New Location",:class=>"notice_icon",:height=>"41",:width=>"46"), new_location_path
+    = link_to 'Click here to add a new location record to the database', new_location_path
+%div{:id=>"index_list_wrapper"}
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Address
+      %th
+        Suburb
+      %th
+        City
+      %th
+        Country
+      %th{:colspan=>"3"}
+    - @locations.each do |location|
+      %tr{:class => cycle('list_odd', 'list_even')}
+        %td
+          = location.street_number
+          = location.street_name
+          = location.street_type
+        %td
+          = location.suburb
+        %td
+          = location.city
+        %td
+          = location.country
+        %td
+          = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :action => "show", :id => location
+        %td
+          = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_location_path(location)
+        %td
+          = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), location, :confirm => 'Are you sure?', :method => :delete
 %br
