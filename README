@@ -1,5 +1,5 @@
 ==================================
-== Welcome to peoplemap
+== WELCOME TO PEOPLEMAP
 ==================================
 
 peoplemap is a Rails-based web application designed to support the collection & analysis of information about social relationships.  At present, this uses a fairly simple user-driven CRUD model to permit manual entry of data.  Eventually this will mature with data visualisation tools like network charts, timeline visualisation, graphs, etc and I will add tools to pull data from CSV and live sources like Twitter, Facebook, LinkedIn, etc.
@@ -7,6 +7,13 @@ peoplemap is a Rails-based web application designed to support the collection & 
 This project is (or (ahem) will be once it matures sufficiently to deserve it) protected under a Creative Commons Attribution-Share Alike 2.5 Australia License see http://creativecommons.org/licenses/by-sa/2.5/au/ for more details.  For non-lawyers or people who can't be bothered with the details, this means (within the limitations imposed by other IP contained within this solution), do whatever you like with it, as long as you publish any changes you make to the code and attribute my (and all contributors') authorship.
 
 This project has just started, so expect a great deal change over the coming year.  Not everything is stable yet!!! If you've got suggestions for improving approaches that I'm taking in building this thing, please let me know, or make a fork and get to it!  There are plenty of bugs, so expect things to break, but if you find something, add it to the issues list and I'll get to it as quickly as I can.
+
+==================================
+== SEE IT IN ACTION!!!
+==================================
+If you'd like to see peoplemap in action, I have a live instance of the latest version running at http://peoplemap.404.com.au
+
+Please try to limit traffic to this site, as it is on a limited bandwidth plan & RAM is fairly low (only 256MB). Thanks!
 
 ==================================
 == I NEED HELP!!!!
@@ -68,6 +75,36 @@ Here are detailed instructions for getting this rolling on a clean Ubuntu 9 Virt
 9. Run Aptana, go to Window | Preferences | Ruby | Installed Interpreters, remove the reference to the existing JRuby VM and create a new one pointing to your JRuby location (eg /opt).  If you don't have any other instances of Ruby on your machine, Aptana may prompt you to use JRuby, but warn against doing it.  Do it anyway.
 10.From Aptana, create new Rails project in folder from peoplemap Git repository, tell Aptana to generate app, but skip overwriting any files it wants to recreate
 11.Start the server and navigate to http://0.0.0.0:3000/people
+
+=====================================
+== DEPLOYING THE APPLICATION
+=====================================
+This section provides some quick options for deploying peoplemap on a server.  This is aimed at people looking to get it up and running quickly and is not intended to provide any real tips for deployment into production.
+
+Option 1: Glassfish gem
+1. Install the glassfish gem "jruby -S gem install glassfish"
+2. Navigate to the parent folder above the peoplemap folder (eg /home/sasha/peoplemap )
+3. Type "jruby -S glassfish <peoplemap_folder_name>" (eg "jruby -S glassfish peoplemap")
+4. The app should automatically be deployed (to port 3000 if nothing else is running)
+
+Option 2: Webrick Server (assumes this is installed)
+1. type "jruby script/server" from the console in the /peoplemap directory.  The server should automatically start on the built-in webrick server
+
+Option 3: Mongrel Server
+1. INstall the mongrel gem "jruby -S gem install mongrel"
+2. Navigate to root directory of peoplemap
+3. "mongrel_rails start"
+
+NOTE: I haven't managed to get Glassfish, Webrick or Mongrel running with JRuby as a daemon/background service.  If anyone can point me in the direciton of some good articles on this, that would be much appreciated...
+
+Option 4: Tomcat Server (assumes this is installed)
+1. Install warbler "gem install warbler"
+2. Navigate to root directory of peoplemap
+3. "jruby -S warble war" (produces peoplemap.war file - you may want to run "jruby -S warble config" first)
+4. Copy peoplemap.war to your {TOMCAT_HOME}/webapps folder
+5. Start the Tomcat service
+
+Tomcat will automatically deploy the *.war file into webapps/peoplemap
 
 =====================================
 == COMPILING THE VISUALISATION COMPONENT

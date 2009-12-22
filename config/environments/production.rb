@@ -9,6 +9,10 @@ config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = true
 config.action_view.cache_template_loading            = true
 
+Lucene::Config[:store_on_file] = true
+Lucene::Config[:storage_path] = 'db/lucene'
+Neo4j::Config[:storage_path] = 'db/neo4j' 
+
 # See everything in the log (default is :info)
 # config.log_level = :debug
 
