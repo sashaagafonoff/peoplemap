@@ -50,18 +50,18 @@ module ApplicationHelper
   
   def get_type_list(origin_type, target_type, origin_gender)
     @@cache2 ||= {}
-    key = origin_type + target_type
+    key = origin_type + target_type + origin_gender
+    case origin_gender
+      when "Male"
+        @gender_modifier = ' and (@gender_specific="male" or @gender_specific="neutral")'
+      when "Female"
+        @gender_modifier = ' and (@gender_specific="female" or @gender_specific="neutral")'
+      else
+        @gender_modifier = ''
+    end
     unless @@cache2[key]
       xml = File.open("#{RAILS_ROOT}/config/relationships.xml")
       doc = Document.new(xml)
-      case origin_gender
-        when "Male"
-          @gender_modifier = ' and (@gender_specific="male" or @gender_specific="neutral")'
-        when "Female"
-          @gender_modifier = ' and (@gender_specific="female" or @gender_specific="neutral")'
-        else
-          @gender_modifier = ''
-      end
       drop_list_display = '//relationships/relationship[@predicate="' + origin_type + '_to_' + target_type + '"'+ @gender_modifier +']/option' # /text() will return just node values
       @@cache2[key] = XPath.match(doc, drop_list_display)
       xml.close
