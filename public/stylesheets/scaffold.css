@@ -226,6 +226,9 @@ input.rel_date {
   font-size: 9px;
   width: 50px;
 }
+input.datepicker {
+  width: 100px;
+}
 input.notes {
   height: 12px;
   font-size: 9px;

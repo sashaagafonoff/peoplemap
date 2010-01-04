@@ -33,6 +33,14 @@
       %p
         = f.label :date_of_birth
         = f.text_field :date_of_birth, :class=>"datepicker"
+
+      %p
+        = f.label :facebook_uid
+        = f.text_field :facebook_uid
+      %p
+        = f.label :twitter_screen_name
+        = f.text_field :twitter_screen_name
+
     %div{:class=>"clear_all"}
     %div{:class=>"form_group"}
       = f.label :notes

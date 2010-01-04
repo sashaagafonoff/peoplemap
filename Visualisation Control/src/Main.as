@@ -449,7 +449,15 @@
 		
 		private function editNodeData(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
+			var nodeClassPlural:String = getNodeClassPlural(evt.target.parent.nodeType);
 			// view the appropriate form for the node type
+			var editRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/" + evt.target.parent.nodeID + "/edit");
+			try {            
+                navigateToURL(editRequest, "_self");
+            }
+            catch (e:Error) {
+                // handle error here
+            }
 		}
 		
 		private function addComment(evt:MouseEvent):void {
@@ -460,35 +468,71 @@
 		private function deleteNode(evt:MouseEvent):void {
 			// keep the button state up for this operation
 			evt.target.upState = evt.target.overState;
-			var nodeClass:String = new String;
-			switch(evt.target.parent.nodeType) {
+			var nodeClassPlural:String = getNodeClassPlural(evt.target.parent.nodeType);
+			var urlRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/destroy/" + evt.target.parent.nodeID);
+			// display confirmation message
+			displayMsgOKCancel("This will delete the selected node. Do you want to proceed?",nodeClassPlural,urlRequest);
+			evt.target.upState = evt.target.hitTestState;
+		}
+		
+		private function displayMsgOKCancel(msgText:String,nodeClassPlural:String,urlRequest:URLRequest):void {
+
+			var boxBlackout:Sprite = new Sprite();
+			var msgBox:msgBoxOKCancel = new msgBoxOKCancel;
+
+			boxBlackout.graphics.beginFill(0x000000);
+			boxBlackout.graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
+			boxBlackout.graphics.endFill();
+			boxBlackout.alpha = 0.85;
+			addChild(boxBlackout);
+			msgBox.btnOK.label = "OK";
+			msgBox.btnCancel.label = "Cancel";
+			msgBox.lblMsgBox.text = msgText;
+			msgBox.lblMsgBox.wordWrap = true;
+			msgBox.x = (stage.stageWidth - msgBox.width) / 2;
+			msgBox.y = (stage.stageHeight - msgBox.height) / 2;
+			addChild(msgBox);
+			msgBox.btnOK.addEventListener(MouseEvent.CLICK,msgOKClicked);
+			msgBox.btnCancel.addEventListener(MouseEvent.CLICK, msgCancelClicked);
+			function msgOKClicked(evt:MouseEvent):void {
+				removeChild(boxBlackout);
+				removeChild(msgBox);
+				
+				// now delete the node
+				try {            
+					navigateToURL(urlRequest, "_self");
+				}
+				catch (e:Error) {
+					// handle error here
+				}
+			}
+			function msgCancelClicked(evt:MouseEvent):void {
+				removeChild(boxBlackout);
+				removeChild(msgBox);
+			}
+
+		}
+		
+		private function getNodeClassPlural(nodeClass:String):String {
+			switch(nodeClass) {
 				case "person" :
-					nodeClass = "people";
+					return "people";
 					break;
 				case "organisation" :
-					nodeClass = "organisations";
+					return "organisations";
 					break;
 				case "event" :
-					nodeClass = "events";
+					return "events";
 					break;
 				case "location" :
-					nodeClass = "locations";
+					return "locations";
 					break;
 				case "reference" :
-					nodeClass = "references";
+					return "references";
 					break;
 				default:
-					nodeClass = "error"; // should not happen
+					return "error"; // should not happen
 			}
-			
-			// delete the node
-			var deleteRequest:URLRequest = new URLRequest("/" + nodeClass + "/destroy/" + evt.target.parent.nodeID);
-			removeChildAt(evt.target.parent.index);
-			deleteRequest.method = URLRequestMethod.POST;
-			var loader:URLLoader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, handleRESTfulRequest);
-			loader.load(deleteRequest);
-			hideActionMenu(evt);
 		}
 		
 		private function handleRESTfulRequest(evt:Event):void {
@@ -504,7 +548,7 @@
 			var flashVars:Object=this.loaderInfo.parameters;
 
 			gmr.read(flashVars.pm_url); // variable loaded from embed code in page
-			//gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			//gmr.read("http://localhost:3001/people/graphml/6"); // for debugging in the Flash player
 			
 		}
 		

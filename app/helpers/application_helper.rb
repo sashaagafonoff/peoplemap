@@ -136,13 +136,15 @@ module ApplicationHelper
       when "Person"
        '<node id="' + node.neo_node_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
+          <data key="title">' + (if(node.title=='') then 'EMPTY' else node.title end) + '</data>
           <data key="name">' + [node.first_name, node.surname].join(" ") + '</data>
           <data key="first_name">' + (if(node.first_name=='') then 'EMPTY' else node.first_name end) + '</data>
           <data key="surname">' + (if(node.surname=='') then 'EMPTY' else node.surname end) + '</data>
           <data key="sex">' + (if(node.sex=='') then 'EMPTY' else node.sex end) + '</data>
           <data key="date_of_birth">' + (if(node.date_of_birth=='') then 'EMPTY' else node.date_of_birth end) + '</data>
-          <data key="title">' + (if(node.title=='') then 'EMPTY' else node.title end) + '</data>
-          <data key="notes">' + (if(node.notes=='') then 'EMPTY' else node.notes end) + '</data> 
+          <data key="facebook_uid">' + (if(node.title=='') then 'EMPTY' else node.facebook_uid end) + '</data>
+          <data key="twitter_screen_name">' + (if(node.title=='') then 'EMPTY' else node.twitter_screen_name end) + '</data>
+          <data key="notes">' + (if(node.notes=='') then 'EMPTY' else node.notes end) + '</data>
         </node>'  
       # :name, :sector, :industry, :notes
       when "Organisation"

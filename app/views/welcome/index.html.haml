@@ -1,0 +1,34 @@
+%h1
+  %img{:src=>@current_node_icon, :alt=>"Person icon", :width=>"56",:height=>"46"}
+  welcome to <b>people</b>map
+%h2
+  Getting Started
+%p
+  You can search for data in the system using the search form below, or create a new record using the links available.
+%h2
+  Search
+%form
+  %input
+  %input{:type=>"submit"}
+%h2
+  Add a New Record
+%p
+  %img{:src=>"/images/icons/male.png",:alt=>"Add a New Person"}
+  %img{:src=>"/images/icons/organisation.png",:alt=>"Add a New Organisation"}
+  %img{:src=>"/images/icons/location.png",:alt=>"Add a New Location"}
+  %img{:src=>"/images/icons/event.png",:alt=>"Add a New Event"}
+  %img{:src=>"/images/icons/note.png",:alt=>"Add a New Reference"}
+%h2
+  About <b>people</b>map
+%p
+  <b>people</b>map is an application designed to support the collection of information about the relationships between people.
+  It is designed to support collaborative analysis of information using a network-centric data model, by explicitly capturing information about relationships
+  and displaying them in a visual manner for easy comprehension & insight.
+%p
+  The relationships defined in this application have been set up to show the types of things that are possible - however, they are extremely simple to define for specific
+  business domains, and the effort required to define a comprehensive set of relationships is minimal as they are all maintained in a single master XML file.
+  The master XML file can easily be edited using a simple text editor, or maintained as a spreadsheet (Excel, etc) and exported to XML.
+  The master Excel spreadsheet used to define relationship types for this instance are available with the full source code on GitHub at <a href="http://github.com/sashaagafonoff/peoplemap">http://github.com/sashaagafonoff/peoplemap</a>
+%p
+  Implemented in Ruby on Rails, the underlying data model is extremely simple to modify, both for entity types as well as relationship properties.
+  Changes to the underlying data model are very simple to implement, as the MVC architecture used by the application lends itself readily to model changes.

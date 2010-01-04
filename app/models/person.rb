@@ -2,9 +2,10 @@ class Person
 
   include Neo4j::NodeMixin
 
-  property :title, :first_name, :middle_names, :surname, :maternal_name, :date_of_birth, :classification, :sex, :notes
+  property :title, :first_name, :middle_names, :surname, :maternal_name, :date_of_birth, :sex, :facebook_uid, :twitter_screen_name, :notes
   
   has_n(:person_to_person).to(Person).relationship(Role)
+
   has_n(:person_to_organisation).to(Organisation).relationship(Role)
   has_n(:person_to_event).to(Event).relationship(Role)
   has_n(:person_to_location).to(Location).relationship(Role)
@@ -15,7 +16,8 @@ class Person
   has_n(:location_to_person).from(Location).relationship(Role)
   has_n(:reference_to_person).from(Reference).relationship(Role)
 
-  index :surname, :first_name, :classification
+
+  index :surname, :first_name
 
   Person::TITLE_TYPES = [
     ["Mr", "Mr"],

@@ -1,13 +1,19 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :users
+
   map.resources :references
 
   map.resources :events
 
-   map.resources :organisations 
+  map.resources :organisations
 
   map.resources :locations
 
   map.resources :people
+
+  map.resources :users
+
+  map.resources :welcome
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -50,4 +56,5 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing the them or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  map.connect "/" , :controller => "welcome" , :action => "index"
 end
