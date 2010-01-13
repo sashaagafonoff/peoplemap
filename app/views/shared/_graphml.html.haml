@@ -30,11 +30,12 @@
   <key attr.type="string" id="ref_value" for="node" attr.name="type"/>
   <!-- Event -->
   <key attr.type="string" id="event_type" for="node" attr.name="event_type"/>
-  <key attr.type="date" id="start_date" for="node" attr.name="start_date"/>
-  <key attr.type="date" id="end_date" for="node" attr.name="end_date"/>
+  <key attr.type="string" id="start_date" for="node" attr.name="start_date"/>
+  <key attr.type="string" id="end_date" for="node" attr.name="end_date"/>
   <!-- Relationships -->
   <key attr.type="string" id="link_type" for="edge" attr.name="link_type"/>
-  <key attr.type="date" id="start_date" for="edge" attr.name="start_date"/>
-  <key attr.type="date" id="end_date" for="edge" attr.name="end_date"/>
+  <key attr.type="string" id="start_date" for="edge" attr.name="start_date"/>
+  <key attr.type="string" id="end_date" for="edge" attr.name="end_date"/>
+  <key attr.type="string" id="notes" for="edge" attr.name="notes"/>
   %graph{:edgedefault=>"directed"}
     = @graphml

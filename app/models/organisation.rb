@@ -29,8 +29,13 @@ class Organisation
   Organisation::INDUSTRY_TYPES = [
     ["Aeronautics","Aeronautics"],
     ["Acrobatics","Acrobatics"],
-    ["Government","Government"],
+    ["Church","Church"],
+    ["Energy","Energy"],
+    ["Gang","Gang"],
+    ["Government Agency","Government Agency"],
     ["Mining","Mining"],
+    ["School","School"],
+    ["Television Show","Television Show"],
     ["Terrorism","Terrorism"],
     ["etc","etc"]
   ]

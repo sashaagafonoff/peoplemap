@@ -1,6 +1,5 @@
 class LocationsController < ApplicationController
   
-  around_filter :neo_tx
   layout 'layout', :except => [:graphml]
   
   def index
@@ -71,4 +70,5 @@ class LocationsController < ApplicationController
     yield
     Neo4j::Transaction.finish
   end
+
 end

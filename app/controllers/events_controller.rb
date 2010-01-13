@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   
-  around_filter :neo_tx
   layout 'layout', :except => [:graphml]
   
   def index
@@ -70,4 +69,5 @@ class EventsController < ApplicationController
     yield
     Neo4j::Transaction.finish
   end
+
 end

@@ -6,18 +6,16 @@
 %p
   You can search for data in the system using the search form below, or create a new record using the links available.
 %h2
-  Search
-%form
-  %input
+  Search or Add a New Record
+- form_tag :action => 'index', :controller=> "search", :id=>"top_menu_search" do
+  %input{:name=>"search"}
   %input{:type=>"submit"}
-%h2
-  Add a New Record
 %p
-  %img{:src=>"/images/icons/male.png",:alt=>"Add a New Person"}
-  %img{:src=>"/images/icons/organisation.png",:alt=>"Add a New Organisation"}
-  %img{:src=>"/images/icons/location.png",:alt=>"Add a New Location"}
-  %img{:src=>"/images/icons/event.png",:alt=>"Add a New Event"}
-  %img{:src=>"/images/icons/note.png",:alt=>"Add a New Reference"}
+  = link_to image_tag("/images/icons/male.png",:alt=>"New Person"), new_person_path
+  = link_to image_tag("/images/icons/organisation.png",:alt=>"Add a New Organisation"), new_organisation_path
+  = link_to image_tag("/images/icons/location.png",:alt=>"Add a New Location"), new_location_path
+  = link_to image_tag("/images/icons/event.png",:alt=>"Add a New Event"), new_event_path
+  = link_to image_tag("/images/icons/note.png",:alt=>"Add a New Reference"), new_reference_path
 %h2
   About <b>people</b>map
 %p

@@ -94,42 +94,50 @@ module ApplicationHelper
       @rel_start_id = relationship.start_node.neo_node_id
       @rel_end_id = relationship.end_node.neo_node_id
       @rel_id = relationship.neo_relationship_id
-      node_array.push relationship.start_node.neo_node_id
-      node_array.push relationship.end_node.neo_node_id
-      unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely
+
+      unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
+        
+        # inverse_node is the node to which our originating node connects (relationship could be incoming or outgoing)
         if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
 
         inverse_node.relationships.both.each do |sub_relationship|
-          unless (sub_relationship.start_node.neo_node_id == 1) then  
+          unless (sub_relationship.start_node.neo_node_id == 1) then # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
             unless rel_array.include? sub_relationship.neo_relationship_id then
-              @inverse_id = inverse_node.neo_node_id
-              @sub_rel_start_id = sub_relationship.start_node.neo_node_id
-              @sub_rel_end_id = sub_relationship.end_node.neo_node_id
-              @sub_rel_id = sub_relationship.neo_relationship_id
+
+              # find out which node is the other end of the relationship from the originating node
               if (inverse_node.neo_node_id == sub_relationship.start_node.neo_node_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
-              @sub_nodes = unless (node_array.include? sub_inverse_node.neo_node_id) then graphml_builder(sub_inverse_node) else " " end
+
+              # build graphml code for node and edge (unless already done)
+              @sub_nodes = unless (node_array.include? sub_inverse_node.neo_node_id) then graphml_builder(sub_inverse_node) else " " end  # else " " is needed to stop stuff breaking
               @sub_edges = unless (sub_relationship.start_node.neo_node_id == 1) then graphml_edge_builder(sub_relationship) else " " end
+
+              # push to array of sub-code for second layer
               grandchildren.push @sub_nodes + @sub_edges
-              node_array.push sub_relationship.start_node.neo_node_id
-              node_array.push sub_relationship.end_node.neo_node_id
+
+              # finally, keep track of this node to stop it repeating
+              node_array.push sub_inverse_node.neo_node_id # add inverse node to list to stop it repeating
             end
           end
           rel_array.push sub_relationship.neo_relationship_id
         end
       end
 
-      @inverse_graphml = unless (inverse_node.nil?) then graphml_builder(inverse_node) else " " end    # need to catch 
+      @inverse_node_graphml = unless (inverse_node.nil?) then
+        unless (node_array.include? inverse_node.neo_node_id) then graphml_builder(inverse_node) else " " end
+      else
+        " "
+      end
       @grandchildren = grandchildren.join("")
       @edges = unless (relationship.start_node.neo_node_id == 1) then graphml_edge_builder(relationship) else " " end
-      children.push @inverse_graphml + @grandchildren + @edges
+      children.push @inverse_node_graphml + @grandchildren + @edges
 
       rel_array.push relationship.neo_relationship_id
 
     end
     @graphml = graphml_builder(object) + children.join("")
-    #@graphml = rel_array.join(",")
+    
   end
-  
+
   # now detect class of target node and build data according to model
   def graphml_builder(node)
     case node.class.to_s
@@ -196,10 +204,20 @@ module ApplicationHelper
   
   def graphml_edge_builder(edge)
     @rel_desc = get_relationship_description(edge)
+    @start_date = edge.start_date
+    @end_date = edge.end_date
+    @notes = edge.notes
+#    if (edge.start_date.nil?) then @start_date = "" else @start_date = edge.start_date end
+#    if (edge.end_date=="") then @end_date ="" else @end_date = edge.end_date end
+#    if (edge.notes=="") then @notes = "" else @notes = =  edge.notes end
     #@rel_desc = "unknown"
     '<edge source="' + edge.start_node.neo_node_id.to_s +
-       '" target="' + edge.end_node.neo_node_id.to_s + '"
-       link_type="'+ @rel_desc +'">
+       '" target="' + edge.end_node.neo_node_id.to_s +
+       '" link_type="' + @rel_desc +
+       '" start_date="' + @start_date +
+       '" end_date="' + @end_date +
+       '" notes="' + @notes +
+       '">
      </edge>'
   end
 
@@ -219,4 +237,49 @@ module ApplicationHelper
 
     return @display_name
   end
+
+  def search_index(class_type,search_term)
+    case class_type
+      when "person"
+        @people = Person.find(:first_name=>search_term)
+        @people2 = Person.find(:surname=>search_term)
+      when "organisation"
+        @organisations = Organisation.find(:name=>search_term)
+      when "location"
+        @locations = Location.find(:street_name=>search_term)
+      when "event"
+        @events = Event.find(:title=>search_term)
+      when "reference"
+        @references = Reference.find(:ref_value=>search_term)
+    end
+  end
+
+  def search_terms_display(search_terms)
+    unless (search_terms.nil?) then
+      if search_terms.kind_of? Array then
+        @search_terms_display = search_terms.join(" ")
+      else
+        @search_terms_display = search_terms 
+      end
+    else
+      @search_terms_display = ""
+    end
+    return @search_terms_display
+  end
+
+  def load_batch_data
+#    xml = File.open("#{RAILS_ROOT}/public/batch.xml")
+#    doc = Document.new(xml)
+#    xpath_query = '//relationships/relationship[@name="' + @edge_name + '"]/' + @link_desc
+#    xml.close
+  end
+
+  def batch_create_node
+
+  end
+
+  def batch_link_node
+
+  end
+
 end

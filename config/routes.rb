@@ -15,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :welcome
 
+  map.resources :search
+
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -57,4 +60,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   map.connect "/" , :controller => "welcome" , :action => "index"
+  map.connect "/batch", :controller => "batch", :action => "index"
+  map.connect "/batch/load_lots", :controller => "batch", :action => "load_lots"
+  map.connect "/batch/load_simpsons", :controller => "batch", :action => "load_simpsons"
 end

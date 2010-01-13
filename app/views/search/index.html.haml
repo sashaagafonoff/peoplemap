@@ -1,0 +1,160 @@
+// This page is a whole pile of crap that needs to be redone in a major way !!!!
+%h1
+  %img{:src=>@current_node_icon, :alt=>"Person icon", :width=>"56",:height=>"46"}
+  search <b>people</b>map
+%h2
+  Your Search Results
+%p
+  You searched for
+  = unless (@search_terms.nil?) then search_terms_display(@search_terms) end
+%p
+  Results:
+%div{:id=>"index_list_wrapper"}
+  %b
+    people
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Name
+      %th
+        Date of Birth
+      %th{:colspan=>"3"}
+    - @search_terms.each do |search_term|
+      - search_index("person",search_term)
+      - @people.each do |person|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = [person.title, person.first_name, person.surname].join " "
+          %td
+            = person.date_of_birth
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :controller => "person", :action => "show", :id => person
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_person_path(person)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), person, :confirm => 'Are you sure?', :method => :delete
+      - @people2.each do |person|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = [person.title, person.first_name, person.surname].join " "
+          %td
+            = person.date_of_birth
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :controller => "person", :action => "show", :id => person
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_person_path(person)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), person, :confirm => 'Are you sure?', :method => :delete
+  %b
+    organisations
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Name
+      %th
+        Sector
+      %th{:colspan=>"3"}
+    - @search_terms.each do |search_term|
+      - search_index("organisation",search_term)
+      - @organisations.each do |organisation|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = organisation.name
+          %td
+            = organisation.sector
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :controller => "organisation", :action => "show", :id => organisation
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_organisation_path(organisation)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), organisation, :confirm => 'Are you sure?', :method => :delete
+  %b
+    locations
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Address
+      %th
+        Suburb
+      %th
+        City
+      %th
+        Country
+      %th{:colspan=>"3"}
+    - @search_terms.each do |search_term|
+      - search_index("location",search_term)
+      - @locations.each do |location|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = location.street_number
+            = location.street_name
+            = location.street_type
+          %td
+            = location.suburb
+          %td
+            = location.city
+          %td
+            = location.country
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :action => "show", :id => location
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_location_path(location)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), location, :confirm => 'Are you sure?', :method => :delete
+  %b
+    events
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Title
+      %th
+        Category
+      %th
+        Date
+      %th{:colspan=>"3"}
+    - @search_terms.each do |search_term|
+      - search_index("event",search_term)
+      - @events.each do |event|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = event.title
+          %td
+            = event.event_type
+          %td
+            = event.start_date
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :action => "show", :id => event
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_event_path(event)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), event, :confirm => 'Are you sure?', :method => :delete
+  %b
+    references
+  %table{ :cellpadding => "0", :cellspacing => "0", :border => "0", :class => "node_list"}
+    %tr
+      %th
+        Name
+      %th
+        Date of Birth
+      %th{:colspan=>"3"}
+    - @search_terms.each do |search_term|
+      - search_index("reference",search_term)
+      - @references.each do |reference|
+        %tr{:class => cycle('list_odd', 'list_even')}
+          %td
+            = reference.reference_type
+          %td
+            = reference.ref_value
+          %td
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), :controller => "reference", :action => "show", :id => reference
+          %td
+            = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_reference_path(reference)
+          %td
+            = link_to image_tag("/images/icons/delete_XS_f2.png",:alt=>"Delete",:class=>"notice_icon",:height=>"25",:width=>"27"), reference, :confirm => 'Are you sure?', :method => :delete
+
+// %h2
+//  Advanced Search
+// - form_tag :action => 'index', :controller=> "search", :id=>"top_menu_search" do
+//  %input{:name=>"search",:value=>@search_terms}
+//  %input
+//  %input{:type=>"submit"}

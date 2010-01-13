@@ -31,6 +31,11 @@
           references
     %div{:id => "CCL"}
       <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/au/"><img alt="Creative Commons License" style="border-width:0" src="/images/88x31.png" /></a>
+    %div{:id=>"top_menu_search"}
+      - form_tag :action => 'index', :controller=> "search", :id=>"top_menu_search" do
+        search:
+        %input{:name=>"search",:value=>unless (@search_terms.nil?) then search_terms_display(@search_terms) end}
+        %input{:type=>"submit", :value=>"go"}
   - if flash[:notice]
     %div{:id => "notice"}
       = flash[:notice]

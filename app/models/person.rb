@@ -24,7 +24,13 @@ class Person
     ["Mrs", "Mrs"],
     ["Ms", "Ms"],
     ["Miss", "Miss"],
-    ["Master", "Master"]
+    ["Master", "Master"],
+    ["Doctor", "Doctor"],
+    ["Professor", "Professor"],
+    ["Reverend", "Reverend"],
+    ["President", "President"],
+    ["Lord", "Lord"],
+    ["Lady", "Lady"]
   ]
   
   Person::SEXES = [

@@ -59,6 +59,14 @@ div#top_menu li{
 div#top_menu div#CCL{
   float:right;
 }
+div#top_menu_search {
+  float:right;
+  display:inline-block;
+  margin:0;
+  padding:0 0 0 0;
+  line-height:31px;
+  color: #fff;
+}
 
 div#notice {
   background-color: #69BE39;

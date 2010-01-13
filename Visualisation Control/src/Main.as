@@ -1,6 +1,7 @@
 ﻿package 
 {
 	import flare.display.TextSprite;
+	import flash.display.Shape;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
@@ -12,6 +13,8 @@
 	
 
 	import flare.util.Shapes;
+	import flash.utils.Timer;
+    import flash.events.TimerEvent;
 	
 	import flare.vis.Visualization;
 
@@ -74,14 +77,24 @@
 		private var bmb:baseMenuBar = new baseMenuBar;
 
 		private var vis:Visualization;
-		
+
+		private var actionMenu:cptNodeActions = new cptNodeActions;
+
+		private var linkDetails:linkInfo = new linkInfo;
+		private var showLinkDirtyFlag:Boolean = false;
+
+		private var rollOver:rolloverMenu = new rolloverMenu;
+		private var rollOverUpFlag:Boolean = false;
+		private var mouseDownFlag:Boolean = false;
+				
 		private var opt:Array;
 		private var idx:int = -1;
 		private var cur:Object = new Object;
 		private var stgHeight:int = stage.stageHeight;
 		
-		private var currentActionMenuID:int = -1; // used to store ID of current actionMenu (if present)
-		
+		private var nodeID:int = new int;
+		private var nodeClass:String = new String;
+		private var actionMenuIsActive:Boolean = false;
 /*		
  * 		Set up the basic layout and set links for the buttons
 */
@@ -113,16 +126,6 @@
 			
 			bmb.btnFullScreen.addEventListener(MouseEvent.CLICK, toggleFullScreen);
 			stage.addEventListener(Event.RESIZE, resize);
-
-			// set up listeners for each of the buttons from the menuBar component (in /lib/peoplemap.swc)
-			for (var i:uint=0; i<opt.length; ++i) {
-				this.mb.getChildByName(opt[i].button).addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void { 
-					downstateMenuBtns();
-					event.target.upState = event.target.overState; 
-					//setChildIndex(event.target, -1);
-					switchTo(event.target.name).play();
-				});
-			}
 
 			// ADD CODE HERE FOR ZOOM CONTROL	
 				
@@ -168,6 +171,7 @@
 			// set up icons for visualisation
 			vis.data.nodes.visit(function(ns:NodeSprite):void { 
 				
+
 				// rs is the icon
 				var rs:Sprite = new Sprite;
  
@@ -206,8 +210,10 @@
 				rs.x = -20;
 				rs.y = -20;
 				
-				ns.addEventListener(MouseEvent.CLICK, showActionMenu);
- 
+				ns.addEventListener(MouseEvent.ROLL_OVER, showRolloverMenu);
+				ns.addEventListener(MouseEvent.MOUSE_DOWN, hideRolloverMenu); // to hide it when dragging
+				ns.addEventListener(MouseEvent.MOUSE_UP, setMouseFlag); // to hide it when dragging
+
 				// set up text formatting of node labels
 				var nodeTF:TextFormat = new TextFormat();
 				nodeTF.color = 0xff333333;
@@ -236,6 +242,16 @@
 			// make the default layout a Tree
 			switchTo("treeBtn").play();
  
+			// set up listeners for each of the buttons from the menuBar component (in /lib/peoplemap.swc)
+			for (var i:uint=0; i<opt.length; ++i) {
+				this.mb.getChildByName(opt[i].button).addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void { 
+					downstateMenuBtns();
+					event.target.upState = event.target.overState; 
+					//setChildIndex(event.target, -1);
+					switchTo(event.target.name).play();
+				});
+			}
+
  
 		}
 		
@@ -353,7 +369,10 @@
  
 			// draw labels on edges
 			vis.data.edges.visit(function(es:EdgeSprite):void {
-				es.data.label = es.data.link_type,edgeTF
+				es.data.label = es.data.link_type, edgeTF
+				es.addEventListener(MouseEvent.CLICK, showLinkDetails);
+				es.addEventListener(MouseEvent.MOUSE_OVER, highlightLink);
+				es.addEventListener(MouseEvent.MOUSE_OUT, restoreLinkColor);
 			});
 			vis.data.edges.setProperty("arrowType", ArrowType.TRIANGLE);
 			vis.data.edges.setProperty("arrowWidth", 8);
@@ -396,21 +415,67 @@
 		private function updateEdgeLabelPosition(evt:Event):void {
 			var es:EdgeSprite = evt.target as EdgeSprite;
 			es.props.label.x = (es.source.x + es.target.x) / 2;
-			es.props.label.y = (es.source.y + es.target.y) / 2 + 15;	
+			es.props.label.y = (es.source.y + es.target.y) / 2 + 15;
+		}
+		private function highlightLink(evt:MouseEvent):void {
+			evt.target.lineColor = 0xffCC3300;
+			evt.target.lineWidth = 5;
+			evt.target.arrowWidth = 16;
+		}
+		private function restoreLinkColor(evt:MouseEvent):void {
+			evt.target.lineColor = 0x99666666;
+			evt.target.lineWidth = 2;
+			evt.target.arrowWidth = 8;
+		}
+		private function showLinkDetails(evt:MouseEvent):void {
+			if (showLinkDirtyFlag == true) {
+				removeChild(linkDetails);
+			}
+			var start_date:String = new String;
+			if (evt.target.data.start_date == "") { start_date = "unknown date"; } else { start_date = evt.target.data.start_date; }
+			var end_date:String = new String;
+			if (evt.target.data.end_date == "") { end_date = "present"; } else { end_date = evt.target.data.end_date; }
+			linkDetails.linkType.text = evt.target.data.link_type;
+			linkDetails.dateRange.text = start_date + " to " + end_date;
+			linkDetails.txtNotes.text = evt.target.data.notes;
+			linkDetails.x = mouseX + 10;
+			linkDetails.y = mouseY - 55;
+			linkDetails.btnCloseLinkInfo.addEventListener(MouseEvent.CLICK, hideLinkDetails);
+			addChild(linkDetails);
+			showLinkDirtyFlag = true;
+		}
+		private function hideLinkDetails(evt:MouseEvent):void {
+			removeChild(linkDetails);
+			showLinkDirtyFlag = false;
 		}
 		
+		private function showRolloverMenu(evt:MouseEvent):void {
+			if (mouseDownFlag == false) {
+				if (actionMenuIsActive == false) {
+					rollOver.x = evt.target.x + 15;
+					rollOver.y = evt.target.y + 20;
+					nodeID = evt.target.data.id;
+					nodeClass = evt.target.data.node_class;
+					addChild(rollOver);
+					rollOver.btnMenu.addEventListener(MouseEvent.CLICK, showActionMenu);
+					rollOver.btnGo.addEventListener(MouseEvent.CLICK, browseNode);
+					rollOver.addEventListener(MouseEvent.ROLL_OUT, hideRolloverMenu);
+					rollOverUpFlag = true;
+				}
+			}
+		}
+		private function hideRolloverMenu(evt:MouseEvent):void {
+			if (rollOverUpFlag == true) { removeChild(rollOver); }
+			mouseDownFlag = true;
+			rollOverUpFlag = false;
+		}
+		private function setMouseFlag(evt:MouseEvent):void {
+			mouseDownFlag = false;
+		}
 		private function showActionMenu(evt:MouseEvent):void {
-			
-			// remove the current actionMenu (if present)
-			if (currentActionMenuID != -1) { 
-				removeChildAt(currentActionMenuID); 
-			} 
-			
-			var actionMenu:cptNodeActions = new cptNodeActions;
-			actionMenu.nodeID = evt.target.data.id;
-			actionMenu.nodeType = evt.target.data.node_class;
-			actionMenu.x = evt.target.x-97;
-			actionMenu.y = evt.target.y-35;
+			actionMenuIsActive = true;
+			actionMenu.x = rollOver.x-110;
+			actionMenu.y = rollOver.y-55;
 			addChild(actionMenu);
 			actionMenu.btnClose.addEventListener(MouseEvent.CLICK, hideActionMenu);
 			actionMenu.btnGetTwitterData.addEventListener(MouseEvent.CLICK, getTwitterData);
@@ -420,12 +485,11 @@
 			actionMenu.btnAddComment.addEventListener(MouseEvent.CLICK, addComment);
 			actionMenu.btnDeleteNode.addEventListener(MouseEvent.CLICK, deleteNode);
 			
-			currentActionMenuID = getChildIndex(actionMenu);
 		}
 		
 		private function hideActionMenu(evt:MouseEvent):void {
 			removeChild(evt.target.parent);
-			currentActionMenuID = -1;
+			actionMenuIsActive = false;
 		}
 		
 		private function getTwitterData(evt:MouseEvent):void {
@@ -449,9 +513,21 @@
 		
 		private function editNodeData(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
-			var nodeClassPlural:String = getNodeClassPlural(evt.target.parent.nodeType);
+			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
 			// view the appropriate form for the node type
-			var editRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/" + evt.target.parent.nodeID + "/edit");
+			var editRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/" + nodeID + "/edit");
+			try {            
+                navigateToURL(editRequest, "_self");
+            }
+            catch (e:Error) {
+                // handle error here
+            }
+		}
+		
+		private function browseNode(evt:MouseEvent):void {
+			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
+			// view the appropriate form for the node type
+			var editRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/" + nodeID);
 			try {            
                 navigateToURL(editRequest, "_self");
             }
@@ -468,8 +544,8 @@
 		private function deleteNode(evt:MouseEvent):void {
 			// keep the button state up for this operation
 			evt.target.upState = evt.target.overState;
-			var nodeClassPlural:String = getNodeClassPlural(evt.target.parent.nodeType);
-			var urlRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/destroy/" + evt.target.parent.nodeID);
+			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
+			var urlRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/destroy/" + nodeID);
 			// display confirmation message
 			displayMsgOKCancel("This will delete the selected node. Do you want to proceed?",nodeClassPlural,urlRequest);
 			evt.target.upState = evt.target.hitTestState;
@@ -542,13 +618,14 @@
 		}
 
 		private function updateGraph():void {
+
 			if (vis) { removeChild(vis); }
 			
 			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
 			var flashVars:Object=this.loaderInfo.parameters;
 
 			gmr.read(flashVars.pm_url); // variable loaded from embed code in page
-			//gmr.read("http://localhost:3001/people/graphml/6"); // for debugging in the Flash player
+			//gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
 			
 		}
 		
@@ -575,8 +652,8 @@
 		
 		private function showPreLoader():void {
 			// show preloader
-			preloaderAnimation.x = stage.stageWidth/2 - preloaderAnimation.width/2;
-			preloaderAnimation.y = stage.stageHeight/2;
+			preloaderAnimation.x = stage.stageWidth/2 - preloaderAnimation.width/2 + 120;
+			preloaderAnimation.y = stage.stageHeight/2 - 100;
 			addChild(preloaderAnimation);
 		}
 		

@@ -1,6 +1,5 @@
 class PeopleController < ApplicationController
   
-  around_filter :neo_tx
   layout 'layout', :except => [:graphml]
 
   def index
