@@ -71,21 +71,34 @@
 	public class Main extends Sprite
 	{
 		
+		private const debugModeFlag:Boolean = false;
+		
+		[Embed(source="arial.ttf", fontName="Arial")]
+		private static var _font:Class;
+		
 		// add UI components (from /lib/peoplemap.swc)
 		private var mb:menuBar = new menuBar;
 		private var preloaderAnimation:loaderComponent = new loaderComponent;
 		private var bmb:baseMenuBar = new baseMenuBar;
 
 		private var vis:Visualization;
-
-		private var actionMenu:cptNodeActions = new cptNodeActions;
+		private var nearbyNodeRootID:int;
 
 		private var linkDetails:linkInfo = new linkInfo;
 		private var showLinkDirtyFlag:Boolean = false;
 
-		private var rollOver:rolloverMenu = new rolloverMenu;
-		private var rollOverUpFlag:Boolean = false;
+		private var btnRollover:btnRolloverMenu = new btnRolloverMenu;
+		private var rollOverFlag:Boolean = false;
+		
+		private var actionMenu:cptNodeActions = new cptNodeActions;
+		private var actionMenuFlag:Boolean = false;
+
 		private var mouseDownFlag:Boolean = false;
+		
+		private var currentVisType:String = "treeBtn";
+		
+		private var boxBlackout:Sprite = new Sprite();
+		private var getNearbyNodesFlag:Boolean = false;
 				
 		private var opt:Array;
 		private var idx:int = -1;
@@ -94,7 +107,12 @@
 		
 		private var nodeID:int = new int;
 		private var nodeClass:String = new String;
-		private var actionMenuIsActive:Boolean = false;
+
+		private var nodeIDs:Array = new Array;
+		private var edgeIDs:Array = new Array;
+
+		private var nodeTF:TextFormat = new TextFormat();
+		private var edgeTF:TextFormat = new TextFormat();
 /*		
  * 		Set up the basic layout and set links for the buttons
 */
@@ -104,13 +122,64 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			// get configured options for visualisation types 
-			opt = options(stage.width-50,stage.height-50);
+			opt = options(stage.stageWidth,stage.stageHeight-50);
 			
 			// set default visualisation to tree (first in options index)
 			idx = 0;
 
 			showPreLoader();
 			
+			// set up visualisation space
+			vis = new Visualization;
+			//vis.opaqueBackground = 0xff669977;
+			
+			updateVisDimensions();
+						
+			// set up text formatting of node labels
+			nodeTF.color = 0xff333333;
+			nodeTF.bold = true;
+			nodeTF.font = "Arial";
+			nodeTF.size = 10;
+			nodeTF.align = "center";
+
+			// Edge text formatting
+			edgeTF.color = 0xff333333;
+			edgeTF.font = "Arial";
+			edgeTF.size = 9;
+			edgeTF.align = "center";
+				
+			updateGraph();
+
+		}
+		
+		/*	Once the GraphML data has been loaded, build the visualisation */
+		private function onLoaded(data:Data):void {
+			
+			// hide preloader
+			removeChild(preloaderAnimation);
+			
+			vis.data = data;
+			
+
+			// add DragControl to allow node repositioning by user
+			var dc:DragControl = new DragControl(NodeSprite);
+			vis.controls.add(dc);
+
+			var pzc:PanZoomControl = new PanZoomControl();
+			vis.controls.add(pzc);
+			
+			// set up icons for visualisation
+			vis.data.nodes.visit(function(ns:NodeSprite):void { 
+				generateNodeIcon(ns);
+				nodeIDs.push(ns.data.id);
+			});
+
+			// update visualisation and add to Stage
+			addChild(vis);
+
+			// make the default layout a Tree
+			switchTo(currentVisType).play();
+ 
 			// build menu buttons
 			mb.menuBgd.width = stage.stageWidth;
 			mb.x = stage.stageWidth - mb.menuBgd.width + 20;
@@ -127,121 +196,6 @@
 			bmb.btnFullScreen.addEventListener(MouseEvent.CLICK, toggleFullScreen);
 			stage.addEventListener(Event.RESIZE, resize);
 
-			// ADD CODE HERE FOR ZOOM CONTROL	
-				
-				
-			updateGraph();
-
-		}
-/*		
-//		toggle all menu buttons when switching states
-//		
-*/
-		private function downstateMenuBtns():void {
-			mb.treeBtn.upState = mb.treeBtn.downState;
-			mb.indentBtn.upState = mb.indentBtn.downState;
-			mb.forceBtn.upState = mb.forceBtn.downState;
-			mb.radialBtn.upState = mb.radialBtn.downState;
-			mb.circleBtn.upState = mb.circleBtn.downState;
-		}
-		
-/*		
- * 		Once the GraphML data has been loaded, build the visualisation
-*/
-		private function onLoaded(data:Data):void {
-			
-			// hide preloader
-			removeChild(preloaderAnimation);
-			
-			
-			// set up visualisation space
-			vis = new Visualization(data);
-			vis.x = 0;
-			vis.y = 50;
-			vis.operators.add(opt[idx].op);
-			vis.setOperator("nodes", new PropertyEncoder(opt[idx].nodes, "nodes"));
-			vis.setOperator("edges", new PropertyEncoder(opt[idx].edges, "edges"));
-						
-			var dc:DragControl = new DragControl(NodeSprite);
-			vis.controls.add(dc);
-
-			var pzc:PanZoomControl = new PanZoomControl();
-			vis.controls.add(pzc);
-			
-			// set up icons for visualisation
-			vis.data.nodes.visit(function(ns:NodeSprite):void { 
-				
-
-				// rs is the icon
-				var rs:Sprite = new Sprite;
- 
-				// select icon (from /lib/icons.swc) depending on type
-				switch (ns.data.node_class) {
-					case "person":
-						if (ns.data.sex == "Female") {
-							rs.addChild(new female);
-						} else {
-							rs.addChild(new male);
-						}
-						break;
-					case "organisation":
-						rs.addChild(new organisation);
-						break;
-					case "location":
-						rs.addChild(new location);
-						break;
-					case "reference":
-						switch(ns.data.reference_type) {
-							case "email":
-								rs.addChild(new email);
-								break;
-							default:
-								rs.addChild(new reference);
-						}
-						break;
-					case "event":
-						rs.addChild(new event);
-						break;
-					default:
-						rs.addChild(new reference);
-				}
- 
-				// move node to center it against edge lines
-				rs.x = -20;
-				rs.y = -20;
-				
-				ns.addEventListener(MouseEvent.ROLL_OVER, showRolloverMenu);
-				ns.addEventListener(MouseEvent.MOUSE_DOWN, hideRolloverMenu); // to hide it when dragging
-				ns.addEventListener(MouseEvent.MOUSE_UP, setMouseFlag); // to hide it when dragging
-
-				// set up text formatting of node labels
-				var nodeTF:TextFormat = new TextFormat();
-				nodeTF.color = 0xff333333;
-				nodeTF.bold = true;
-				nodeTF.font = "Arial";
-				nodeTF.size = 10;
-				nodeTF.align = "center";
-	 
-				// get name of node for label
-				var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
-				ns.addChild(ts);	
-
-				// center below icon
-				ts.x = ns.x - ns.width / 2;
-				ts.y = ns.y + 20;
-
-				ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the icon
-				ns.size = 0;
-				ns.mouseChildren = false; 
-				ns.buttonMode = true;
-			});
-
-			// update visualisation and add to Stage
-			addChild(vis);
-
-			// make the default layout a Tree
-			switchTo("treeBtn").play();
- 
 			// set up listeners for each of the buttons from the menuBar component (in /lib/peoplemap.swc)
 			for (var i:uint=0; i<opt.length; ++i) {
 				this.mb.getChildByName(opt[i].button).addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void { 
@@ -251,15 +205,69 @@
 					switchTo(event.target.name).play();
 				});
 			}
-
- 
 		}
-		
-/*		
- * This function sets up an array which will configure each visualisation type based on the size of the bounds
-*/		
-		private function options(w:Number, h:Number):Array
-		{
+
+		private function generateNodeIcon(ns:NodeSprite):void {
+			
+			// rs is the icon
+			var rs:Sprite = new Sprite;
+
+			// select icon (from /lib/icons.swc) depending on type
+			switch (ns.data.node_class) {
+				case "person":
+					if (ns.data.sex == "Female") {
+						rs.addChild(new female);
+					} else {
+						rs.addChild(new male);
+					}
+					break;
+				case "organisation":
+					rs.addChild(new organisation);
+					break;
+				case "location":
+					rs.addChild(new location);
+					break;
+				case "reference":
+					switch(ns.data.reference_type) {
+						case "email":
+							rs.addChild(new email);
+							break;
+						default:
+							rs.addChild(new reference);
+					}
+					break;
+				case "event":
+					rs.addChild(new event);
+					break;
+				default:
+					rs.addChild(new reference);
+			}
+
+			// move node to center it against edge lines
+			rs.x = -20;
+			rs.y = -20;
+			
+			ns.addEventListener(MouseEvent.ROLL_OVER, showRolloverMenu);
+			ns.addEventListener(MouseEvent.MOUSE_DOWN, hideRolloverMenu); // to hide it when dragging
+			ns.addEventListener(MouseEvent.MOUSE_DOWN, hideActionMenu);
+			ns.addEventListener(MouseEvent.MOUSE_UP, setMouseFlag); // to hide it when dragging
+			ns.addEventListener(MouseEvent.MOUSE_UP, showRolloverMenu);
+ 
+			// get name of node for label
+			var ts:TextSprite = new TextSprite(ns.data.name,nodeTF);	
+			ns.addChild(ts);	
+
+			// center below icon
+			ts.x = ns.x - ns.width / 2;
+			ts.y = ns.y + 20;
+
+			ns.addChildAt(rs, 0); // at position 0 so that the text label is drawn above the icon
+			ns.size = 0;
+			ns.mouseChildren = false; 
+			ns.buttonMode = true;
+		}
+		/* Sets up an array which will configure each visualisation type based on the size of the bounds */		
+		private function options(w:Number, h:Number):Array {
 			var a:Array = [
 				{
 					name: "Tree",
@@ -272,11 +280,11 @@
 					button: "forceBtn",
 					op: new ForceDirectedLayout(true),
 					param: {
-						"simulation.dragForce.drag": 0.7,
-						defaultParticleMass: 1,
-						defaultSpringLength: 125,
+						"simulation.dragForce.drag": 0.3,
+						defaultParticleMass: 2,
+						defaultSpringLength: 150,
 						defaultSpringTension: 0.1,
-						layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/3)
+						layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/2)
 					},
 					update: true
 				},
@@ -290,11 +298,11 @@
 					name: "Radial",
 					button: "radialBtn",
 					op: new RadialTreeLayout(50,true,true),
-					param: { layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/3),
+					param: { layoutAnchor: new Point(stage.stageWidth/2, stage.stageHeight/2.5),
 							angleWidth: -2 * Math.PI,
-							radiusIncrement: 45,
-							useNodeSize: true
-							 }
+							radiusIncrement: 25,
+							useNodeSize: false
+							}
 				},
 				{
 					name: "Circle",
@@ -343,10 +351,12 @@
 			return a;
 		}
 		
-		/*		
- * 		This function supports switching between layout types
-*/
+		/*	Switch between layout types */
 		private function switchTo(visualisationType:String):Transition {
+			
+			hidePopups();
+			
+			currentVisType = visualisationType; // remember which layout we're currently using
 			
 			var old:Object = opt[idx];
 			for (idx=0; idx<opt.length; ++idx) {
@@ -360,19 +370,11 @@
 			vis.setOperator("nodes", new PropertyEncoder(cur.nodes, "nodes"));
 			vis.setOperator("edges", new PropertyEncoder(cur.edges, "edges"));
 			
-			// text formatting for edge labels
-			var edgeTF:TextFormat = new TextFormat();
-			edgeTF.color = 0xff333333;
-			edgeTF.font = "Arial";
-			edgeTF.size = 9;
-			edgeTF.align = "center";
  
 			// draw labels on edges
 			vis.data.edges.visit(function(es:EdgeSprite):void {
-				es.data.label = es.data.link_type, edgeTF
-				es.addEventListener(MouseEvent.CLICK, showLinkDetails);
-				es.addEventListener(MouseEvent.MOUSE_OVER, highlightLink);
-				es.addEventListener(MouseEvent.MOUSE_OUT, restoreLinkColor);
+				generateEdgeLabel(es);
+				edgeIDs.push(es.data.id);
 			});
 			vis.data.edges.setProperty("arrowType", ArrowType.TRIANGLE);
 			vis.data.edges.setProperty("arrowWidth", 8);
@@ -405,27 +407,46 @@
 				);
 			}
 			
-			var lae:Labeler = new Labeler("data.label",Data.EDGES,edgeTF,EdgeSprite,Labeler.LAYER); 
-			vis.data.edges.visit(function(es:EdgeSprite):void {es.addEventListener(Event.RENDER,updateEdgeLabelPosition);});
+			var lae:Labeler = new Labeler("data.label", Data.EDGES, edgeTF);
 			vis.operators.add(lae);
 
 			return seq;
+			
+			updateVisDimensions();
 		}
 
+		private function generateEdgeLabel(es:EdgeSprite):void {
+			es.data.label = es.data.link_type, edgeTF;
+			es.addEventListener(MouseEvent.CLICK, showLinkDetails);
+			es.addEventListener(MouseEvent.MOUSE_OVER, highlightLink);
+			es.addEventListener(MouseEvent.MOUSE_OUT, restoreLinkColor);
+			es.addEventListener(Event.RENDER, updateEdgeLabelPosition);
+		}
 		private function updateEdgeLabelPosition(evt:Event):void {
 			var es:EdgeSprite = evt.target as EdgeSprite;
 			es.props.label.x = (es.source.x + es.target.x) / 2;
 			es.props.label.y = (es.source.y + es.target.y) / 2 + 15;
 		}
+		
 		private function highlightLink(evt:MouseEvent):void {
 			evt.target.lineColor = 0xffCC3300;
 			evt.target.lineWidth = 5;
 			evt.target.arrowWidth = 16;
+			var es:EdgeSprite = evt.target as EdgeSprite; 
+			es.props.label.color = 0xff331111;
+			es.props.label.size = 15;
+			es.props.label.bold = true;
+			es.buttonMode = true;
 		}
 		private function restoreLinkColor(evt:MouseEvent):void {
 			evt.target.lineColor = 0x99666666;
 			evt.target.lineWidth = 2;
 			evt.target.arrowWidth = 8;
+			var es:EdgeSprite = evt.target as EdgeSprite; 
+			es.props.label.color = 0xff333333;
+			es.props.label.size = 9;
+			es.props.label.bold = false;
+			es.buttonMode = false;
 		}
 		private function showLinkDetails(evt:MouseEvent):void {
 			if (showLinkDirtyFlag == true) {
@@ -449,47 +470,49 @@
 			showLinkDirtyFlag = false;
 		}
 		
-		private function showRolloverMenu(evt:MouseEvent):void {
-			if (mouseDownFlag == false) {
-				if (actionMenuIsActive == false) {
-					rollOver.x = evt.target.x + 15;
-					rollOver.y = evt.target.y + 20;
-					nodeID = evt.target.data.id;
-					nodeClass = evt.target.data.node_class;
-					addChild(rollOver);
-					rollOver.btnMenu.addEventListener(MouseEvent.CLICK, showActionMenu);
-					rollOver.btnGo.addEventListener(MouseEvent.CLICK, browseNode);
-					rollOver.addEventListener(MouseEvent.ROLL_OUT, hideRolloverMenu);
-					rollOverUpFlag = true;
-				}
-			}
-		}
-		private function hideRolloverMenu(evt:MouseEvent):void {
-			if (rollOverUpFlag == true) { removeChild(rollOver); }
-			mouseDownFlag = true;
-			rollOverUpFlag = false;
-		}
 		private function setMouseFlag(evt:MouseEvent):void {
 			mouseDownFlag = false;
 		}
+
+		private function showRolloverMenu(evt:MouseEvent):void {
+			if (actionMenuFlag == false) {
+				nodeID = evt.target.data.id;
+				nodeClass = evt.target.data.node_class;
+				btnRollover.x = evt.target.x + 20;
+				btnRollover.y = evt.target.y;
+				rollOverFlag = true;
+				addChild(btnRollover);
+				btnRollover.addEventListener(MouseEvent.CLICK, showActionMenu);
+				btnRollover.addEventListener(MouseEvent.ROLL_OUT, hideRolloverMenu);
+			}
+		}
+		private function hideRolloverMenu(evt:MouseEvent):void {
+			hidePopups();
+		}
+		
 		private function showActionMenu(evt:MouseEvent):void {
-			actionMenuIsActive = true;
-			actionMenu.x = rollOver.x-110;
-			actionMenu.y = rollOver.y-55;
+			removeChild(btnRollover);
+			rollOverFlag = false;
+			
+			actionMenuFlag = true;
+			actionMenu.x = btnRollover.x - 90;
+			actionMenu.y = btnRollover.y - 35;
 			addChild(actionMenu);
+			
 			actionMenu.btnClose.addEventListener(MouseEvent.CLICK, hideActionMenu);
 			actionMenu.btnGetTwitterData.addEventListener(MouseEvent.CLICK, getTwitterData);
 			actionMenu.btnGetFacebookData.addEventListener(MouseEvent.CLICK, getFacebookData);
 			actionMenu.btnGetNearbyNodes.addEventListener(MouseEvent.CLICK, getNearbyNodes);
 			actionMenu.btnEditNodeData.addEventListener(MouseEvent.CLICK, editNodeData);
-			actionMenu.btnAddComment.addEventListener(MouseEvent.CLICK, addComment);
+			actionMenu.btnGoToNode.addEventListener(MouseEvent.CLICK, browseNode);
 			actionMenu.btnDeleteNode.addEventListener(MouseEvent.CLICK, deleteNode);
 			
 		}
-		
 		private function hideActionMenu(evt:MouseEvent):void {
-			removeChild(evt.target.parent);
-			actionMenuIsActive = false;
+			if (actionMenuFlag == true) {
+				removeChild(actionMenu);
+				actionMenuFlag = false;
+			}
 		}
 		
 		private function getTwitterData(evt:MouseEvent):void {
@@ -497,20 +520,38 @@
 			// retrieve Twitter data for node
 			// ie followers, followed by, tweets by followers/followees, own tweets
 		}
-		
 		private function getFacebookData(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
 			// retrieve Facebook data for node
 			// ie first circle of friends
 			// status updates, linked content, etc
 		}
-		
 		private function getNearbyNodes(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
-			// retrieve immediate network around node
-			// add limiter to retrieval to allow setting of number of records retrieved (probably in Rails, with setting of limit from this control)
+			
+			getNearbyNodesFlag = true;
+
+			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
+
+			actionMenuFlag = false;
+			removeChild(actionMenu);
+			
+			// block out main animation
+			boxBlackout.graphics.beginFill(0xff001133);
+			boxBlackout.graphics.drawRect(0,30,stage.stageWidth,stage.stageHeight-62);
+			boxBlackout.graphics.endFill();
+			boxBlackout.alpha = 0.85;
+			addChild(boxBlackout);
+			showPreLoader();
+			
+			var gmr:GraphMLReader = new GraphMLReader(addNewData);
+
+			if (debugModeFlag == false) {
+				gmr.read("/" + nodeClassPlural + "/graphml/" + nodeID); // for server
+			} else {
+				gmr.read("http://localhost:3001/" + nodeClassPlural + "/graphml/" + nodeID); // for debugging in Flash player
+			}
 		}
-		
 		private function editNodeData(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
 			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
@@ -523,8 +564,8 @@
                 // handle error here
             }
 		}
-		
 		private function browseNode(evt:MouseEvent):void {
+			evt.target.upState = evt.target.overState;
 			var nodeClassPlural:String = getNodeClassPlural(nodeClass);
 			// view the appropriate form for the node type
 			var editRequest:URLRequest = new URLRequest("/" + nodeClassPlural + "/" + nodeID);
@@ -535,12 +576,11 @@
                 // handle error here
             }
 		}
-		
 		private function addComment(evt:MouseEvent):void {
 			evt.target.upState = evt.target.overState;
 			// add a comment to the node
 		}
-		
+
 		private function deleteNode(evt:MouseEvent):void {
 			// keep the button state up for this operation
 			evt.target.upState = evt.target.overState;
@@ -550,10 +590,8 @@
 			displayMsgOKCancel("This will delete the selected node. Do you want to proceed?",nodeClassPlural,urlRequest);
 			evt.target.upState = evt.target.hitTestState;
 		}
-		
 		private function displayMsgOKCancel(msgText:String,nodeClassPlural:String,urlRequest:URLRequest):void {
 
-			var boxBlackout:Sprite = new Sprite();
 			var msgBox:msgBoxOKCancel = new msgBoxOKCancel;
 
 			boxBlackout.graphics.beginFill(0x000000);
@@ -619,26 +657,82 @@
 
 		private function updateGraph():void {
 
-			if (vis) { removeChild(vis); }
-			
 			var gmr:GraphMLReader = new GraphMLReader(onLoaded);
 			var flashVars:Object=this.loaderInfo.parameters;
 
-			gmr.read(flashVars.pm_url); // variable loaded from embed code in page
-			//gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
-			
+			if (debugModeFlag == false) {
+				gmr.read(flashVars.pm_url); // variable loaded from embed code in page
+			} else {
+				gmr.read("http://localhost:3001/people/graphml/2"); // for debugging in the Flash player
+			}
 		}
 		
-		public function play():void
-		{
+		public function addNewData(dt:Data):void {
+			var numNewNodes:int = 0;
+			var numNewEdges:int = 0;
+			
+			dt.nodes.visit(function(ns:NodeSprite):void{
+				if (nodeIDs.indexOf(ns.data.id) == -1) { // don't duplicate any nodes
+					vis.data.addNode(ns);
+					generateNodeIcon(ns);
+					nodeIDs.push(ns.data.id);
+					numNewNodes=numNewNodes+1;
+				}
+			});
+			dt.edges.visit(function(es:EdgeSprite):void {
+				if (edgeIDs.indexOf(es.data.id) == -1) { // don't duplicate any edges
+					vis.data.addEdgeFor(getNodeFromVisData(es.data.source), getNodeFromVisData(es.data.target), true, es.data); // the all important moment of adding the new edge
+					edgeIDs.push(es.data.id);
+					numNewEdges = numNewEdges + 1;
+				}
+			});
+
+			if (numNewNodes == 0) {
+				// message to say no new nodes retrieved
+			}
+
+			removeChild(boxBlackout);
+			getNearbyNodesFlag = false;
+			removeChild(preloaderAnimation);
+			
+			switchTo(currentVisType).play();
+		}
+		//
+		private function getNodeFromVisData(nodeID:int):NodeSprite {
+			var thisNode:NodeSprite = new NodeSprite;
+			vis.data.nodes.visit(function(ns:NodeSprite):void { // check each member in the set
+				if (ns.data.id == nodeID) {
+					thisNode = ns;
+				}
+			})
+			return thisNode;
+		}
+		// 
+		private function getEdgeFromVisData(edgeID:int):EdgeSprite {
+			var thisEdge:EdgeSprite = new EdgeSprite;
+			vis.data.edges.visit(function(es:EdgeSprite):void {
+				if (es.data.id == edgeID) {
+					thisEdge = es;
+				}
+			})
+			return thisEdge;
+		}
+		public function play():void	{
 			if (opt[idx].update) vis.continuousUpdates = true;
 		}
-		
-		public function stop():void
-		{
+		public function stop():void	{
 			vis.continuousUpdates = false;
 		}
 		
+		/*	toggle all menu buttons when switching states */
+		private function downstateMenuBtns():void {
+			mb.treeBtn.upState = mb.treeBtn.downState;
+			mb.indentBtn.upState = mb.indentBtn.downState;
+			mb.forceBtn.upState = mb.forceBtn.downState;
+			mb.radialBtn.upState = mb.radialBtn.downState;
+			mb.circleBtn.upState = mb.circleBtn.downState;
+		}
+
 		private function toggleFullScreen(evt:MouseEvent):void {
 			if (stage.displayState == StageDisplayState.NORMAL) {
 				stage.displayState = StageDisplayState.FULL_SCREEN;
@@ -658,6 +752,9 @@
 		}
 		
 		private function resize(evt:Event):void {
+			
+			hidePopups();
+			
 			mb.x = mb.x - (stage.stageWidth - mb.menuBgd.width)/2; // float left
 			mb.menuBgd.width = stage.stageWidth;
 			mb.y = Math.round((stgHeight - stage.stageHeight)/2); // float top
@@ -666,10 +763,30 @@
 			bmb.baseMenuBgd.width = stage.stageWidth;
 			bmb.y = Math.round((stgHeight - stage.stageHeight) / 2) + stage.stageHeight - bmb.baseMenuBgd.height; // float bottom
 			
-			vis.bounds.width = stage.stageWidth - 50;
-			vis.bounds.height = stage.stageHeight - 50;
+			updateVisDimensions();
+								
 			vis.update();
 			
+		}
+		private function updateVisDimensions():void {
+			vis.x = mb.x+25;
+			vis.y = mb.y+50;
+			
+			vis.bounds.width = stage.stageWidth-50;
+			vis.bounds.height = stage.stageHeight - 50;
+			
+		}
+		private function hidePopups():void {
+			
+			if (rollOverFlag == true) {
+				removeChild(btnRollover);
+				rollOverFlag = false;
+			}
+			
+			if (showLinkDirtyFlag == true) {
+				removeChild(linkDetails);
+				showLinkDirtyFlag = false;
+			}
 		}
 	}
 		

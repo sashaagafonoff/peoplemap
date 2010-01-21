@@ -77,6 +77,7 @@ class BatchController < ApplicationController
     linker(:origin_id=>11,:origin_type=>"person",:target_id=>13,:target_type=>"person",:link_category=>"person_to_person_father",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
     linker(:origin_id=>11,:origin_type=>"person",:target_id=>14,:target_type=>"person",:link_category=>"person_to_person_father",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
     linker(:origin_id=>15,:origin_type=>"person",:target_id=>3,:target_type=>"person",:link_category=>"person_to_person_girlfriend",:start_date=>"2005-01-01",:end_date=>"2005-01-05",:notes=>"created by batch process")
+    linker(:origin_id=>16,:origin_type=>"person",:target_id=>15,:target_type=>"person",:link_category=>"person_to_person_father",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
 
     @organisation = Organisation.new #17
     @organisation.update(:name=>"Springfield Nuclear Power Plant", :sector=>"Private Sector", :industry=>"Energy", :notes=>"created by batch process")
@@ -92,6 +93,46 @@ class BatchController < ApplicationController
     linker(:origin_id=>3,:origin_type=>"person",:target_id=>18,:target_type=>"organisation",:link_category=>"person_to_organisation_student",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
     linker(:origin_id=>3,:origin_type=>"person",:target_id=>19,:target_type=>"organisation",:link_category=>"person_to_organisation_supporter",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
     linker(:origin_id=>20,:origin_type=>"organisation",:target_id=>16,:target_type=>"person",:link_category=>"organisation_to_person_employer",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+
+    # :apt_office_floor_number, :street_number, :street_name, :street_type, :suburb, :city, :country, :postcode, :notes
+    @location = Location.new #21
+    @location.update(:apt_office_floor_number=>"",:street_number=>"24", :street_name=>"Evergreen Terrace", :street_type=>"Street", :suburb => "", :city => "Springfield", :country => "United States", :postcode => "12345",:notes=>"created by batch process")
+    @location = Location.new #22
+    @location.update(:apt_office_floor_number=>"",:street_number=>"45", :street_name=>"Mall", :street_type=>"Avenue", :suburb => "", :city => "Springfield", :country => "United States", :postcode => "12345",:notes=>"created by batch process")
+    @location = Location.new #23
+    @location.update(:apt_office_floor_number=>"",:street_number=>"264", :street_name=>"School", :street_type=>"Street", :suburb => "", :city => "Springfield", :country => "United States", :postcode => "12345",:notes=>"created by batch process")
+    @location = Location.new #24
+    @location.update(:apt_office_floor_number=>"",:street_number=>"745", :street_name=>"Nuclear", :street_type=>"Street", :suburb => "", :city => "Springfield", :country => "United States", :postcode => "12345",:notes=>"created by batch process")
+    @location = Location.new #25
+    @location.update(:apt_office_floor_number=>"",:street_number=>"954", :street_name=>"Beach", :street_type=>"Road", :suburb => "", :city => "Springfield", :country => "United States", :postcode => "12345",:notes=>"created by batch process")
+
+    @event = Event.new #26
+    @event.update(:title=>"Car crash", :description=>"Car crash into telephone pole", :event_type=>"Accident", :start_date=>"1995-01-01", :end_date=>"1995-01-01", :notes=>"created by batch process")
+
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>21,:target_type=>"location",:link_category=>"person_to_location_home_address",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>22,:origin_type=>"location",:target_id=>19,:target_type=>"organisation",:link_category=>"location_to_organisation_headquarters",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>18,:origin_type=>"organisation",:target_id=>23,:target_type=>"location",:link_category=>"organisation_to_location_headquarters",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>17,:origin_type=>"organisation",:target_id=>24,:target_type=>"location",:link_category=>"organisation_to_location_headquarters",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+
+    linker(:origin_id=>26,:origin_type=>"event",:target_id=>24,:target_type=>"location",:link_category=>"event_to_location_location",:start_date=>"1995-01-01",:end_date=>"1995-01-01",:notes=>"created by batch process")
+    linker(:origin_id=>26,:origin_type=>"event",:target_id=>11,:target_type=>"location",:link_category=>"event_to_person_participated_in",:start_date=>"1995-01-01",:end_date=>"1995-01-01",:notes=>"created by batch process")
+
+    @reference = Reference.new #27
+    @reference.update(:reference_type=>"email", :ref_value=>"homer.simpson@nuclearplant.springfield.com",:notes=>"created by batch process")
+    @reference = Reference.new #28
+    @reference.update(:reference_type=>"home_phone", :ref_value=>"8548 5658",:notes=>"created by batch process")
+    @reference = Reference.new #29
+    @reference.update(:reference_type=>"work_phone", :ref_value=>"9653 2584",:notes=>"created by batch process")
+    @reference = Reference.new #30
+    @reference.update(:reference_type=>"mobile_phone", :ref_value=>"653 496 358",:notes=>"created by batch process")
+    @reference = Reference.new #31
+    @reference.update(:reference_type=>"web_url", :ref_value=>"http://www.homersimpson.com",:notes=>"created by batch process")
+
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>27,:target_type=>"reference",:link_category=>"person_to_reference_email_address",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>28,:target_type=>"reference",:link_category=>"person_to_reference_home_phone",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>29,:target_type=>"reference",:link_category=>"person_to_reference_work_phone",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>30,:target_type=>"reference",:link_category=>"person_to_reference_mobile_phone",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
+    linker(:origin_id=>2,:origin_type=>"person",:target_id=>31,:target_type=>"reference",:link_category=>"person_to_reference_website",:start_date=>"1995-01-01",:end_date=>"",:notes=>"created by batch process")
 
 
   end

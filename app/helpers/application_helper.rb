@@ -96,7 +96,7 @@ module ApplicationHelper
       @rel_id = relationship.neo_relationship_id
 
       unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
-        
+
         # inverse_node is the node to which our originating node connects (relationship could be incoming or outgoing)
         if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
 
@@ -211,7 +211,8 @@ module ApplicationHelper
 #    if (edge.end_date=="") then @end_date ="" else @end_date = edge.end_date end
 #    if (edge.notes=="") then @notes = "" else @notes = =  edge.notes end
     #@rel_desc = "unknown"
-    '<edge source="' + edge.start_node.neo_node_id.to_s +
+    '<edge id = "' + edge.neo_relationship_id.to_s +
+       '" source="' + edge.start_node.neo_node_id.to_s +
        '" target="' + edge.end_node.neo_node_id.to_s +
        '" link_type="' + @rel_desc +
        '" start_date="' + @start_date +
