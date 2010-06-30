@@ -21,8 +21,8 @@ it makes sense that users will be focussed on communities/networks of interest a
       = link_to '[+] Add a new person to the system', new_person_path, :title => "Add a New Person"
     %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
       - @people.each do |person|
-        - if (person.neo_node_id != object.neo_node_id) then
-          %tr{:class => cycle('list_odd', 'list_even'), :id => person.neo_node_id}
+        - if (person.neo_id != object.neo_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => person.neo_id}
             = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "person",get_gender(object)), :target => person, :origin_type => object.class.to_s.downcase, :target_type => "person"})
 
   %h3
@@ -32,8 +32,8 @@ it makes sense that users will be focussed on communities/networks of interest a
       = link_to '[+] Add a new organisation to the system', new_organisation_path, :title => "Add a New Organisation"
     %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
       - @organisations.each do |organisation|
-        - if (organisation.neo_node_id != object.neo_node_id) then
-          %tr{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_node_id}
+        - if (organisation.neo_id != object.neo_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => organisation.neo_id}
             = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "organisation","neutral"), :target => organisation, :origin_type => object.class.to_s.downcase, :target_type => "organisation"})
 
   %h3
@@ -43,8 +43,8 @@ it makes sense that users will be focussed on communities/networks of interest a
       = link_to '[+] Add a new location to the system', new_location_path, :title => "Add a New Location"
     %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
       - @locations.each do |location|
-        - if (location.neo_node_id != object.neo_node_id) then
-          %tr{:class => cycle('list_odd', 'list_even'), :id => location.neo_node_id}
+        - if (location.neo_id != object.neo_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => location.neo_id}
             = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "location","neutral"), :target => location, :origin_type => object.class.to_s.downcase, :target_type => "location"})
   %h3
     <a href="#">events</a>
@@ -53,8 +53,8 @@ it makes sense that users will be focussed on communities/networks of interest a
       = link_to '[+] Add a new event to the system', new_event_path, :title => "Add a New Event"
     %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
       - @events.each do |event|
-        - if (event.neo_node_id != object.neo_node_id) then
-          %tr{:class => cycle('list_odd', 'list_even'), :id => event.neo_node_id}
+        - if (event.neo_id != object.neo_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => event.neo_id}
             = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "event","neutral"), :target => event, :origin_type => object.class.to_s.downcase, :target_type => "event"})
 
   %h3
@@ -64,6 +64,6 @@ it makes sense that users will be focussed on communities/networks of interest a
       = link_to '[+] Add a new reference to the system', new_reference_path, :title => "Add a New Reference"
     %table{:cellpadding => "0", :cellspacing => "0", :border => "0", :width => "100%"}
       - @references.each do |reference|
-        - if (reference.neo_node_id != object.neo_node_id) then
-          %tr{:class => cycle('list_odd', 'list_even'), :id => reference.neo_node_id}
+        - if (reference.neo_id != object.neo_id) then
+          %tr{:class => cycle('list_odd', 'list_even'), :id => reference.neo_id}
             = render( :partial => "shared/relationship_form", :object => object, :locals => {:link_category_table => get_type_list(object.class.to_s.downcase, "reference","neutral"), :target => reference, :origin_type => object.class.to_s.downcase, :target_type => "reference"})

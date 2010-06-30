@@ -28,7 +28,7 @@
           %td
             = person.date_of_birth
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/people/" + person.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/people/" + person.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_person_path(person)
           %td
@@ -40,7 +40,7 @@
           %td
             = person.date_of_birth
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/people/" + person.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/people/" + person.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_person_path(person)
           %td
@@ -63,7 +63,7 @@
           %td
             = organisation.sector
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/organisations/" + organisation.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/organisations/" + organisation.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_organisation_path(organisation)
           %td
@@ -96,7 +96,7 @@
           %td
             = location.country
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/locations/" + location.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/locations/" + location.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_location_path(location)
           %td
@@ -123,7 +123,7 @@
           %td
             = event.start_date
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/events/" + event.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/events/" + event.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_event_path(event)
           %td
@@ -146,7 +146,7 @@
           %td
             = reference.ref_value
           %td
-            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/references/" + reference.neo_node_id.to_s
+            = link_to image_tag("/images/icons/show_XS_f2.png",:alt=>"Show",:class=>"notice_icon",:height=>"25",:width=>"29"), "/references/" + reference.neo_id.to_s
           %td
             = link_to image_tag("/images/icons/edit_XS_f2.png",:alt=>"Edit",:class=>"notice_icon",:height=>"25",:width=>"31"), edit_reference_path(reference)
           %td

@@ -21,7 +21,7 @@ class ReferencesController < ApplicationController
   end
   
   def destroy
-    @object.delete
+    @object.del
     redirect_to(references_url)
   end
   
@@ -43,13 +43,13 @@ class ReferencesController < ApplicationController
   def link
     linker(params)
     redirect_to(@object)
-    flash[:notice] = @object.ref_value + " was linked to node " + @target.neo_node_id.to_s
+    flash[:notice] = @object.ref_value + " was linked to node " + @target.neo_id.to_s
   end
   
   def unlink
     unlinker(params)
     redirect_to(@object)
-    flash[:notice] = @object.ref_value + " was unlinked from " + @target.neo_node_id.to_s
+    flash[:notice] = @object.ref_value + " was unlinked from " + @target.neo_id.to_s
   end
   
   def new
@@ -65,7 +65,7 @@ class ReferencesController < ApplicationController
   private
   def neo_tx
     Neo4j::Transaction.new
-    @object = Neo4j.load(params[:id]) if params[:id]
+    @object = Neo4j.load_node(params[:id]) if params[:id]
     yield
     Neo4j::Transaction.finish
   end

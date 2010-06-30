@@ -4,9 +4,9 @@
   %param{:name=>"wmode", :value=>"opaque"}
   %param{:name=>"swfversion", :value=>"9.0.45.0"}
   %param{:name=>"allowFullScreen", :value=>"true"}
-  %param{:name=>"FlashVars", :value=>"pm_url=/"+@controller.type.to_s.downcase.gsub("controller","")+"/graphml/"+@object.neo_node_id.to_s}
+  %param{:name=>"FlashVars", :value=>"pm_url=/"+@controller.type.to_s.downcase.gsub("controller","")+"/graphml/"+@object.neo_id.to_s}
   %embed{:src=>"/peoplemap.swf",
-         :FlashVars=>"pm_url=/"+@controller.type.to_s.downcase.gsub("controller","")+"/graphml/"+@object.neo_node_id.to_s,
+         :FlashVars=>"pm_url=/"+@controller.type.to_s.downcase.gsub("controller","")+"/graphml/"+@object.neo_id.to_s,
          :swfversion=>"9.0.45.0",
          :wmode=>"opaque",
          :width=>"800",

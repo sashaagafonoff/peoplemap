@@ -18,7 +18,7 @@ class BatchController < ApplicationController
           c=c+1 # increment c to the next id
           n=0   # reset 15X counter
         end
-        @target = Neo4j.load(c)
+        @target = Neo4j.load_node(c)
         rel = @person.person_to_person.new(@target)
         rel.name = "person_to_person_friend"
         rel.start_date = "2010-01-01"
@@ -140,7 +140,7 @@ class BatchController < ApplicationController
   private
   def neo_tx
     Neo4j::Transaction.new
-    @object = Neo4j.load(params[:id]) if params[:id]
+    @object = Neo4j.load_node(params[:id]) if params[:id]
     yield
     Neo4j::Transaction.finish
   end

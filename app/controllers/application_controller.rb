@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
 
   def linker(params)
     
-    @origin = Neo4j.load(params[:origin_id])
-    @target = Neo4j.load(params[:target_id])
+    @origin = Neo4j.load_node(params[:origin_id])
+    @target = Neo4j.load_node(params[:target_id])
 
     # construct predicate type
     @rel_string = params[:origin_type] + "_to_" + params[:target_type]
@@ -99,9 +99,9 @@ class ApplicationController < ActionController::Base
   end
   
   def unlinker(params)
-    @origin = Neo4j.load(params[:id]) if params[:id]
-    @target = Neo4j.load(params[:target_id]) if params[:target_id]
-    relationship = Neo4j.load_relationship(params[:neo_relationship_id])
+    @origin = Neo4j.load_node(params[:id]) if params[:id]
+    @target = Neo4j.load_node(params[:target_id]) if params[:target_id]
+    relationship = Neo4j.load_rel(params[:neo_relationship_id])
     if (relationship) then
       relationship.delete
     end

@@ -8,10 +8,10 @@
       changeYear: true
   	});
   });
-- form_tag "link", :id => "linker_form_"+target.neo_node_id.to_s, :class => "linker_form" do
-  = hidden_field_tag "target_id", target.neo_node_id.to_s
-  = hidden_field_tag "id", object.neo_node_id.to_s
-  = hidden_field_tag "origin_id", object.neo_node_id.to_s
+- form_tag "link", :id => "linker_form_"+target.neo_id.to_s, :class => "linker_form" do
+  = hidden_field_tag "target_id", target.neo_id.to_s
+  = hidden_field_tag "id", object.neo_id.to_s
+  = hidden_field_tag "origin_id", object.neo_id.to_s
   = hidden_field_tag "origin_type", origin_type
   = hidden_field_tag "target_type", target_type
   %td
@@ -23,10 +23,10 @@
     = link_to get_display_name(target), :action => "show", :id => target, :controller=>target.class.to_s.downcase.pluralize
   %td
     from
-    = text_field_tag 'start_date', Date.today, :class => "rel_date", :id=> "start_date" + target.neo_node_id.to_s
+    = text_field_tag 'start_date', Date.today, :class => "rel_date", :id=> "start_date" + target.neo_id.to_s
   %td
     to
-    = text_field_tag 'end_date', '', :class => "rel_date", :id=> "end_date" + target.neo_node_id.to_s
+    = text_field_tag 'end_date', '', :class => "rel_date", :id=> "end_date" + target.neo_id.to_s
   %td
     = text_field_tag 'notes', '<insert notes about this link here>', :class => "notes"
   %td

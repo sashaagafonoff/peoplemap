@@ -86,52 +86,52 @@ module ApplicationHelper
     children = Array.new
 
     # build GraphML for children nodes to target
-    object.relationships.both.each do |relationship|
+    object.rels.both.each do |relationship|
 
       grandchildren = Array.new
-      rel_array.push(relationship.neo_relationship_id)
+      rel_array.push(relationship.neo_id)
 
-      @rel_start_id = relationship.start_node.neo_node_id
-      @rel_end_id = relationship.end_node.neo_node_id
-      @rel_id = relationship.neo_relationship_id
+      @rel_start_id = relationship.start_node.neo_id
+      @rel_end_id = relationship.end_node.neo_id
+      @rel_id = relationship.neo_id
 
-      unless (relationship.start_node.neo_node_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
+      unless (relationship.start_node.neo_id == 1) then  # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
 
         # inverse_node is the node to which our originating node connects (relationship could be incoming or outgoing)
-        if (object.neo_node_id == relationship.start_node.neo_node_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
+        if (object.neo_id == relationship.start_node.neo_id) then inverse_node = relationship.end_node else inverse_node = relationship.start_node end
 
-        inverse_node.relationships.both.each do |sub_relationship|
-          unless (sub_relationship.start_node.neo_node_id == 1) then # relationships.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
-            unless rel_array.include? sub_relationship.neo_relationship_id then
+        inverse_node.rels.both.each do |sub_relationship|
+          unless (sub_relationship.start_node.neo_id == 1) then # rels.both.each is returning an edge to node 1 which behaves strangely - THIS IS A HACK
+            unless rel_array.include? sub_relationship.neo_id then
 
               # find out which node is the other end of the relationship from the originating node
-              if (inverse_node.neo_node_id == sub_relationship.start_node.neo_node_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
+              if (inverse_node.neo_id == sub_relationship.start_node.neo_id) then sub_inverse_node = sub_relationship.end_node else sub_inverse_node = sub_relationship.start_node end
 
               # build graphml code for node and edge (unless already done)
-              @sub_nodes = unless (node_array.include? sub_inverse_node.neo_node_id) then graphml_builder(sub_inverse_node) else " " end  # else " " is needed to stop stuff breaking
-              @sub_edges = unless (sub_relationship.start_node.neo_node_id == 1) then graphml_edge_builder(sub_relationship) else " " end
+              @sub_nodes = unless (node_array.include? sub_inverse_node.neo_id) then graphml_builder(sub_inverse_node) else " " end  # else " " is needed to stop stuff breaking
+              @sub_edges = unless (sub_relationship.start_node.neo_id == 1) then graphml_edge_builder(sub_relationship) else " " end
 
               # push to array of sub-code for second layer
               grandchildren.push @sub_nodes + @sub_edges
 
               # finally, keep track of this node to stop it repeating
-              node_array.push sub_inverse_node.neo_node_id # add inverse node to list to stop it repeating
+              node_array.push sub_inverse_node.neo_id # add inverse node to list to stop it repeating
             end
           end
-          rel_array.push sub_relationship.neo_relationship_id
+          rel_array.push sub_relationship.neo_id
         end
       end
 
       @inverse_node_graphml = unless (inverse_node.nil?) then
-        unless (node_array.include? inverse_node.neo_node_id) then graphml_builder(inverse_node) else " " end
+        unless (node_array.include? inverse_node.neo_id) then graphml_builder(inverse_node) else " " end
       else
         " "
       end
       @grandchildren = grandchildren.join("")
-      @edges = unless (relationship.start_node.neo_node_id == 1) then graphml_edge_builder(relationship) else " " end
+      @edges = unless (relationship.start_node.neo_id == 1) then graphml_edge_builder(relationship) else " " end
       children.push @inverse_node_graphml + @grandchildren + @edges
 
-      rel_array.push relationship.neo_relationship_id
+      rel_array.push relationship.neo_id
 
     end
     @graphml = graphml_builder(object) + children.join("")
@@ -142,7 +142,7 @@ module ApplicationHelper
   def graphml_builder(node)
     case node.class.to_s
       when "Person"
-       '<node id="' + node.neo_node_id.to_s + '">
+       '<node id="' + node.neo_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
           <data key="title">' + (if(node.title=='') then 'EMPTY' else node.title end) + '</data>
           <data key="name">' + [node.first_name, node.surname].join(" ") + '</data>
@@ -156,7 +156,7 @@ module ApplicationHelper
         </node>'  
       # :name, :sector, :industry, :notes
       when "Organisation"
-       '<node id="' + node.neo_node_id.to_s + '">
+       '<node id="' + node.neo_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
           <data key="name">' + (if(node.name=='') then 'EMPTY' else node.name end) + '</data>
           <data key="sector">' + (if(node.sector=='') then 'EMPTY' else node.sector end) + '</data>
@@ -166,7 +166,7 @@ module ApplicationHelper
       # :apt_office_floor_number, :street_number, :street_name, :street_type, :suburb, :city, :country, :postcode, :notes
       when "Location"
         text_address = [node.street_number,node.street_name,node.street_type,node.suburb].join(" ")
-       '<node id="' + node.neo_node_id.to_s + '">
+       '<node id="' + node.neo_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
           <data key="name">' + (if(text_address=='') then 'EMPTY' else text_address end) + '</data>
           <data key="apt_office_floor_number">' + (if(node.apt_office_floor_number=='') then 'EMPTY' else node.apt_office_floor_number end) + '</data>
@@ -181,7 +181,7 @@ module ApplicationHelper
         </node>'  
       # :title, :description, :event_type, :start_date, :end_date, :notes
       when "Event"
-       '<node id="' + node.neo_node_id.to_s + '">
+       '<node id="' + node.neo_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
           <data key="name">' + (if(node.title=='') then 'EMPTY' else node.title end) + '</data>
           <data key="description">' + (if(node.description=='') then 'EMPTY' else node.description end) + '</data>
@@ -193,7 +193,7 @@ module ApplicationHelper
         '  
       # :reference_type, :ref_value, :notes
       when "Reference"
-       '<node id="' + node.neo_node_id.to_s + '">
+       '<node id="' + node.neo_id.to_s + '">
           <data key="node_class">' + node.class.to_s.downcase + '</data>
           <data key="name">' + (if(node.ref_value=='') then 'EMPTY' else node.ref_value end) + '</data>
           <data key="reference_type">' + (if(node.reference_type=='') then 'EMPTY' else node.reference_type end) + '</data>
@@ -211,9 +211,9 @@ module ApplicationHelper
 #    if (edge.end_date=="") then @end_date ="" else @end_date = edge.end_date end
 #    if (edge.notes=="") then @notes = "" else @notes = =  edge.notes end
     #@rel_desc = "unknown"
-    '<edge id = "' + edge.neo_relationship_id.to_s +
-       '" source="' + edge.start_node.neo_node_id.to_s +
-       '" target="' + edge.end_node.neo_node_id.to_s +
+    '<edge id = "' + edge.neo_id.to_s +
+       '" source="' + edge.start_node.neo_id.to_s +
+       '" target="' + edge.end_node.neo_id.to_s +
        '" link_type="' + @rel_desc +
        '" start_date="' + @start_date +
        '" end_date="' + @end_date +
