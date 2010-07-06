@@ -1,0 +1,380 @@
+@charset "utf-8"
+
+/* CSS Document
+
+body
+  background-color: #fff
+  color: #333
+  padding: 0
+  margin: 0
+  border: 0
+  width: 100%
+  min-width: 1000px
+  font-family: verdana, arial, helvetica, sans-serif
+  font-size: 12px
+  line-height: 18px
+
+p, ol, ul, td
+  font-family: verdana, arial, helvetica, sans-serif
+  font-size: 12px
+  line-height: 18px
+
+p
+  padding: 5px
+  margin: 0
+
+pre
+  background-color: #eee
+  padding: 10px
+  font-size: 11px
+
+a
+  color: #336
+  &:visited
+    color: #334
+  &:hover
+
+img
+  border: 0
+
+div#top_menu
+  background-color: #1f5081
+  background-image: url(/images/top_menu_bgd.png)
+  height: 31px
+  border-bottom: solid 1px #003366
+  margin: 0
+  padding: 0
+  ul
+    margin: 0
+    padding: 0
+    display: inline-block
+  div
+    &#logo, &#CCL
+      margin: 0
+      padding: 0
+      display: inline-block
+    &#logo
+      float: left
+  ul
+    float: left
+  li
+    font-family: arial, helvetica, sans-serif
+    font-size: 15px
+    line-height: 31px
+    list-style: none
+    padding: 0 0 0 10px
+    display: inline-block
+    color: #fff
+
+#top_menu li a, #footer_menu li a, #node_menu li a
+  color: #fff
+  text-decoration: none
+  &:visited
+    color: #fff
+    text-decoration: none
+
+#top_menu li a:hover, #footer_menu li a:hover, #node_menu li a:hover
+  color: #f1c130
+  text-decoration: none
+  background-color: #1f5081
+
+div
+  &#top_menu div#CCL
+    float: right
+  &#top_menu_search
+    float: right
+    display: inline-block
+    margin: 0
+    padding: 0 0 0 0
+    line-height: 31px
+    color: #fff
+  &#notice
+    background-color: #69BE39
+    color: #fff
+    border-bottom: solid 1px #385A25
+    margin: 0
+    padding: 3px 5px 3px 5px
+    clear: both
+
+td
+  &#node_left_col
+    margin: 0
+    padding: 0
+    vertical-align: top
+  &#node_right_col
+    border-left: solid 1px #888888
+    vertical-align: top
+
+#node_menu
+  background-color: #6784af
+  margin: 0
+  padding: 0 0 0 5px
+  border-bottom: solid 1px #000040
+  li
+    display: inline
+    list-style: none
+    padding: 0 10px 0 0
+    margin: 0
+
+h1, h2
+  padding: 0
+  margin: 0
+  font-family: Arial, Helvetica, sans-serif
+  font-weight: normal
+
+h1
+  padding: 20px 0 20px 5px
+  background-color: #4D4D4D
+  background-image: url(/images/h1_bgd.png)
+  background-repeat: repeat-y
+  color: #fff
+  border-bottom: 1px solid #000
+  img
+    margin: 0
+    padding: 0 10px 0 10px
+    vertical-align: middle
+    &.action_btn
+      float: right
+
+h2
+  padding: 7px 0 7px 10px
+  background-color: #ffeba1
+  background-image: url(/images/h2_bgd.png)
+  font-size: 17px
+  font-weight: normal
+  border-bottom: solid 1px #966
+  color: #633
+
+.fieldWithErrors
+  padding: 2px
+  background-color: red
+  display: table
+
+#errorExplanation
+  width: 400px
+  border: 2px solid red
+  padding: 7px
+  padding-bottom: 12px
+  margin-bottom: 20px
+  background-color: #f0f0f0
+  h2
+    text-align: left
+    font-weight: bold
+    padding: 5px 5px 5px 15px
+    font-size: 12px
+    margin: -7px
+    background-color: #c00
+    color: #fff
+  p
+    color: #333
+    margin-bottom: 0
+    padding: 5px
+  ul li
+    font-size: 12px
+    list-style: square
+
+div.node_data
+  text-align: left
+  border-bottom: solid 1px #bbb
+  padding: 0
+
+label.node_data_label
+  background-color: #f0f0f0
+  text-align: right
+  vertical-align: top
+  border-right: solid 1px #bbb
+  padding: 0 5px 0 5px
+  width: 150px
+
+.node_list
+  border: solid 1px #f1e9cd
+  border-right: none
+  margin: 0 0 0 10px
+
+.date_range
+  font-size: 9px
+  color: #999999
+
+div
+  &.linked_nodes
+    width: auto
+  &#index_list_wrapper
+    margin: 0
+    padding: 10px
+
+tr
+  &.list_even, &.list_odd
+    padding: 0
+    margin: 0
+    text-align: left
+    background-color: #ffffff
+
+.node_list
+  padding: 0
+  margin: 0
+  text-align: left
+  background-color: #ffffff
+
+tr
+  &.list_odd
+    background-color: #f8f3e4
+  &.list_even td, &.list_odd td
+    padding: 0 3px 0 3px
+    margin: 0
+    font-size: 9px
+    border-right: solid 1px #f1e9cd
+    border-top: solid 1px #f1e9cd
+
+table.node_list th
+  padding: 0 3px 0 3px
+  margin: 0
+  font-size: 9px
+  border-right: solid 1px #f1e9cd
+  border-top: solid 1px #f1e9cd
+
+div.link_button
+  float: right
+  width: 30px
+
+form.linker_form
+  font-size: 9px
+  padding: 0
+  margin: 0
+  select, input
+    font-size: 9px
+    padding: 0
+    margin: 0
+
+select#link_category
+  height: 17px
+  font-size: 9px
+
+input
+  &.rel_date
+    height: 12px
+    font-size: 9px
+    width: 50px
+  &.datepicker
+    width: 100px
+  &.notes
+    height: 12px
+    font-size: 9px
+    width: 150px
+    color: #666666
+  &.submit_link
+    height: 18px
+    font-size: 9px
+    width: 35px
+
+label
+  font-family: arial,helvetica,sans-serif
+  font-weight: 500
+  color: #333333
+  font-size: 12px
+  width: 100px
+  display: inline-block
+  text-align: right
+  padding: 3px 0 0 10px
+  vertical-align: top
+
+input.hidden_field
+  visibility: hidden
+
+div
+  &#form_wrapper
+    margin: 10px
+    padding: 5px 10px 10px 10px
+    background-color: #006699
+    display: block
+  &.general_explanation
+    background-color: #f5f0da
+    padding: 10px
+    margin: 0
+    img
+      float: left
+      margin: 5px 10px 10px 0
+  &.form_explanation, &.form_group
+    margin: 10px 0 10px 0
+    padding: 10px
+    background-color: #ebf9ff
+    color: #333333
+    display: block
+
+img.notice_icon
+  vertical-align: middle
+
+div
+  &.form_explanation
+  &.form_group
+    background-color: #eee
+  &.clear_all
+    clear: both
+    height: 0
+  &.form_group text_area
+    font-family: arial, helvetica, sans-serif
+  &#form_submit input
+    height: 40px
+    color: #333333
+    font-weight: bold
+    font-size: 15px
+
+.new_node_link a
+  font-size: 12px
+  text-decoration: none
+
+ul.link_desc
+  margin: 0
+  padding: 0
+
+li
+  &.link_odd, &.link_even
+    padding: 0 5px 0 5px
+    border-bottom: solid 1px #b39da6
+    list-style: none
+  &.link_odd
+    background-color: #fdfaf7
+  &.link_even
+
+a.unlink_a:link
+  text-decoration: none
+  color: #ff0000
+  font-weight: bold
+  font-size: 9px
+
+div.all_nodes_list
+  border-top: solid 1px #333
+  margin: 0
+  padding: 0
+
+td.all_nodes_list_item
+  width: 200px
+  border-top: none
+  text-align: right
+
+div#footer_menu
+  text-align: center
+  clear: both
+  background-color: #82A0C6
+  background-image: url(/images/bgd_cloud.png)
+  background-repeat: no-repeat
+  padding: 15px 0 13px 0
+  width: 100%
+  font-size: 12px
+  font-family: Arial, Helvetica, sans-serif
+  color: #3A5061
+  border-top: 1px solid #5c6e7c
+  border-bottom: 1px solid #5c6e7c
+
+#network_visualisation, #processing_visualisation
+  background-color: #fff
+  height: 800px
+
+#timeline_visualisation
+  background-color: #000
+  height: 800px
+  border: solid 1px #333
+  color: #fff
+
+#geo_visualisation
+  width: 800px
+  height: 800px
